@@ -472,7 +472,7 @@ fn section_bodies(
             ));
             continue;
         }
-        bodies.insert(canonical, body_lines(&body));
+        bodies.insert(canonical, body_lines(canonical, &body));
     }
 
     for heading in REQUIRED_SECTIONS {
@@ -503,7 +503,7 @@ fn section_bodies(
     bodies
 }
 
-fn body_lines(body: &str) -> Vec<String> {
+fn body_lines(heading: &str, body: &str) -> Vec<String> {
     let normalized = body.replace("\r\n", "\n");
     let mut lines = Vec::new();
     let mut previous_was_bullet = false;
@@ -526,6 +526,9 @@ fn body_lines(body: &str) -> Vec<String> {
         }
         lines.push(trimmed.to_string());
         previous_was_bullet = is_bullet;
+    }
+    if lines.is_empty() && heading != "Acceptance criteria" {
+        return vec!["- none".to_string()];
     }
     lines
 }
@@ -1226,6 +1229,20 @@ mod tests {
         );
         let reentered = reenter_canonical_markdown(markdown);
         assert_eq!(reentered["projection"]["requirements"], json!([]));
+    }
+
+    #[test]
+    fn empty_non_acceptance_section_uses_the_canonical_placeholder() {
+        let mut input = valid_summary();
+        input["summary"]["sections"]["Notes"] = json!("");
+
+        let output = render_request_markdown(&input);
+        assert_eq!(output["valid"], true, "{}", output["errors"]);
+        assert_eq!(output["round_trip"]["status"], "match");
+        assert!(output["markdown"]
+            .as_str()
+            .unwrap()
+            .contains("## Notes\n\n- none"));
     }
 
     #[test]
