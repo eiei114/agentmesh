@@ -397,51 +397,51 @@ fn section_bodies(
 
     let entries: Vec<(String, String)> = match sections {
         None | Some(Value::Null) => Vec::new(),
-        Some(Value::Array(items)) => items
-            .iter()
-            .enumerate()
-            .filter_map(|(index, item)| match item.as_object() {
-                Some(object) => Some((
-                    object
-                        .get("heading")
-                        .and_then(Value::as_str)
-                        .unwrap_or_default()
-                        .to_string(),
-                    object
-                        .get("body")
-                        .and_then(Value::as_str)
-                        .unwrap_or_default()
-                        .to_string(),
-                ))
-                .or_else(|| {
+        Some(Value::Array(items)) => {
+            let mut entries = Vec::new();
+            for (index, item) in items.iter().enumerate() {
+                let path = format!("$.summary.sections[{index}]");
+                let Some(object) = item.as_object() else {
                     errors.push(error(
                         "AGENTMESH_REQUEST_MARKDOWN_RENDERER_SUMMARY_MALFORMED",
                         "malformed_summary",
-                        format!("$.summary.sections[{index}]"),
+                        path,
                         "section entries must be objects with heading and body strings",
                     ));
-                    None
-                }),
-                None => {
+                    continue;
+                };
+                let (Some(heading), Some(body)) = (
+                    object.get("heading").and_then(Value::as_str),
+                    object.get("body").and_then(Value::as_str),
+                ) else {
                     errors.push(error(
                         "AGENTMESH_REQUEST_MARKDOWN_RENDERER_SUMMARY_MALFORMED",
                         "malformed_summary",
-                        format!("$.summary.sections[{index}]"),
+                        path,
                         "section entries must be objects with heading and body strings",
                     ));
-                    None
+                    continue;
+                };
+                entries.push((heading.to_string(), body.to_string()));
+            }
+            entries
+        }
+        Some(Value::Object(map)) => {
+            let mut entries = Vec::new();
+            for (heading, body) in map {
+                if let Some(body) = body.as_str() {
+                    entries.push((heading.clone(), body.to_string()));
+                } else {
+                    errors.push(error(
+                        "AGENTMESH_REQUEST_MARKDOWN_RENDERER_SUMMARY_MALFORMED",
+                        "malformed_summary",
+                        format!("$.summary.sections.{heading}"),
+                        "section bodies in the object representation must be strings",
+                    ));
                 }
-            })
-            .collect(),
-        Some(Value::Object(map)) => map
-            .iter()
-            .map(|(heading, body)| {
-                (
-                    heading.clone(),
-                    body.as_str().unwrap_or_default().to_string(),
-                )
-            })
-            .collect(),
+            }
+            entries
+        }
         Some(_) => {
             errors.push(error(
                 "AGENTMESH_REQUEST_MARKDOWN_RENDERER_SUMMARY_MALFORMED",
@@ -505,11 +505,27 @@ fn section_bodies(
 
 fn body_lines(body: &str) -> Vec<String> {
     let normalized = body.replace("\r\n", "\n");
-    let lines: Vec<String> = normalized.lines().map(ToString::to_string).collect();
-    if lines.iter().all(|line| line.trim().is_empty()) {
-        // The canonical writer emits `- none` for an empty section body; using the
-        // same placeholder keeps the round-trip digest comparison honest.
-        return vec!["- none".to_string()];
+    let mut lines = Vec::new();
+    let mut previous_was_bullet = false;
+    for line in normalized.lines() {
+        let trimmed = line.trim();
+        if trimmed.is_empty() {
+            if !lines.is_empty() && !lines.last().is_some_and(|line: &String| line.is_empty()) {
+                lines.push(String::new());
+            }
+            previous_was_bullet = false;
+            continue;
+        }
+
+        let is_bullet = ["- ", "* ", "+ "]
+            .iter()
+            .any(|prefix| trimmed.starts_with(prefix));
+        let last_is_empty = lines.last().is_some_and(|line: &String| line.is_empty());
+        if !lines.is_empty() && !last_is_empty && !(previous_was_bullet && is_bullet) {
+            lines.push(String::new());
+        }
+        lines.push(trimmed.to_string());
+        previous_was_bullet = is_bullet;
     }
     lines
 }
@@ -541,24 +557,34 @@ fn compact(
     mut diagnostics: Vec<DiagnosticRecord>,
     mut errors: Vec<ErrorRecord>,
 ) -> Value {
-    errors.sort_by(|left, right| {
-        left.code
-            .cmp(right.code)
-            .then_with(|| left.path.cmp(&right.path))
-            .then_with(|| left.message.cmp(&right.message))
-    });
     diagnostics.sort_by(|left, right| {
         left.category
             .cmp(right.category)
             .then_with(|| left.path.cmp(&right.path))
             .then_with(|| left.message.cmp(&right.message))
     });
+    let (render, round_trip) = if errors.is_empty() {
+        match summary {
+            Some(summary) => match render_summary(summary) {
+                Ok((render, round_trip)) => (Some(render), round_trip),
+                Err(error) => {
+                    errors.push(error);
+                    (None, Value::Null)
+                }
+            },
+            None => (None, Value::Null),
+        }
+    } else {
+        (None, Value::Null)
+    };
+    errors.sort_by(|left, right| {
+        left.code
+            .cmp(right.code)
+            .then_with(|| left.path.cmp(&right.path))
+            .then_with(|| left.message.cmp(&right.message))
+    });
     let valid = errors.is_empty();
     let errors_json: Vec<Value> = errors.iter().map(ErrorRecord::value).collect();
-    let (render, round_trip) = summary
-        .filter(|_| valid)
-        .map(render_summary)
-        .unwrap_or_else(|| (None, Value::Null));
     let diagnostics_json = bounded_diagnostics(diagnostics);
 
     sort_json_keys(json!({
@@ -588,38 +614,36 @@ struct Render {
     input_digest: String,
 }
 
-fn render_summary(summary: SummaryInput) -> (Option<Render>, Value) {
+fn render_summary(summary: SummaryInput) -> Result<(Render, Value), ErrorRecord> {
     let SummaryInput {
         fields,
         section_bodies,
     } = summary;
-    let document = match canonical_document_from_summary(fields, &section_bodies) {
-        Ok(document) => document,
-        Err(canonical_errors) => {
-            let message = format!(
-                "canonical projection rejected the summary: {}",
-                canonical_errors
-                    .iter()
-                    .filter_map(|record| record.get("code").and_then(Value::as_str))
-                    .collect::<Vec<_>>()
-                    .join(",")
-            );
-            return (
-                None,
-                json!({
-                    "status": "mismatch",
-                    "input_canonical_sha256": Value::Null,
-                    "rendered_canonical_sha256": Value::Null,
-                    "mismatch_count": 1,
-                    "mismatches": [{
-                        "code": "AGENTMESH_REQUEST_MARKDOWN_RENDERER_RENDER_UNPARSEABLE",
-                        "path": "$.summary",
-                        "message": message,
-                    }],
-                }),
-            );
-        }
-    };
+    let document =
+        canonical_document_from_summary(fields, &section_bodies).map_err(|canonical_errors| {
+            let details = canonical_errors
+                .iter()
+                .map(|record| {
+                    let code = record
+                        .get("code")
+                        .and_then(Value::as_str)
+                        .unwrap_or("unknown");
+                    let path = record.get("path").and_then(Value::as_str).unwrap_or("$");
+                    let message = record
+                        .get("message")
+                        .and_then(Value::as_str)
+                        .unwrap_or("invalid canonical section");
+                    format!("{code} at {path}: {message}")
+                })
+                .collect::<Vec<_>>()
+                .join("; ");
+            error(
+                "AGENTMESH_REQUEST_MARKDOWN_RENDERER_SUMMARY_MALFORMED",
+                "malformed_summary",
+                "$.summary.sections",
+                format!("canonical projection rejected the summary: {details}"),
+            )
+        })?;
 
     let input_projection = document.projection;
     let input_digest = sha256_prefixed(&canonical_json_bytes(&input_projection));
@@ -633,14 +657,14 @@ fn render_summary(summary: SummaryInput) -> (Option<Render>, Value) {
     let reentered = reenter_canonical_markdown(&markdown);
     let round_trip = round_trip(&input_projection, &input_digest, &reentered);
 
-    (
-        Some(Render {
+    Ok((
+        Render {
             slug,
             markdown,
             input_digest,
-        }),
+        },
         round_trip,
-    )
+    ))
 }
 
 fn round_trip(input_projection: &Value, input_digest: &str, reentered: &Value) -> Value {
@@ -1135,6 +1159,93 @@ mod tests {
                 output["errors"]
             );
         }
+    }
+
+    #[test]
+    fn paragraph_boundaries_survive_rendering_and_reentry() {
+        let mut input = valid_summary();
+        input["summary"]["sections"]["Notes"] = json!("First paragraph.\nSecond paragraph.");
+
+        let output = render_request_markdown(&input);
+        assert_eq!(output["valid"], true, "{}", output["errors"]);
+        assert_eq!(output["round_trip"]["status"], "match");
+        let markdown = output["markdown"].as_str().unwrap();
+        assert!(markdown.contains("## Notes\n\nFirst paragraph.\n\nSecond paragraph."));
+        let reentered = reenter_canonical_markdown(markdown);
+        let notes = reentered["projection"]["sections"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|section| section["heading"] == "Notes")
+            .unwrap();
+        assert_eq!(notes["body"], "First paragraph.\n\nSecond paragraph.");
+    }
+
+    #[test]
+    fn malformed_section_bodies_fail_closed_in_both_representations() {
+        let mut object_body = valid_summary();
+        object_body["summary"]["sections"]["Notes"] = json!({"text": "discarded"});
+
+        let mut missing_array_body = valid_summary();
+        missing_array_body["summary"]["sections"] = json!([{"heading": "Notes"}]);
+
+        let mut non_string_array_body = valid_summary();
+        non_string_array_body["summary"]["sections"] =
+            json!([{"heading": "Notes", "body": ["not", "a", "string"]}]);
+
+        for input in [object_body, missing_array_body, non_string_array_body] {
+            let output = render_request_markdown(&input);
+            assert_eq!(output["valid"], false);
+            assert_eq!(output["markdown"], Value::Null);
+            assert_eq!(output["round_trip"], Value::Null);
+            assert!(output["errors"].as_array().unwrap().iter().any(|record| {
+                record["code"] == "AGENTMESH_REQUEST_MARKDOWN_RENDERER_SUMMARY_MALFORMED"
+            }));
+        }
+    }
+
+    #[test]
+    fn empty_acceptance_criteria_reenter_as_zero_requirements() {
+        let mut input = valid_summary();
+        input["summary"]["sections"]["Acceptance criteria"] = json!("");
+
+        let output = render_request_markdown(&input);
+        assert_eq!(output["valid"], true, "{}", output["errors"]);
+        assert_eq!(output["round_trip"]["status"], "match");
+        let markdown = output["markdown"].as_str().unwrap();
+        let criteria = markdown
+            .split("## Acceptance criteria\n")
+            .nth(1)
+            .unwrap()
+            .split("\n## Blocked by")
+            .next()
+            .unwrap();
+        assert!(
+            criteria.trim().is_empty(),
+            "unexpected criteria body: {criteria:?}"
+        );
+        let reentered = reenter_canonical_markdown(markdown);
+        assert_eq!(reentered["projection"]["requirements"], json!([]));
+    }
+
+    #[test]
+    fn canonical_construction_errors_fail_compact_instead_of_round_trip_mismatch() {
+        let mut input = valid_summary();
+        input["summary"]["sections"]["Acceptance criteria"] = json!("- [q] Invalid marker");
+
+        let output = render_request_markdown(&input);
+        assert_eq!(output["valid"], false);
+        assert_eq!(output["markdown"], Value::Null);
+        assert_eq!(output["round_trip"], Value::Null);
+        assert_eq!(output["error_count"], 1);
+        assert_eq!(
+            output["errors"][0]["code"],
+            "AGENTMESH_REQUEST_MARKDOWN_RENDERER_SUMMARY_MALFORMED"
+        );
+        assert!(output["errors"][0]["message"]
+            .as_str()
+            .unwrap()
+            .contains("AGENTMESH_REQUEST_MARKDOWN_NORMALIZER_CHECKLIST_MALFORMED"));
     }
 
     #[test]

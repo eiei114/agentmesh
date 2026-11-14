@@ -716,23 +716,27 @@ fn checklist_error(line_number: usize, message: impl Into<String>) -> ErrorRecor
 fn normalize_section_body(lines: &[String]) -> String {
     let mut out = Vec::new();
     let mut paragraph = Vec::new();
+    let mut bullets = Vec::new();
 
     for line in lines {
         let trimmed = line.trim();
         if trimmed.is_empty() {
             flush_paragraph(&mut out, &mut paragraph);
+            flush_bullets(&mut out, &mut bullets);
             continue;
         }
         if let Some(rest) = bullet_body(trimmed) {
             flush_paragraph(&mut out, &mut paragraph);
-            out.push(format!("- {}", collapse_inline_whitespace(rest)));
+            bullets.push(format!("- {}", collapse_inline_whitespace(rest)));
         } else {
+            flush_bullets(&mut out, &mut bullets);
             paragraph.push(collapse_inline_whitespace(trimmed));
         }
     }
     flush_paragraph(&mut out, &mut paragraph);
+    flush_bullets(&mut out, &mut bullets);
 
-    out.join("\n")
+    out.join("\n\n")
 }
 
 fn flush_paragraph(out: &mut Vec<String>, paragraph: &mut Vec<String>) {
@@ -741,6 +745,14 @@ fn flush_paragraph(out: &mut Vec<String>, paragraph: &mut Vec<String>) {
     }
     out.push(paragraph.join(" "));
     paragraph.clear();
+}
+
+fn flush_bullets(out: &mut Vec<String>, bullets: &mut Vec<String>) {
+    if bullets.is_empty() {
+        return;
+    }
+    out.push(bullets.join("\n"));
+    bullets.clear();
 }
 
 fn bullet_body(trimmed: &str) -> Option<&str> {
@@ -884,9 +896,9 @@ fn normalized_markdown(fields: &Value, sections: &[CanonicalSection]) -> String 
         writeln!(out).expect("write markdown");
         writeln!(out, "## {}", section.heading).expect("write markdown");
         writeln!(out).expect("write markdown");
-        if section.body.is_empty() {
+        if section.body.is_empty() && section.heading != "Acceptance criteria" {
             writeln!(out, "- none").expect("write markdown");
-        } else {
+        } else if !section.body.is_empty() {
             writeln!(out, "{}", section.body).expect("write markdown");
         }
     }
@@ -1079,6 +1091,32 @@ mod tests {
             serde_json::to_vec(&left).unwrap(),
             serde_json::to_vec(&right).unwrap()
         );
+    }
+
+    #[test]
+    fn canonical_paragraphs_are_separated_by_blank_lines() {
+        let markdown = valid_markdown().replace(
+            "## Notes\nNormalize outside Multica.",
+            "## Notes\nFirst paragraph.\n\nSecond paragraph.",
+        );
+        let output = normalize_request_markdown(&json!({
+            "schema_version": INPUT_SCHEMA_VERSION,
+            "request_schema_version": REQUEST_SCHEMA_VERSION,
+            "markdown": markdown,
+        }));
+
+        assert_eq!(output["valid"], true, "{}", output["errors"]);
+        let notes = output["projection"]["sections"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|section| section["heading"] == "Notes")
+            .unwrap();
+        assert_eq!(notes["body"], "First paragraph.\n\nSecond paragraph.");
+        assert!(output["projection"]["normalized_markdown"]
+            .as_str()
+            .unwrap()
+            .contains("First paragraph.\n\nSecond paragraph."));
     }
 
     #[test]
