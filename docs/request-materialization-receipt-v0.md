@@ -15,6 +15,14 @@ the canonical summary, and one adapter descriptor. The descriptor records the
 adapter identity, artifact kind, artifact digest, and the source digest recorded
 with the artifact. That recorded source digest is required to prove the
 post-write source binding; the App does not derive it from a path or file.
+Input scope keys are limited to 256 ASCII characters. The host accepts at most
+131,072 raw UTF-8 JSON bytes; before field parsing, the App also limits the
+compact, key-sorted JSON representation to 65,536 bytes. Thus JSON whitespace
+does not increase the App's semantic-size measurement. The host's raw byte
+limit runs first, then the App's compact-size check, root required fields,
+schema and contract versions, nested required fields, scalar validation, and
+scope validation. Each App-level failure is a single normalized code with no
+partial receipt.
 
 ```json
 {
@@ -58,21 +66,51 @@ Malformed, missing, unsupported-version, oversized, invalid, and cross-scope
 inputs return a normalized error and `receipt: null`; failures never contain a
 partial receipt. Output does not echo request text, evidence values, adapter
 identity, artifact kind, credentials, logs, filesystem paths, or tracker IDs.
+The input schema's `scope_key.maxLength` matches the implementation's 256-byte
+ASCII scope limit. `criteria_count` accepts any JSON number that is an integer
+value (including `3.0`); it is normalized to an integer before comparison and
+digesting.
+
+### Compared-value digest recipe
+
+For each field, form the following JSON array in exactly this operand order:
+
+| Ordinal | Field | Array operands |
+| --- | --- | --- |
+| 1 | `scope_key` | `[admission_record.scope_key, request_summary.scope_key]` |
+| 2 | `request_kind` | `[admission_record.request_kind, request_summary.request_kind]` |
+| 3 | `title_digest` | `[admission_record.title_digest, request_summary.title_digest]` |
+| 4 | `criteria_count` | `[admission_record.criteria_count, request_summary.criteria_count]` |
+| 5 | `admission_verdict` | `[admission_record.verdict, "admit"]` |
+| 6 | `source_digest` | `[admission_record.source_digest, request_summary.source_digest, artifact.source_digest]` |
+| 7 | `artifact_digest` | `[artifact.artifact_digest]` |
+
+`compared_values_digest` is `sha256:` followed by the lowercase SHA-256 hex of
+the array's UTF-8 JSON bytes: compact JSON, no insignificant whitespace, array
+order as listed, string values JSON-escaped, and integer counts written in base
+10 without a decimal point. The inputs to these arrays are ASCII by contract.
+For the artifact itself, adapters hash its exact written bytes (not a parsed or
+reformatted representation) as `sha256:` plus lowercase SHA-256 hex.
 
 ## Adapter and reviewer procedure
 
-1. After writing the artifact, compute its byte digest and retain the original
-   source digest alongside it. Do not put a file path or tracker identifier in
-   the descriptor.
+1. After writing the artifact, hash its exact bytes and retain that artifact
+   digest and the original source digest with the adapter's materialization
+   record. Do not put a file path or tracker identifier in the descriptor.
 2. Run this App once with the admission record as supplied, the retained
-   canonical summary, and that artifact descriptor. Store the JSON receipt next
-   to the artifact using the adapter's own storage convention; the App itself
-   does not write files.
+   canonical summary, and that artifact descriptor. Store the bounded input
+   descriptor and JSON receipt beside the artifact using the adapter's storage
+   convention; neither contains request body text or tracker metadata, and the
+   App itself does not write files.
 3. A reviewer checks `receipt.verdict`, then reads `fields` and
-   `reason_codes` in ordinal order. A `drifted` receipt identifies which
-   comparisons disagree without disclosing request body text or tracker
-   metadata. A null receipt means the input was invalid and must not be treated
-   as correspondence evidence.
+   `reason_codes` in ordinal order. To ensure the receipt still describes the
+   current write, the reviewer hashes the artifact's current raw bytes and
+   computes the ordinal-7 compared-value digest as described above; it must
+   equal `fields[6].compared_values_digest`. A mismatch means the artifact was
+   replaced or altered after the receipt and the receipt must not be trusted. A
+   `drifted` receipt identifies the failing comparisons without disclosing
+   request body text or tracker metadata. A null receipt means the input was
+   invalid and must not be treated as correspondence evidence.
 
 Fixtures in `plugins/markdown-request-validator/testdata/` pair each documented
 JSON input with its exact expected compact output: successful correspondence,

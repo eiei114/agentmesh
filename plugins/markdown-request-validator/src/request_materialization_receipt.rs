@@ -6,8 +6,10 @@
 
 use crate::adapter_compact_helpers::canonical_json_bytes;
 use agentmesh_evidence::sha256_prefixed;
+use serde::de::{self, Deserializer, Visitor};
 use serde::Deserialize;
 use serde_json::{json, Value};
+use std::fmt;
 
 /// Contract version accepted by this App and copied into successful receipts.
 pub const RECEIPT_CONTRACT_VERSION: &str = "agentmesh-request-materialization-receipt.v0";
@@ -44,6 +46,7 @@ struct AdmissionRecord {
     scope_key: String,
     request_kind: String,
     title_digest: String,
+    #[serde(deserialize_with = "deserialize_criteria_count")]
     criteria_count: u32,
     source_digest: String,
 }
@@ -54,6 +57,7 @@ struct RequestSummary {
     scope_key: String,
     request_kind: String,
     title_digest: String,
+    #[serde(deserialize_with = "deserialize_criteria_count")]
     criteria_count: u32,
     source_digest: String,
 }
@@ -253,6 +257,52 @@ fn missing_required(
         .then_some("REQUIRED_FIELD_MISSING")
 }
 
+fn deserialize_criteria_count<'de, D>(deserializer: D) -> Result<u32, D::Error>
+where
+    D: Deserializer<'de>,
+{
+    struct CriteriaCountVisitor;
+
+    impl Visitor<'_> for CriteriaCountVisitor {
+        type Value = u32;
+
+        fn expecting(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
+            formatter.write_str("a non-negative integral u32")
+        }
+
+        fn visit_u64<E>(self, value: u64) -> Result<Self::Value, E>
+        where
+            E: de::Error,
+        {
+            u32::try_from(value).map_err(|_| E::custom("criteria_count exceeds u32"))
+        }
+
+        fn visit_i64<E>(self, value: i64) -> Result<Self::Value, E>
+        where
+            E: de::Error,
+        {
+            u32::try_from(value).map_err(|_| E::custom("criteria_count is outside u32"))
+        }
+
+        fn visit_f64<E>(self, value: f64) -> Result<Self::Value, E>
+        where
+            E: de::Error,
+        {
+            if value.is_finite()
+                && value.fract() == 0.0
+                && value >= 0.0
+                && value <= f64::from(u32::MAX)
+            {
+                Ok(value as u32)
+            } else {
+                Err(E::custom("criteria_count must be an integral u32"))
+            }
+        }
+    }
+
+    deserializer.deserialize_any(CriteriaCountVisitor)
+}
+
 fn valid_record(input: &ReceiptInput) -> bool {
     let admission = &input.admission_record;
     let summary = &input.request_summary;
@@ -410,6 +460,19 @@ mod tests {
         let first = serde_json::to_vec(&create_materialization_receipt(&input)).unwrap();
         let second = serde_json::to_vec(&create_materialization_receipt(&input)).unwrap();
         assert_eq!(first, second);
+    }
+
+    #[test]
+    fn integral_decimal_criteria_counts_match_integer_inputs() {
+        let integer_input = fixture("request_materialization_receipt_success_input.json");
+        let mut decimal_input = integer_input.clone();
+        decimal_input["admission_record"]["criteria_count"] = json!(3.0);
+        decimal_input["request_summary"]["criteria_count"] = json!(3.0);
+
+        assert_eq!(
+            create_materialization_receipt(&decimal_input),
+            create_materialization_receipt(&integer_input)
+        );
     }
 
     #[test]

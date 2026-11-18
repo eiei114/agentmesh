@@ -6,6 +6,7 @@ protocol_version = "2026-07-15"
 logical_name = "agentmesh-request-materialization-receipt"
 
 [limits]
+# Host raw UTF-8 JSON limit; the receipt plugin separately caps compact JSON at 65,536 bytes.
 input_max_bytes = 131072
 
 [schemas]
