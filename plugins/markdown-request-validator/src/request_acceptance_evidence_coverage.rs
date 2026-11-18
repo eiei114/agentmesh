@@ -407,6 +407,10 @@ fn valid_scope(value: &str) -> bool {
     value.len() > 10
         && value.len() <= MAX_SCOPE_BYTES
         && value.starts_with("agentmesh:")
+        && value[10..]
+            .bytes()
+            .next()
+            .is_some_and(|byte| byte.is_ascii_lowercase() || byte.is_ascii_digit())
         && value[10..].bytes().all(|byte| {
             byte.is_ascii_lowercase()
                 || byte.is_ascii_digit()
@@ -458,6 +462,10 @@ mod tests {
             "request_acceptance_evidence_coverage_malformed_expected.json",
         ),
         (
+            "request_acceptance_evidence_coverage_invalid_scope_input.json",
+            "request_acceptance_evidence_coverage_invalid_scope_expected.json",
+        ),
+        (
             "request_acceptance_evidence_coverage_unsupported_evidence_input.json",
             "request_acceptance_evidence_coverage_unsupported_evidence_expected.json",
         ),
@@ -488,6 +496,15 @@ mod tests {
                 "fixture {input_name} changed across repeated runs"
             );
         }
+    }
+
+    #[test]
+    fn schema_invalid_scope_fails_without_partial_coverage() {
+        let input = fixture("request_acceptance_evidence_coverage_invalid_scope_input.json");
+        let output = coverage_report(&input);
+
+        assert_failure(&output, REQUEST_SUMMARY_INVALID);
+        assert_eq!(output["errors"][0]["path"], "$.request_summary.scope");
     }
 
     #[test]

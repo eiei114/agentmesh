@@ -71,7 +71,10 @@ summary verdict never overrides an uncovered criterion.
 
 The fixture pairs in `plugins/markdown-request-validator/testdata/` cover full
 and partial coverage, duplicate and out-of-range references, malformed input,
-an unsupported evidence schema version, and an unsupported App schema version.
+an invalid scope (including `agentmesh::scope`), an unsupported evidence schema
+version, and an unsupported App schema version. The invalid-scope fixture records
+the deterministic request-summary error and confirms that no partial coverage
+is returned.
 
 ```bash
 cargo build -p agentmesh-cli -p agentmesh-markdown-request-validator --bins
