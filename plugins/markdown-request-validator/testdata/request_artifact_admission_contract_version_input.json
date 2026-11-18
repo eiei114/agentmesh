@@ -1,0 +1,13 @@
+{
+  "schema_version": "request-artifact-admission-input.v0",
+  "contract_version": "request-artifact-admission.v9",
+  "request_summary": {
+    "schema_version": "request-artifact-admission-summary.v0",
+    "scope": "agentmesh:app:request-artifact-admission-gate",
+    "request_digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "revision_identity": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "source_neutrality": {},
+  "acceptance_evidence": {},
+  "revision_lineage": {}
+}

@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentmesh.local/schemas/request-artifact-admission-gate-input-v0.schema.json",
+  "title": "Request Artifact Admission Gate Input v0",
+  "description": "Bounded, tool-neutral request summary and existing sub-gate results. No source text, tracker identifiers, command strings, or credentials are accepted.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "contract_version", "request_summary", "source_neutrality", "acceptance_evidence", "revision_lineage"],
+  "properties": {
+    "schema_version": { "const": "request-artifact-admission-input.v0" },
+    "contract_version": { "const": "request-artifact-admission.v0" },
+    "request_summary": { "$ref": "#/$defs/request_summary" },
+    "source_neutrality": { "$ref": "#/$defs/source_neutrality" },
+    "acceptance_evidence": { "$ref": "#/$defs/acceptance_evidence" },
+    "revision_lineage": { "$ref": "#/$defs/revision_lineage" }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "maxLength": 71
+    },
+    "scope": {
+      "type": "string",
+      "pattern": "^agentmesh:[a-z0-9][a-z0-9:._-]{0,117}$",
+      "maxLength": 128
+    },
+    "request_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "scope", "request_digest", "revision_identity"],
+      "properties": {
+        "schema_version": { "const": "request-artifact-admission-summary.v0" },
+        "scope": { "$ref": "#/$defs/scope" },
+        "request_digest": { "$ref": "#/$defs/sha256" },
+        "revision_identity": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "source_neutrality": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "contract_version", "scope", "request_digest", "verdict", "reason_code"],
+      "properties": {
+        "schema_version": { "const": "source-neutrality-result.v0" },
+        "contract_version": { "const": "source-neutrality.v0" },
+        "scope": { "$ref": "#/$defs/scope" },
+        "request_digest": { "$ref": "#/$defs/sha256" },
+        "verdict": { "enum": ["neutral", "non_neutral"] },
+        "reason_code": { "enum": ["none", "source_not_neutral"] }
+      },
+      "allOf": [
+        { "if": { "properties": { "verdict": { "const": "neutral" } } }, "then": { "properties": { "reason_code": { "const": "none" } } } },
+        { "if": { "properties": { "verdict": { "const": "non_neutral" } } }, "then": { "properties": { "reason_code": { "const": "source_not_neutral" } } } }
+      ]
+    },
+    "acceptance_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "contract_version", "scope", "request_digest", "verdict", "uncovered_criterion_ordinals", "reason_code"],
+      "properties": {
+        "schema_version": { "const": "acceptance-evidence-coverage.v0" },
+        "contract_version": { "const": "acceptance-evidence-coverage.v0" },
+        "scope": { "$ref": "#/$defs/scope" },
+        "request_digest": { "$ref": "#/$defs/sha256" },
+        "verdict": { "enum": ["covered", "uncovered"] },
+        "uncovered_criterion_ordinals": {
+          "type": "array",
+          "maxItems": 128,
+          "uniqueItems": true,
+          "items": { "type": "integer", "minimum": 1, "maximum": 128 }
+        },
+        "reason_code": { "enum": ["none", "acceptance_criteria_uncovered"] }
+      },
+      "allOf": [
+        { "if": { "properties": { "verdict": { "const": "covered" } } }, "then": { "properties": { "uncovered_criterion_ordinals": { "maxItems": 0 }, "reason_code": { "const": "none" } } } },
+        { "if": { "properties": { "verdict": { "const": "uncovered" } } }, "then": { "properties": { "uncovered_criterion_ordinals": { "minItems": 1 }, "reason_code": { "const": "acceptance_criteria_uncovered" } } } }
+      ]
+    },
+    "revision_lineage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "contract_version", "scope", "request_digest", "current_revision_identity"],
+      "properties": {
+        "schema_version": { "const": "revision-lineage-resolution.v0" },
+        "contract_version": { "const": "revision-lineage.v0" },
+        "scope": { "$ref": "#/$defs/scope" },
+        "request_digest": { "$ref": "#/$defs/sha256" },
+        "current_revision_identity": { "$ref": "#/$defs/sha256" }
+      }
+    }
+  }
+}
