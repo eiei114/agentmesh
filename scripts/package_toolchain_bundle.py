@@ -10,6 +10,7 @@ Produces the layout consumed by `agentmesh toolchain install`:
     bin/agentmesh-markdown-request-validator[.exe]
     bin/agentmesh-request-markdown-normalizer[.exe]
     bin/agentmesh-request-markdown-renderer[.exe]
+    bin/agentmesh-request-acceptance-evidence-coverage[.exe]
     bin/agentmesh-public-0x-readiness-report[.exe]
     bin/agentmesh-public-0x-rollback-replay[.exe]
     bin/agentmesh-multica-cli-adapter[.exe]
@@ -52,6 +53,7 @@ PLUGIN_STEMS = (
     "agentmesh-markdown-request-validator",
     "agentmesh-request-markdown-normalizer",
     "agentmesh-request-markdown-renderer",
+    "agentmesh-request-acceptance-evidence-coverage",
     "agentmesh-markdown-adapter-replay-fixture",
     "agentmesh-public-0x-readiness-report",
     "agentmesh-public-0x-rollback-replay",
@@ -166,6 +168,7 @@ def main() -> int:
         "markdown-adapter-replay-fixture-v0.md",
         "request-markdown-normalizer-v0.md",
         "request-markdown-renderer-v0.md",
+        "request-acceptance-evidence-coverage-v0.md",
         "local-production-control-v0.md",
     ]:
         docs_src = repo / "docs" / doc_name

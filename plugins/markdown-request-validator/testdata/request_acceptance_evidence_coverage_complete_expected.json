@@ -1,0 +1,26 @@
+{
+  "schema_version": "request-acceptance-evidence-coverage-compact.v0",
+  "app_version": "request-acceptance-evidence-coverage.v0",
+  "valid": true,
+  "coverage": {
+    "schema_version": "acceptance-evidence-coverage.v0",
+    "contract_version": "acceptance-evidence-coverage.v0",
+    "scope": "agentmesh:app:request-acceptance-evidence-coverage",
+    "request_digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+    "verdict": "covered",
+    "uncovered_criterion_ordinals": [],
+    "reason_code": "none",
+    "evidence_inventory_sha256": "sha256:776fc234e514f8667e4cb936f7aed915761b9281d8eb91c374acc738fc847675",
+    "criteria": [
+      {"ordinal": 1, "verdict": "covered", "evidence_ids": ["ev_test-run-1"]},
+      {"ordinal": 2, "verdict": "covered", "evidence_ids": ["ev_test-run-1"]},
+      {"ordinal": 3, "verdict": "covered", "evidence_ids": ["ev_review-1"]}
+    ],
+    "finding_count": 0,
+    "findings": [],
+    "findings_truncated": false,
+    "omitted_finding_count": 0
+  },
+  "error_count": 0,
+  "errors": []
+}
