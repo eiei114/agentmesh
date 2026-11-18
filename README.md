@@ -22,6 +22,8 @@ The request Markdown normalizer App (`agentmesh-request-markdown-normalizer`) em
 
 The request Markdown renderer App (`agentmesh-request-markdown-renderer`) renders one validated canonical request summary back into canonical `agentmesh-request.v0` Markdown, reports normalized adapter-owned diagnostics instead of embedding them, and proves round-trip fidelity with an explicit canonical digest comparison.
 
+The request materialization receipt App (`agentmesh-request-materialization-receipt`) emits a bounded deterministic post-write receipt comparing admission, canonical request, and adapter-recorded artifact digests without exposing request text or tracker metadata.
+
 The Markdown adapter replay fixture App (`agentmesh-markdown-adapter-replay-fixture`) replays one validated request Markdown document against a declared adapter fixture and expected canonical result, emitting deterministic pass or mismatch diagnostics for local adapter regression replay.
 
 The adapter metadata canonicalizer App (`agentmesh-adapter-metadata-canonicalizer`) compares two adapter request metadata payloads, promotes only equal stable fields into a deterministic canonical subset, and preserves adapter-specific extensions separately.
@@ -180,6 +182,7 @@ Apps / packaging (version-controlled, not `default-members`):
 - `apps/request-dry-run-summary/` — deterministic request dry-run Markdown preview + evidence schemas
 - `apps/request-fingerprint-manifest/` — deterministic request fingerprint JSON/Markdown manifest + hash schemas
 - `apps/request-materialization-audit/` — deterministic request materialization + same-scope dedupe audit manifest + IO schemas
+- `apps/request-materialization-receipt/` — deterministic post-write request correspondence receipt manifest + IO schemas
 - `apps/request-markdown-normalizer/` — deterministic request Markdown projection normalizer manifest + IO schemas
 - `apps/request-markdown-renderer/` — deterministic canonical request Markdown renderer + round-trip digest manifest + IO schemas
 - `apps/markdown-adapter-replay-fixture/` — deterministic Markdown adapter replay fixture manifest + IO schemas
@@ -224,6 +227,7 @@ Internal / test-only:
 - `agentmesh-adapter-error-contract` — shared adapter error boundary contract binary (`markdown-request-validator` package)
 - `agentmesh-request-fingerprint-manifest` — deterministic request fingerprint manifest binary (`markdown-request-validator` package)
 - `agentmesh-request-materialization-audit` — deterministic request materialization + same-scope dedupe audit binary (`markdown-request-validator` package)
+- `agentmesh-request-materialization-receipt` — deterministic post-write request correspondence receipt binary (`markdown-request-validator` package)
 - `agentmesh-request-markdown-normalizer` — deterministic request Markdown projection normalizer binary (`markdown-request-validator` package)
 - `agentmesh-request-markdown-renderer` — deterministic canonical request Markdown renderer binary (`markdown-request-validator` package)
 - `agentmesh-markdown-adapter-replay-fixture` — deterministic Markdown adapter replay fixture binary (`markdown-request-validator` package)

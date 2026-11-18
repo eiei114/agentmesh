@@ -12,6 +12,7 @@ pub mod request_fingerprint_manifest;
 pub mod request_markdown_normalizer;
 pub mod request_markdown_renderer;
 pub mod request_materialization_audit;
+pub mod request_materialization_receipt;
 
 use agentmesh_request_evidence::{adapter_evidence_digest, RequestEvidenceFields};
 use serde::Deserialize;
