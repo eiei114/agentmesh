@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentmesh.local/schemas/request-canonical-summary-manifest-compact-v0.schema.json",
+  "title": "Request Canonical Summary Manifest Compact Output v0",
+  "description": "Deterministic canonical summary digests partitioned into common and adapter-owned fields. Invalid input has no partial manifest.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "contract_version", "valid", "manifest", "error_count", "errors"],
+  "properties": {
+    "schema_version": { "const": "request-canonical-summary-manifest-compact.v0" },
+    "contract_version": { "const": "agentmesh-request-canonical-summary.v0" },
+    "valid": { "type": "boolean" },
+    "manifest": {
+      "anyOf": [
+        { "$ref": "#/$defs/manifest" },
+        { "type": "null" }
+      ]
+    },
+    "error_count": { "type": "integer", "minimum": 0 },
+    "errors": { "type": "array", "items": { "$ref": "#/$defs/error" } }
+  },
+  "$defs": {
+    "manifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["common_fields", "adapter_owned_fields"],
+      "properties": {
+        "common_fields": { "$ref": "#/$defs/common_fields" },
+        "adapter_owned_fields": { "type": "object", "maxProperties": 0 }
+      }
+    },
+    "common_fields": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request_identity_sha256",
+        "request_kind",
+        "same_scope_key",
+        "normalized_title_sha256",
+        "normalized_summary_sha256",
+        "acceptance_criteria_digests",
+        "acceptance_criteria_count",
+        "source_sha256"
+      ],
+      "properties": {
+        "request_identity_sha256": { "$ref": "#/$defs/sha256" },
+        "request_kind": { "enum": ["app", "repair"] },
+        "same_scope_key": { "type": "string", "minLength": 1, "maxLength": 200, "pattern": "^agentmesh:(app|repair):[a-z0-9][a-z0-9._:-]*$" },
+        "normalized_title_sha256": { "$ref": "#/$defs/sha256" },
+        "normalized_summary_sha256": { "$ref": "#/$defs/sha256" },
+        "acceptance_criteria_digests": { "type": "array", "items": { "$ref": "#/$defs/sha256" } },
+        "acceptance_criteria_count": { "type": "integer", "minimum": 0 },
+        "source_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "error": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "severity"],
+      "properties": {
+        "code": {
+          "enum": [
+            "AGENTMESH_REQUEST_CANONICAL_SUMMARY_INPUT_INVALID",
+            "AGENTMESH_REQUEST_CANONICAL_SUMMARY_SCHEMA_UNSUPPORTED",
+            "AGENTMESH_REQUEST_CANONICAL_SUMMARY_SOURCE_TOO_LARGE",
+            "AGENTMESH_REQUEST_CANONICAL_SUMMARY_MARKDOWN_MALFORMED",
+            "AGENTMESH_REQUEST_CANONICAL_SUMMARY_REQUEST_UNSUPPORTED",
+            "AGENTMESH_REQUEST_CANONICAL_SUMMARY_REQUEST_INVALID",
+            "AGENTMESH_REQUEST_CANONICAL_SUMMARY_SCOPE_MISSING",
+            "AGENTMESH_REQUEST_CANONICAL_SUMMARY_SCOPE_AMBIGUOUS",
+            "AGENTMESH_REQUEST_CANONICAL_SUMMARY_SCOPE_INVALID"
+          ]
+        },
+        "severity": { "const": "error" }
+      }
+    }
+  }
+}
