@@ -130,10 +130,13 @@ def synthetic_requests() -> dict[str, dict]:
                 **deepcopy(values["policy"]),
             }
             if "labels" in values["policy"]:
-                request["policy"]["labels"] = {
-                    **deepcopy(BASE_POLICY["labels"]),
-                    **deepcopy(values["policy"]["labels"]),
-                }
+                labels = deepcopy(BASE_POLICY["labels"])
+                for label_name, overrides in values["policy"]["labels"].items():
+                    labels[label_name] = {
+                        **labels.get(label_name, {}),
+                        **deepcopy(overrides),
+                    }
+                request["policy"]["labels"] = labels
         requests[name] = request
     return requests
 

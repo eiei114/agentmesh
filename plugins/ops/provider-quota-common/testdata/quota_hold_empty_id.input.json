@@ -8,6 +8,7 @@
         "id": "fallback-free"
       },
       "quota_hold": {
+        "name": "provider/quota-hold",
         "id": ""
       }
     }

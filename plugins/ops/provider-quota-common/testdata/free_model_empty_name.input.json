@@ -4,7 +4,8 @@
     "max_requeues_per_tick": 5,
     "labels": {
       "free_model": {
-        "name": ""
+        "name": "",
+        "id": "fallback-free"
       },
       "quota_hold": {
         "name": "provider/quota-hold",
