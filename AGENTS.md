@@ -11,6 +11,10 @@ Phase 1.0+ **local production control foundation** (ADR 0003) adds bounded plugi
 ## Workspace rules
 
 - Only the coordinator lane edits root `Cargo.toml` / `Cargo.lock`.
+- Python port crates (`docs/python-migration-v0.md`) are the one exception: a crate under `plugins/ops/<name>/` joins the workspace through the `plugins/ops/*` member glob, so adding it needs no root `Cargo.toml` edit. Such a PR may change `Cargo.lock` only by its own package entries. Resolve a `Cargo.lock` conflict by rebasing on `main` and regenerating with `cargo check --workspace`, never by hand. Everything outside `plugins/ops/*` stays coordinator-only.
+- `plugins/ops/` holds crate directories only (a non-crate entry breaks the glob). `plugins/ops/kit` (`agentmesh-ops-kit`) is coordinator-owned; port PRs depend on it by path and do not change it.
+- Ops crates must not depend on `agentmesh-host` / `agentmesh-conformance`, and do not call Multica, git or the network themselves; side effects stay behind a trait or in the vault wrapper.
+- Python stays the authority for every ported controller until the owner switches it. A port PR never changes which implementation the vault runs.
 - Every crate is `publish = false`.
 - Fixture plugins depend on `agentmesh-fixture-support` + `agentmesh-proto` only — never `agentmesh-host` or `agentmesh-conformance`.
 - Phase 1 adapter plugins (`agentmesh-multica-*`, `agentmesh-markdown-*`) must not depend on `agentmesh-host` / `agentmesh-conformance`; adapter-shaped types stay inside the plugin crate.
