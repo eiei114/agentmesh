@@ -27,6 +27,9 @@ members = [
     "plugins/production-controller-observer",
     "plugins/production-authority",
     "plugins/production-evaluation-report",
+    # Python port crates (docs/python-migration-v0.md). New crates under
+    # plugins/ops/ join the workspace without editing this file.
+    "plugins/ops/*",
 ]
 default-members = [
     "crates/agentmesh-proto",
