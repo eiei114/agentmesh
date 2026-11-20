@@ -230,7 +230,7 @@ fn valid_scope_slug(slug: &str) -> bool {
         && slug.split(['-', '_', '.']).all(|segment| {
             let mut bytes = segment.bytes();
             bytes.next().is_some_and(|byte| byte.is_ascii_lowercase())
-                && bytes.all(|byte| byte.is_ascii_lowercase() || byte.is_ascii_digit())
+                && bytes.all(|byte| byte.is_ascii_lowercase())
         })
 }
 
@@ -320,17 +320,21 @@ mod tests {
             "agentmesh:repair:repo_main_behind:v10",
             "repair"
         ));
+        assert!(!valid_scope_key("agentmesh:app:dot3925", "app"));
+        assert!(!valid_scope_key("agentmesh:app:dot-3925", "app"));
         assert!(!valid_scope_key("agentmesh:app:jira-123", "app"));
         assert!(!valid_scope_key("agentmesh:app:scope-123", "app"));
         let tracker_scope = canonical_summary_manifest(&input(&markdown().replace(
             "agentmesh:app:request-canonical-summary-manifest",
-            "agentmesh:app:jira-123",
+            "agentmesh:app:dot3925",
         )));
         let expected: Value = serde_json::from_str(include_str!(
             "../testdata/expected_request_canonical_summary_manifest_tracker_scope_payload.json"
         ))
         .unwrap();
         assert_eq!(tracker_scope, expected);
+        assert_eq!(tracker_scope["manifest"], Value::Null);
+        assert_eq!(tracker_scope["errors"][0]["code"], ERROR_SCOPE_INVALID);
     }
 
     #[test]

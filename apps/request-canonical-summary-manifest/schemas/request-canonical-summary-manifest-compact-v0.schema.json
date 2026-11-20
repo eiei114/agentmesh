@@ -45,7 +45,7 @@
       "properties": {
         "request_identity_sha256": { "$ref": "#/$defs/sha256" },
         "request_kind": { "enum": ["app", "repair"] },
-        "same_scope_key": { "type": "string", "minLength": 1, "maxLength": 200, "pattern": "^agentmesh:(app|repair):[a-z][a-z0-9]*(?:[-_.][a-z][a-z0-9]*)*(?::v[0-9]+)?$" },
+        "same_scope_key": { "type": "string", "minLength": 1, "maxLength": 200, "pattern": "^agentmesh:(app|repair):[a-z]+(?:[-_.][a-z]+)*(?::v[0-9]+)?$" },
         "normalized_title_sha256": { "$ref": "#/$defs/sha256" },
         "normalized_summary_sha256": { "$ref": "#/$defs/sha256" },
         "acceptance_criteria_digests": { "type": "array", "items": { "$ref": "#/$defs/sha256" } },
