@@ -9,8 +9,9 @@ python .\testdata\generate_expected.py --python-source "C:\Users\Keisu\Projects\
 
 The corpus reuses the Python tests' resolved-to-new, acknowledgement,
 volatile-evidence fingerprint, and multi-month history-window cases. Additional
-cases cover malformed timestamps and JSONL, unrelated controllers, and
-duplicate fingerprints where the last matching event wins. The generator loads
+cases cover malformed timestamps and JSONL, Python's short timezone offset and
+basic date/time spelling, unrelated controllers, and duplicate fingerprints
+where the last matching event wins. The generator loads
 the target Python module with its event-directory dependency stubbed to a
 synthetic relative path; event lines are written only to a temporary directory
 by the Python oracle. The history fold receives caller-ordered lines

@@ -15,7 +15,9 @@ use agentmesh_ops_kit::OpsError;
 /// helper's `datetime.fromisoformat(...).astimezone(timezone.utc)` behavior.
 pub fn parse_event_dt(value: Option<&str>) -> Option<DateTime<Utc>> {
     let value = value.filter(|value| !value.is_empty())?;
-    let normalized = normalize_python_fraction(&normalize_separator(&value.replace('Z', "+00:00")));
+    let normalized = normalize_python_fraction(&normalize_python_offset(&normalize_separator(
+        &value.replace('Z', "+00:00"),
+    )));
 
     let parsed = parse_aware_datetime(&normalized)
         .or_else(|| parse_naive_datetime(&normalized).and_then(local_to_utc))?;
@@ -36,6 +38,18 @@ fn parse_aware_datetime(value: &str) -> Option<DateTime<Utc>> {
         "%Y-%m-%dT%H:%M:%S%.f%z",
         "%Y-%m-%dT%H:%M:%S%z",
         "%Y-%m-%dT%H:%M%z",
+        "%Y%m%dT%H:%M:%S%.f%:z",
+        "%Y%m%dT%H:%M:%S%:z",
+        "%Y%m%dT%H:%M%:z",
+        "%Y%m%dT%H%M%S%.f%:z",
+        "%Y%m%dT%H%M%S%:z",
+        "%Y%m%dT%H%M%:z",
+        "%Y%m%dT%H:%M:%S%.f%z",
+        "%Y%m%dT%H:%M:%S%z",
+        "%Y%m%dT%H:%M%z",
+        "%Y%m%dT%H%M%S%.f%z",
+        "%Y%m%dT%H%M%S%z",
+        "%Y%m%dT%H%M%z",
     ]
     .iter()
     .find_map(|format| {
@@ -51,11 +65,22 @@ fn parse_naive_datetime(value: &str) -> Option<NaiveDateTime> {
         "%Y-%m-%dT%H:%M:%S%.f",
         "%Y-%m-%dT%H:%M:%S",
         "%Y-%m-%dT%H:%M",
+        "%Y%m%dT%H:%M:%S%.f",
+        "%Y%m%dT%H:%M:%S",
+        "%Y%m%dT%H:%M",
+        "%Y%m%dT%H%M%S%.f",
+        "%Y%m%dT%H%M%S",
+        "%Y%m%dT%H%M",
     ]
     .iter()
     .find_map(|format| NaiveDateTime::parse_from_str(&normalized, format).ok())
     .or_else(|| {
         NaiveDate::parse_from_str(&normalized, "%Y-%m-%d")
+            .ok()
+            .and_then(|date| date.and_hms_opt(0, 0, 0))
+    })
+    .or_else(|| {
+        NaiveDate::parse_from_str(&normalized, "%Y%m%d")
             .ok()
             .and_then(|date| date.and_hms_opt(0, 0, 0))
     })
@@ -68,15 +93,25 @@ fn normalize_separator(value: &str) -> String {
             return format!("{date}T{}", rest.chars().skip(1).collect::<String>());
         }
     }
+    if value.len() > 8 && value.is_char_boundary(8) {
+        let (date, rest) = value.split_at(8);
+        if date.bytes().all(|byte| byte.is_ascii_digit()) {
+            return format!("{date}T{}", rest.chars().skip(1).collect::<String>());
+        }
+    }
     value.to_owned()
 }
 
 fn normalize_python_fraction(value: &str) -> String {
     let bytes = value.as_bytes();
-    if bytes.len() <= 19 || !matches!(bytes.get(19), Some(b'.' | b',')) {
-        return value.to_owned();
-    }
-    let fraction_start = 20;
+    let (prefix_end, fraction_start) =
+        if bytes.len() > 20 && matches!(bytes.get(19), Some(b'.' | b',')) {
+            (19, 20)
+        } else if bytes.len() > 16 && matches!(bytes.get(15), Some(b'.' | b',')) {
+            (15, 16)
+        } else {
+            return value.to_owned();
+        };
     let fraction_end = bytes[fraction_start..]
         .iter()
         .position(|byte| !byte.is_ascii_digit())
@@ -87,10 +122,32 @@ fn normalize_python_fraction(value: &str) -> String {
     let retained_end = fraction_start + (fraction_end - fraction_start).min(6);
     format!(
         "{}.{}{}",
-        &value[..19],
+        &value[..prefix_end],
         &value[fraction_start..retained_end],
         &value[fraction_end..]
     )
+}
+
+fn normalize_python_offset(value: &str) -> String {
+    let Some(separator) = value.find('T') else {
+        return value.to_owned();
+    };
+    let Some(offset_start) = value[separator..]
+        .rfind(['+', '-'])
+        .map(|offset| separator + offset)
+    else {
+        return value.to_owned();
+    };
+    let offset = &value[offset_start..];
+    if offset.len() == 3
+        && offset.as_bytes()[1..]
+            .iter()
+            .all(|byte| byte.is_ascii_digit())
+    {
+        format!("{}{}:00", &value[..offset_start], offset)
+    } else {
+        value.to_owned()
+    }
 }
 
 fn local_to_utc(value: NaiveDateTime) -> Option<DateTime<Utc>> {
