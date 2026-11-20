@@ -283,6 +283,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "agentmesh-ops-lane-health"
+version = "0.1.0"
+dependencies = [
+ "agentmesh-ops-kit",
+ "chrono",
+ "serde_json",
+]
+
+[[package]]
 name = "agentmesh-ops-managed-projects-registry"
 version = "0.1.0"
 dependencies = [
