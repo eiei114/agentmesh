@@ -1,0 +1,15 @@
+{
+  "issue": {
+    "id": "fixture-issue-12",
+    "identifier": "DOT-3433",
+    "metadata": { "pr_url": "https://github.com/fixture/repo/pull/139" }
+  },
+  "now": "2026-11-12T18:00:00+09:00",
+  "pr_search_results": [],
+  "pr_view": {
+    "state": "OPEN",
+    "title": " [DOT-3433] already has its issue key",
+    "headRefOid": "head",
+    "url": "https://github.com/fixture/repo/pull/139"
+  }
+}
