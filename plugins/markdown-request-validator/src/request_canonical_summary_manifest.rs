@@ -210,14 +210,28 @@ fn valid_scope_key(scope: &str, request_kind: &str) -> bool {
     let Some(suffix) = scope.strip_prefix(&expected_prefix) else {
         return false;
     };
-    !suffix.is_empty()
-        && suffix.bytes().all(|byte| {
-            byte.is_ascii_lowercase() || byte.is_ascii_digit() || b"-_.:".contains(&byte)
+    let mut parts = suffix.split(':');
+    let Some(slug) = parts.next() else {
+        return false;
+    };
+    let version = parts.next();
+    if parts.next().is_some() || !valid_scope_slug(slug) {
+        return false;
+    }
+    version.is_none_or(|version| {
+        version.strip_prefix('v').is_some_and(|digits| {
+            !digits.is_empty() && digits.bytes().all(|byte| byte.is_ascii_digit())
         })
-        && suffix
-            .bytes()
-            .next()
-            .is_some_and(|byte| byte.is_ascii_lowercase() || byte.is_ascii_digit())
+    })
+}
+
+fn valid_scope_slug(slug: &str) -> bool {
+    !slug.is_empty()
+        && slug.split(['-', '_', '.']).all(|segment| {
+            let mut bytes = segment.bytes();
+            bytes.next().is_some_and(|byte| byte.is_ascii_lowercase())
+                && bytes.all(|byte| byte.is_ascii_lowercase() || byte.is_ascii_digit())
+        })
 }
 
 #[cfg(test)]
@@ -302,6 +316,21 @@ mod tests {
 
         assert!(!valid_scope_key("agentmesh:app:C:\\private", "app"));
         assert!(!valid_scope_key("agentmesh:repair:app:one", "app"));
+        assert!(valid_scope_key(
+            "agentmesh:repair:repo_main_behind:v10",
+            "repair"
+        ));
+        assert!(!valid_scope_key("agentmesh:app:jira-123", "app"));
+        assert!(!valid_scope_key("agentmesh:app:scope-123", "app"));
+        let tracker_scope = canonical_summary_manifest(&input(&markdown().replace(
+            "agentmesh:app:request-canonical-summary-manifest",
+            "agentmesh:app:jira-123",
+        )));
+        let expected: Value = serde_json::from_str(include_str!(
+            "../testdata/expected_request_canonical_summary_manifest_tracker_scope_payload.json"
+        ))
+        .unwrap();
+        assert_eq!(tracker_scope, expected);
     }
 
     #[test]
@@ -319,6 +348,10 @@ mod tests {
             (
                 "request_canonical_summary_manifest_malformed_input.json",
                 "expected_request_canonical_summary_manifest_malformed_payload.json",
+            ),
+            (
+                "request_canonical_summary_manifest_tracker_scope_input.json",
+                "expected_request_canonical_summary_manifest_tracker_scope_payload.json",
             ),
         ] {
             let input: Value =

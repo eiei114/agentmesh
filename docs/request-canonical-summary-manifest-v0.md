@@ -7,7 +7,7 @@
 The only input fields are `schema_version` and one complete request `markdown` string. Inputs are capped at 64 KiB UTF-8. The common output fields are:
 
 - `request_identity_sha256`: SHA-256 of canonical JSON containing the project key, request kind, same-scope key, sequence values, and source request reference. Raw source references are never returned.
-- `request_kind` and `same_scope_key`: the validated request kind and the `Same scope:` key from its Notes section.
+- `request_kind` and `same_scope_key`: the validated request kind and the `Same scope:` key from its Notes section. The key must use the AgentMesh namespace and a lowercase slug; optional numeric versions use the `:vN` suffix. Numeric ticket-like segments (for example, `jira-123`) are rejected so tracker identifiers cannot be echoed as scope keys.
 - `normalized_title_sha256` and `normalized_summary_sha256`: SHA-256 of the normalized title and normalized `What to build` section body.
 - `acceptance_criteria_digests` and `acceptance_criteria_count`: criterion-text digests in the shared normalizer's deterministic canonical order.
 - `source_sha256`: SHA-256 of the shared normalizer's canonical Markdown output, not the raw bytes. This makes harmless Markdown formatting variants produce the same bounded source digest while preserving a stable fingerprint of the validated request projection.
@@ -20,7 +20,7 @@ Markdown and non-Multica adapters can run this App once, retain the resulting ca
 
 ## Fixtures
 
-The fixture inputs and expected outputs are documented in `plugins/markdown-request-validator/testdata/request_canonical_summary_manifest_fixtures.md`. The successful Markdown input and a CRLF/reordered/whitespace variant have identical compact JSON output; malformed input returns a stable error code and no manifest.
+The fixture inputs and expected outputs are documented in `plugins/markdown-request-validator/testdata/request_canonical_summary_manifest_fixtures.md`. The successful Markdown input and a CRLF/reordered/whitespace variant have identical compact JSON output; malformed Markdown and tracker-style scope identifiers return stable error codes and no manifest.
 
 Development validation:
 
