@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentmesh.local/schemas/request-rematerialization-decision-compact-v0.schema.json",
+  "title": "Request Re-materialization Decision Compact Output v0",
+  "description": "Deterministic regenerate, skip, or hold decision with ordered redacted input digests; failed inputs have no partial decision.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "valid", "contract_version", "decision", "input_results", "reason_codes", "error_count", "errors"],
+  "properties": {
+    "schema_version": { "const": "request-rematerialization-decision-compact.v0" },
+    "valid": { "type": "boolean" },
+    "contract_version": { "type": ["string", "null"], "maxLength": 128 },
+    "decision": { "enum": ["regenerate", "skip", "hold", null] },
+    "input_results": { "type": "array", "maxItems": 18, "items": { "$ref": "#/$defs/input_result" } },
+    "reason_codes": { "type": "array", "maxItems": 18, "items": { "$ref": "#/$defs/reason_code" } },
+    "error_count": { "type": "integer", "enum": [0, 1] },
+    "errors": { "type": "array", "maxItems": 1, "items": { "$ref": "#/$defs/error_record" } }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "valid": { "const": true } }, "required": ["valid"] },
+      "then": {
+        "properties": {
+          "decision": { "enum": ["regenerate", "skip", "hold"] },
+          "input_results": { "minItems": 3 },
+          "error_count": { "const": 0 },
+          "errors": { "maxItems": 0 }
+        }
+      },
+      "else": {
+        "properties": {
+          "decision": { "type": "null" },
+          "input_results": { "maxItems": 0 },
+          "reason_codes": { "maxItems": 0 },
+          "error_count": { "const": 1 },
+          "errors": { "minItems": 1, "maxItems": 1 }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$", "maxLength": 71 },
+    "reason_code": { "enum": ["admission_deferred", "receipt_source_digest_mismatch", "receipt_canonical_drift", "receipt_adapter_owned_drift", "receipt_staleness_unknown", "revision_superseded", "revision_staleness_unknown"] },
+    "input_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role", "ordinal", "verdict", "input_digest", "applies_to_supplied_revision", "reason_codes"],
+      "properties": {
+        "role": { "enum": ["admission_record", "receipt", "revision_lineage"] },
+        "ordinal": { "type": "integer", "minimum": 1, "maximum": 16 },
+        "verdict": { "type": "string", "enum": ["admit", "defer", "corresponded", "drifted", "unknown", "current", "superseded"] },
+        "input_digest": { "$ref": "#/$defs/sha256" },
+        "applies_to_supplied_revision": { "type": "boolean" },
+        "reason_codes": { "type": "array", "maxItems": 1, "items": { "$ref": "#/$defs/reason_code" } }
+      }
+    },
+    "error_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code"],
+      "properties": {
+        "code": { "enum": ["INPUT_TOO_LARGE", "MALFORMED_INPUT", "UNSUPPORTED_SCHEMA_VERSION", "UNSUPPORTED_CONTRACT_VERSION", "REQUIRED_FIELD_MISSING", "INVALID_FIELD", "CROSS_SCOPE_INPUT", "EMPTY_RECEIPT_LIST", "RECEIPT_LIST_TOO_LARGE", "DUPLICATE_RECEIPT_ORDINAL", "RECEIPT_ORDER_INVALID", "DUPLICATE_TARGET_RECEIPT", "TARGET_RECEIPT_MISSING", "REVISION_BINDING_MISMATCH"] }
+      }
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentmesh.local/schemas/request-rematerialization-decision-input-v0.schema.json",
+  "title": "Request Re-materialization Decision Input v0",
+  "description": "Bounded, same-scope projections of upstream admission, materialization receipt, and revision-lineage results. No request body, evidence, credentials, paths, logs, commands, or tracker identifiers.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "contract_version", "admission_record", "receipts", "revision_lineage"],
+  "properties": {
+    "schema_version": { "const": "request-rematerialization-decision-input.v0" },
+    "contract_version": { "const": "agentmesh-request-rematerialization-decision.v0" },
+    "admission_record": { "$ref": "#/$defs/admission_record" },
+    "receipts": { "type": "array", "minItems": 1, "maxItems": 16, "items": { "$ref": "#/$defs/receipt_record" } },
+    "revision_lineage": { "$ref": "#/$defs/revision_lineage" }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$", "maxLength": 71 },
+    "scope_key": { "type": "string", "pattern": "^agentmesh:[a-z0-9][a-z0-9:._-]{0,117}$", "maxLength": 128 },
+    "admission_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "contract_version", "scope_key", "source_digest", "revision_identity", "verdict"],
+      "properties": {
+        "schema_version": { "const": "request-artifact-admission-record.v0" },
+        "contract_version": { "const": "request-artifact-admission.v0" },
+        "scope_key": { "$ref": "#/$defs/scope_key" },
+        "source_digest": { "$ref": "#/$defs/sha256" },
+        "revision_identity": { "$ref": "#/$defs/sha256" },
+        "verdict": { "enum": ["admit", "defer"] }
+      }
+    },
+    "receipt_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "contract_version", "ordinal", "scope_key", "revision_identity", "source_digest", "verdict", "drift_class"],
+      "properties": {
+        "schema_version": { "const": "request-materialization-receipt-record.v0" },
+        "contract_version": { "const": "agentmesh-request-materialization-receipt.v0" },
+        "ordinal": { "type": "integer", "minimum": 1, "maximum": 16 },
+        "scope_key": { "$ref": "#/$defs/scope_key" },
+        "revision_identity": { "$ref": "#/$defs/sha256" },
+        "source_digest": { "$ref": "#/$defs/sha256" },
+        "verdict": { "enum": ["corresponded", "drifted", "unknown"] },
+        "drift_class": { "enum": ["none", "canonical_fields", "adapter_owned_fields", "unknown"] }
+      },
+      "allOf": [
+        { "if": { "properties": { "verdict": { "const": "corresponded" } } }, "then": { "properties": { "drift_class": { "const": "none" } } } },
+        { "if": { "properties": { "verdict": { "const": "drifted" } } }, "then": { "properties": { "drift_class": { "enum": ["canonical_fields", "adapter_owned_fields", "unknown"] } } } },
+        { "if": { "properties": { "verdict": { "const": "unknown" } } }, "then": { "properties": { "drift_class": { "const": "unknown" } } } }
+      ]
+    },
+    "revision_lineage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "contract_version", "scope_key", "revision_identity", "verdict"],
+      "properties": {
+        "schema_version": { "const": "revision-lineage-resolution.v0" },
+        "contract_version": { "const": "revision-lineage.v0" },
+        "scope_key": { "$ref": "#/$defs/scope_key" },
+        "revision_identity": { "$ref": "#/$defs/sha256" },
+        "verdict": { "enum": ["current", "superseded", "unknown"] }
+      }
+    }
+  }
+}

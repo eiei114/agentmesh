@@ -1,0 +1,20 @@
+schema_version = "agentmesh-app.v0"
+name = "request-rematerialization-decision"
+protocol_version = "2026-07-15"
+
+[plugin]
+logical_name = "agentmesh-request-rematerialization-decision"
+
+[limits]
+input_max_bytes = 65536
+
+[schemas]
+input = "schemas/request-rematerialization-decision-input-v0.schema.json"
+output = "schemas/request-rematerialization-decision-compact-v0.schema.json"
+
+[sidecar]
+retention_class = "owner_local"
+capture_plugin_stderr = false
+
+[conformance]
+cargo_package = "agentmesh-markdown-request-validator"

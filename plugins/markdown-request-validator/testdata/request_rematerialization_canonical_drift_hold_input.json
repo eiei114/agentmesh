@@ -1,0 +1,31 @@
+{
+  "schema_version": "request-rematerialization-decision-input.v0",
+  "contract_version": "agentmesh-request-rematerialization-decision.v0",
+  "admission_record": {
+    "schema_version": "request-artifact-admission-record.v0",
+    "contract_version": "request-artifact-admission.v0",
+    "scope_key": "agentmesh:app:request-rematerialization-decision",
+    "source_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "revision_identity": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "verdict": "admit"
+  },
+  "receipts": [
+    {
+      "schema_version": "request-materialization-receipt-record.v0",
+      "contract_version": "agentmesh-request-materialization-receipt.v0",
+      "ordinal": 1,
+      "scope_key": "agentmesh:app:request-rematerialization-decision",
+      "revision_identity": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "source_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "verdict": "drifted",
+      "drift_class": "canonical_fields"
+    }
+  ],
+  "revision_lineage": {
+    "schema_version": "revision-lineage-resolution.v0",
+    "contract_version": "revision-lineage.v0",
+    "scope_key": "agentmesh:app:request-rematerialization-decision",
+    "revision_identity": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "verdict": "current"
+  }
+}
