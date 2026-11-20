@@ -1,0 +1,6 @@
+{
+  "error": {
+    "kind": "failed",
+    "message": "invalid_provider_quota_recovery_policy"
+  }
+}
