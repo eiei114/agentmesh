@@ -168,6 +168,23 @@ Expected compact JSON shape (abridged):
 
 The App is pure: it does not read Markdown paths, call Multica, publish releases, tag assets, or perform production authority changes.
 
+## Request materialization receipt App
+
+`apps/request-materialization-receipt/agentmesh-app.toml` declares a one-shot,
+tool-neutral post-write receipt App. It consumes one admission record, one
+canonical request summary, an explicit receipt contract version, and one
+adapter artifact descriptor with the adapter identity, artifact kind, artifact
+digest, and recorded source digest. It compares the supplied stable scalars and
+digests only; it does not re-read or write files, contact a tracker, or discover
+adapters. Output carries a fixed-order seven-field receipt with stable ordinals,
+normalized codes, and digests, but no request body, evidence values, credential,
+path, log, or tracker identifier. Failed, malformed, unsupported-version,
+oversized, and cross-scope inputs return no partial receipt.
+
+See [`request-materialization-receipt-v0.md`](request-materialization-receipt-v0.md)
+for the complete JSON contract, fixture list, and guidance for storing and
+reviewing receipts beside written artifacts.
+
 ## Non-Multica request adapter App
 
 `apps/non-multica-request-adapter/agentmesh-app.toml` declares a tracker-neutral adapter contract for `agentmesh-request.v0` sources. Input accepts exactly one Markdown source or one Markdown-compatible JSON object:

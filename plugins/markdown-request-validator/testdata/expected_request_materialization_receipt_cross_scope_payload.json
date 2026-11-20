@@ -1,0 +1,7 @@
+{
+  "schema_version": "request-materialization-receipt-compact.v0",
+  "valid": false,
+  "receipt": null,
+  "error_count": 1,
+  "errors": [{ "code": "CROSS_SCOPE_INPUT" }]
+}
