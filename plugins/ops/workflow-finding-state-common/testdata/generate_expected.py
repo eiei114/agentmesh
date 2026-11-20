@@ -58,10 +58,10 @@ def main() -> int:
         else:
             raise ValueError(f"unknown fixture operation: {operation}")
         output_path = input_path.with_name(input_path.name.replace(".input.json", ".expected.json"))
-        output_path.write_text(
-            json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
-            encoding="utf-8",
-        )
+        with output_path.open("w", encoding="utf-8", newline="\n") as output_file:
+            output_file.write(
+                json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+            )
         print(f"wrote {output_path.name}")
     return 0
 
