@@ -1,0 +1,13 @@
+{
+  "operation": "analyze_watchdog_activity",
+  "now": "2026-07-13T09:00:00Z",
+  "threshold_seconds": 900,
+  "heartbeats": [
+    {
+      "controller": "fixture-controller",
+      "event": "phase_start",
+      "phase": "fixture_collect",
+      "ts": "2026-07-13T08:45:00Z"
+    }
+  ]
+}

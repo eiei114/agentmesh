@@ -1,0 +1,11 @@
+{
+  "last_phase": "fixture_collect",
+  "last_event": "phase_start",
+  "last_tool": null,
+  "last_detail": "synthetic phase start",
+  "elapsed_seconds": 7200.0,
+  "threshold_seconds": 900,
+  "session_path": "synthetic/session.jsonl",
+  "watchdog_state": "idle",
+  "heartbeat_count": 1
+}

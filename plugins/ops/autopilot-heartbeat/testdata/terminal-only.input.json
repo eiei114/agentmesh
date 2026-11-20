@@ -1,0 +1,13 @@
+{
+  "operation": "analyze_watchdog_activity",
+  "now": "2026-07-13T09:00:00Z",
+  "heartbeats": [
+    {
+      "controller": "fixture-controller",
+      "detail": "synthetic terminal result",
+      "event": "terminal_result",
+      "phase": "fixture_done",
+      "ts": "2026-07-13T08:59:00Z"
+    }
+  ]
+}

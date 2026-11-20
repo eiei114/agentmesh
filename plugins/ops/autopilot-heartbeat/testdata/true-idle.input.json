@@ -1,0 +1,13 @@
+{
+  "operation": "is_watchdog_idle",
+  "now": "2026-07-13T09:00:00Z",
+  "heartbeats": [
+    {
+      "controller": "fixture-controller",
+      "detail": "synthetic phase start",
+      "event": "phase_start",
+      "phase": "fixture_collect",
+      "ts": "2026-07-13T07:00:00Z"
+    }
+  ]
+}

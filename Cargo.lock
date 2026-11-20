@@ -31,6 +31,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "agentmesh-autopilot-heartbeat"
+version = "0.1.0"
+dependencies = [
+ "agentmesh-ops-kit",
+ "chrono",
+ "serde_json",
+]
+
+[[package]]
 name = "agentmesh-cli"
 version = "0.1.0"
 dependencies = [

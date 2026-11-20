@@ -1,0 +1,10 @@
+{
+  "latest_heartbeat": {
+    "event": "terminal_result",
+    "phase": "a",
+    "controller": "fixture-controller",
+    "ts": "2026-07-13T08:59:50Z"
+  },
+  "heartbeat_activity_at": "2026-07-13T08:59:40+00:00",
+  "run_message_activity_at": "2026-07-13T08:59:30+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "state": "unknown",
+  "threshold_seconds": 900,
+  "last_phase": "fixture_done",
+  "last_event": "terminal_result",
+  "last_detail": "synthetic terminal result",
+  "last_tool": null,
+  "last_activity_at": null,
+  "elapsed_seconds": null,
+  "heartbeat_count": 1,
+  "tool_in_flight": false,
+  "provider_wait": false,
+  "session_path": null,
+  "has_user_progress": false,
+  "has_assistant_progress": false
+}

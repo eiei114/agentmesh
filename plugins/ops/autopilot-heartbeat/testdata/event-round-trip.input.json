@@ -1,0 +1,12 @@
+{
+  "operation": "event_round_trip",
+  "event": {
+    "event": "tool_in_flight",
+    "phase": "fixture_phase",
+    "controller": "fixture-controller",
+    "ts": "2026-07-13T09:00:00Z",
+    "detail": "synthetic progress ✓",
+    "tool": "fixture_tool",
+    "session_path": "synthetic/session.jsonl"
+  }
+}

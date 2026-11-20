@@ -1,0 +1,31 @@
+{
+  "operation": "analyze_watchdog_activity",
+  "now": "2026-07-13T09:00:00Z",
+  "session_progress": {
+    "has_user_progress": true,
+    "has_assistant_progress": false
+  },
+  "heartbeats": [
+    {
+      "controller": "fixture-controller",
+      "detail": "synthetic scan started",
+      "event": "phase_start",
+      "phase": "fixture_collect",
+      "ts": "2026-07-13T08:45:10+00:00"
+    },
+    {
+      "controller": "fixture-controller",
+      "detail": "synthetic scan continuing",
+      "event": "progress",
+      "phase": "fixture_collect",
+      "ts": "2026-07-13T08:50:10+00:00"
+    },
+    {
+      "controller": "fixture-controller",
+      "detail": "synthetic classifier running",
+      "event": "progress",
+      "phase": "fixture_classify",
+      "ts": "2026-07-13T08:55:10+00:00"
+    }
+  ]
+}
