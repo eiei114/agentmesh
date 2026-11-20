@@ -17,7 +17,10 @@ writes only the expected JSON files in this testdata directory.
 
 Cases cover a three-run infra streak, too few failures, a success in the latest
 streak, failures outside the three-hour window, non-infrastructure errors,
-unparsable timestamps, runs preceding a configuration update, and timestamp
-parsing itself. The Python check uses only an upper age bound (`now - done <=
-WINDOW`), so future-dated terminal runs also count toward a streak; this
-behavior is retained unchanged and covered by a synthetic case.
+unparsable timestamps, runs preceding a configuration update, timestamp parsing,
+and trailing-zero microseconds in both timestamps and UTC offsets. Python's
+`datetime.isoformat()` preserves all six microsecond digits whenever the value
+has a fractional component; the Rust port mirrors that behavior. The Python
+check uses only an upper age bound (`now - done <= WINDOW`), so future-dated
+terminal runs also count toward a streak; this behavior is retained unchanged
+and covered by a synthetic case.

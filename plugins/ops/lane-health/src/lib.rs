@@ -134,10 +134,7 @@ impl ParsedDateTime {
         );
         let micros = self.local.time().nanosecond() / 1_000;
         if micros != 0 {
-            let mut fraction = format!("{micros:06}");
-            while fraction.ends_with('0') {
-                fraction.pop();
-            }
+            let fraction = format!("{micros:06}");
             result.push('.');
             result.push_str(&fraction);
         }
@@ -153,10 +150,7 @@ impl ParsedDateTime {
                 result.push_str(&format!(":{seconds:02}"));
                 let fractional = absolute % 1_000_000;
                 if fractional != 0 {
-                    let mut fraction = format!("{fractional:06}");
-                    while fraction.ends_with('0') {
-                        fraction.pop();
-                    }
+                    let fraction = format!("{fractional:06}");
                     result.push('.');
                     result.push_str(&fraction);
                 }
