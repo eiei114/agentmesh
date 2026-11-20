@@ -114,6 +114,7 @@ fn attempt(
     let head = md(issue, "pr_head_sha")
         .filter(python_truthy)
         .map_or_else(String::new, |value| python_string(&value));
+    let expected_head_prefix: String = head.chars().take(12).collect();
     let actual_head = pr
         .get("headRefOid")
         .filter(|value| python_truthy(value))
@@ -123,7 +124,7 @@ fn attempt(
         .filter(|value| python_truthy(value))
         .map_or_else(String::new, python_string);
     if state.as_str() != Some("OPEN")
-        || (!head.is_empty() && !actual_head.starts_with(&head[..head.len().min(12)]))
+        || (!head.is_empty() && !actual_head.starts_with(&expected_head_prefix))
         || has_issue_prefix(&key, &title)
     {
         return Ok(json!({}));
@@ -369,7 +370,7 @@ mod tests {
         let count = agentmesh_ops_kit::check_parity(&fixture_dir, handle)
             .expect("PR-link-heal fixtures must match Python output");
         assert!(
-            count >= 12,
+            count >= 13,
             "fixtures should cover guard and action branches"
         );
     }

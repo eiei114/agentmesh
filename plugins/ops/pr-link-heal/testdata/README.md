@@ -16,4 +16,5 @@ The script loads `pr_link_heal.py` from
 and consumes only the synthetic request/response JSON in this directory.
 Fixtures cover metadata candidate precedence, unique/ambiguous/missing search
 results, the one-hour wait boundary and fallback, invalid timestamps, closed
-PRs, stale heads, prefixed titles, and successful title/metadata action plans.
+PRs, stale heads, prefixed titles, Unicode-safe head-prefix comparison, and
+successful title/metadata action plans.
