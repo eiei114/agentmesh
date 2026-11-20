@@ -1,0 +1,6 @@
+{
+  "error": {
+    "kind": "failed",
+    "message": "unexpected headers in ## Projects: expected ['project_key', 'multica_project_id', 'project_name', 'repo/workspace', 'status', 'priority', 'lead', 'notes'], got ['project_key', 'multica_project_id', 'wrong_name', 'repo/workspace', 'status', 'priority', 'lead', 'notes']"
+  }
+}

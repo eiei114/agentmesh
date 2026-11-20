@@ -1,0 +1,6 @@
+{
+  "error": {
+    "kind": "failed",
+    "message": "row column mismatch in ## Projects: expected 8 cells, got 9 :: | core | n/a | Core Project | workspace-core | active | high | lead-a | left \\| right |"
+  }
+}
