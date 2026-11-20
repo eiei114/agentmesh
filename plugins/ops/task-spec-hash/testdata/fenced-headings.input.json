@@ -1,0 +1,1 @@
+{"text":"## What to build\nKeep the fenced example.\n~~~md\n## Notes\nThis is required sample content.\n~~~\n```md\n### Evidence\nAlso part of the sample.\n```\n### Notes\nThis operational subtree is ignored.\n## Notes\nThis log is ignored too.\n"}
