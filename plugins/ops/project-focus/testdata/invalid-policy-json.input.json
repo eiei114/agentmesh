@@ -1,0 +1,7 @@
+{
+  "policy_text": "{invalid json",
+  "issue": {"project_id": "project-yellow", "status": "todo"},
+  "issues": [{"project_id": "project-yellow", "status": "todo"}],
+  "statuses": ["todo"],
+  "limit_key": "max_running"
+}

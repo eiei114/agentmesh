@@ -1,0 +1,21 @@
+{
+  "counts": {
+    "project-red": 1
+  },
+  "focus_rank": 0,
+  "paced_out": null,
+  "policy": {
+    "focus": [
+      "project-red"
+    ],
+    "paced": {
+      "project-red": {
+        "key": "Red team",
+        "max_active": 2,
+        "max_in_review": null,
+        "max_running": null
+      }
+    }
+  },
+  "project_id": "project-red"
+}

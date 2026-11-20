@@ -1,0 +1,7 @@
+{
+  "policy_text": "{\"enabled\":true,\"paced\":[{\"project_id\":\"project-silver\",\"max_active\":true}]}",
+  "issue": {"project_id": "project-silver", "status": "todo"},
+  "issues": [{"project_id": "project-silver", "status": "todo"}],
+  "statuses": ["todo"],
+  "limit_key": "max_active"
+}

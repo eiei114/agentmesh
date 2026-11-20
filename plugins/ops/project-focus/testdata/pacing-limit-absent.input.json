@@ -1,0 +1,10 @@
+{
+  "policy_text": "{\"enabled\":true,\"paced\":[{\"project_id\":\"project-purple\",\"key\":\"Purple\",\"max_active\":4}]}",
+  "issue": {"project_id": "project-purple", "status": "todo"},
+  "issues": [
+    {"project_id": "project-purple", "status": "todo"},
+    {"project_id": "project-purple", "status": "started_2"}
+  ],
+  "statuses": ["todo", "started_2"],
+  "limit_key": "max_running"
+}

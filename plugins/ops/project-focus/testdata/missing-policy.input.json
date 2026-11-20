@@ -1,0 +1,7 @@
+{
+  "policy_text": null,
+  "issue": {"project_id": "project-green", "status": "todo"},
+  "issues": [{"project_id": "project-green", "status": "todo"}],
+  "statuses": ["todo"],
+  "limit_key": "max_active"
+}
