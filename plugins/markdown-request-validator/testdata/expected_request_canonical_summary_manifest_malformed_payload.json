@@ -1,0 +1,1 @@
+{"contract_version":"agentmesh-request-canonical-summary.v0","error_count":1,"errors":[{"code":"AGENTMESH_REQUEST_CANONICAL_SUMMARY_MARKDOWN_MALFORMED","severity":"error"}],"manifest":null,"schema_version":"request-canonical-summary-manifest-compact.v0","valid":false}

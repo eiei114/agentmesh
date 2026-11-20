@@ -1,0 +1,4 @@
+{
+  "schema_version": "request-canonical-summary-manifest-input.v0",
+  "markdown": "---\nsequence_total: 1\nsequence_index: 1\nunblocks: []\nblocked_by: []\nsource_roadmap: synthetic://roadmaps/agentmesh-private\nsource_design: synthetic://docs/agentmesh-request-operations-v1\nsource_prd: synthetic://requests/request-canonical-summary-manifest\nproject_key: agentmesh-private\nstatus: ready\nissue_type: AFK\nrequest_kind: app\ntitle: Add   a deterministic request canonical summary manifest App\n---\r\n## Notes\r\n* Same scope: `agentmesh:app:request-canonical-summary-manifest`\r\n\r\n## User stories covered\r\n* As an adapter maintainer, use the same summary downstream.\r\n\r\n## Blocked by\r\n* None.\r\n\r\n## Acceptance criteria\r\n* Keep adapter-owned fields separate.\r\n* [ ] Emit a stable bounded source digest.\r\n\r\n## What to build\r\nBuild   one tool-neutral canonical summary from each validated request.\r\n"
+}
