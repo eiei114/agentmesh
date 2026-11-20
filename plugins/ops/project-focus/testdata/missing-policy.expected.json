@@ -1,0 +1,12 @@
+{
+  "counts": {
+    "project-green": 1
+  },
+  "focus_rank": 1,
+  "paced_out": null,
+  "policy": {
+    "focus": [],
+    "paced": {}
+  },
+  "project_id": "project-green"
+}

@@ -274,6 +274,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "agentmesh-ops-project-focus"
+version = "0.1.0"
+dependencies = [
+ "agentmesh-ops-kit",
+ "serde_json",
+]
+
+[[package]]
 name = "agentmesh-ops-provider-quota-common"
 version = "0.1.0"
 dependencies = [

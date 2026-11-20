@@ -1,0 +1,19 @@
+{
+  "counts": {
+    "project-violet": 1
+  },
+  "focus_rank": 1,
+  "paced_out": null,
+  "policy": {
+    "focus": [],
+    "paced": {
+      "project-violet": {
+        "key": "project-violet",
+        "max_active": null,
+        "max_in_review": null,
+        "max_running": null
+      }
+    }
+  },
+  "project_id": ""
+}

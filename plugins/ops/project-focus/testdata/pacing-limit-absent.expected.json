@@ -1,0 +1,19 @@
+{
+  "counts": {
+    "project-purple": 2
+  },
+  "focus_rank": 1,
+  "paced_out": null,
+  "policy": {
+    "focus": [],
+    "paced": {
+      "project-purple": {
+        "key": "Purple",
+        "max_active": 4,
+        "max_in_review": null,
+        "max_running": null
+      }
+    }
+  },
+  "project_id": "project-purple"
+}
