@@ -4,6 +4,7 @@ use sha2::{Digest, Sha256};
 use std::mem;
 
 use serde_json::Value;
+use unicode_casefold::UnicodeCaseFold;
 
 use agentmesh_ops_kit::OpsError;
 
@@ -44,7 +45,7 @@ const OPERATIONAL_HEADINGS: &[&str] = &[
 /// optional trailing ATX closing hashes.
 #[must_use]
 pub fn heading_name(title: &str) -> String {
-    let title = strip_atx_closing_hashes(title).trim().to_lowercase();
+    let title = case_fold(strip_atx_closing_hashes(title).trim());
     let end = title
         .char_indices()
         .find_map(|(index, character)| matches!(character, '(' | '（').then_some(index))
@@ -112,7 +113,7 @@ pub fn normalized_task_spec(text: &str) -> Option<String> {
 
             if current.is_none() && SPEC_HEADINGS.contains(&name.as_str()) {
                 selected_level = level;
-                let section_title = strip_atx_closing_hashes(title).trim().to_lowercase();
+                let section_title = case_fold(strip_atx_closing_hashes(title).trim());
                 current = Some(vec![format!("## {section_title}")]);
                 continue;
             }
@@ -132,6 +133,10 @@ pub fn normalized_task_spec(text: &str) -> Option<String> {
 
     sections.sort();
     Some(sections.join("\n\n") + "\n")
+}
+
+fn case_fold(text: &str) -> String {
+    text.case_fold().collect()
 }
 
 /// Return the `sha256:` digest for a task specification, or `None` when it has
@@ -301,6 +306,12 @@ mod tests {
         );
         assert_eq!(heading_name("実装範囲（説明）"), "実装範囲");
         assert_eq!(heading_name("What to build###"), "what to build###");
+    }
+
+    #[test]
+    fn heading_name_uses_full_unicode_case_folding() {
+        assert_eq!(heading_name("ſcope"), "scope");
+        assert_eq!(heading_name("Succeẞ criteria"), "success criteria");
     }
 
     #[test]
