@@ -1,0 +1,26 @@
+{
+  "op": "build_bucket_plans",
+  "today": "2026-11-20",
+  "entries": [
+    {"path": ".multica-spine/current.json", "raw": " M synthetic"},
+    {"path": ".pi/.pi-retention-project.yaml", "raw": " M synthetic"},
+    {"path": "AGENTS.md", "raw": " M synthetic"},
+    {"path": "docs/migration.md", "raw": " M synthetic"},
+    {"path": "4_Project/Multica-Agent-Strategy/Design/plan.md", "raw": " M synthetic"},
+    {"path": "4_Project/Multica-Agent-Strategy/Data/feedback-events/synthetic.jsonl", "raw": " M synthetic"},
+    {"path": "4_Project/Multica-Agent-Strategy/Data/AI-Execution-Calendar/synthetic.md", "raw": " M synthetic"},
+    {"path": "4_Project/Multica-Agent-Strategy/Progress/synthetic.md", "raw": " M synthetic"},
+    {"path": "4_Project/Multica-Agent-Strategy/Notes/synthetic.md", "raw": " M synthetic"},
+    {"path": "5_Structure/synthetic.md", "raw": " M synthetic"},
+    {"path": "1_Fleeting/synthetic.md", "raw": " M synthetic"},
+    {"path": "4_Project/Personal-Positioning/synthetic.md", "raw": " M synthetic"},
+    {"path": "4_Project/X-Creator-Positioning/synthetic.md", "raw": " M synthetic"},
+    {"path": ".pi/skills/example/SKILL.md", "raw": " M synthetic"},
+    {"path": ".pi/skills/example/scripts/run.py", "raw": " M synthetic"},
+    {"path": "4_Project/OSS/sample-repo/Issues/synthetic.md", "raw": " M synthetic"},
+    {"path": "4_Project/Synthetic Project/note.md", "raw": " M synthetic"},
+    {"path": "misc/uncategorized.txt", "raw": " M synthetic"},
+    {"path": ".pi-subagents/cache.json", "raw": "?? excluded"},
+    {"path": "import_dry.json", "raw": "?? excluded"}
+  ]
+}

@@ -1,0 +1,128 @@
+{
+  "plans": [
+    {
+      "bucket_id": "multica-spine",
+      "files": [
+        ".multica-spine/current.json"
+      ],
+      "message": "chore(multica-spine): refresh spine state (2026-11-20)"
+    },
+    {
+      "bucket_id": "pi-retention",
+      "files": [
+        ".pi/.pi-retention-project.yaml"
+      ],
+      "message": "chore: refresh pi retention timestamp"
+    },
+    {
+      "bucket_id": "vault-root",
+      "files": [
+        "AGENTS.md"
+      ],
+      "message": "docs: update vault root pointers (2026-11-20)"
+    },
+    {
+      "bucket_id": "docs-root",
+      "files": [
+        "docs/migration.md"
+      ],
+      "message": "docs: update shared docs (2026-11-20)"
+    },
+    {
+      "bucket_id": "multica-strategy-design",
+      "files": [
+        "4_Project/Multica-Agent-Strategy/Design/plan.md"
+      ],
+      "message": "docs(multica-agent-strategy): update design docs (2026-11-20)"
+    },
+    {
+      "bucket_id": "multica-strategy-feedback",
+      "files": [
+        "4_Project/Multica-Agent-Strategy/Data/feedback-events/synthetic.jsonl"
+      ],
+      "message": "chore(multica-agent-strategy): record feedback events (2026-11-20)"
+    },
+    {
+      "bucket_id": "multica-strategy-calendar",
+      "files": [
+        "4_Project/Multica-Agent-Strategy/Data/AI-Execution-Calendar/synthetic.md"
+      ],
+      "message": "chore(multica-agent-strategy): update AI execution calendar (2026-11-20)"
+    },
+    {
+      "bucket_id": "multica-strategy-progress",
+      "files": [
+        "4_Project/Multica-Agent-Strategy/Progress/synthetic.md"
+      ],
+      "message": "chore(multica-agent-strategy): update progress notes (2026-11-20)"
+    },
+    {
+      "bucket_id": "multica-strategy-other",
+      "files": [
+        "4_Project/Multica-Agent-Strategy/Notes/synthetic.md"
+      ],
+      "message": "chore(multica-agent-strategy): update strategy artifacts (2026-11-20)"
+    },
+    {
+      "bucket_id": "structure",
+      "files": [
+        "5_Structure/synthetic.md"
+      ],
+      "message": "docs(structure): refresh structure notes (2026-11-20)"
+    },
+    {
+      "bucket_id": "fleeting",
+      "files": [
+        "1_Fleeting/synthetic.md"
+      ],
+      "message": "fleeting: capture vault intake (2026-11-20)"
+    },
+    {
+      "bucket_id": "personal-positioning",
+      "files": [
+        "4_Project/Personal-Positioning/synthetic.md"
+      ],
+      "message": "docs(personal-positioning): update positioning docs (2026-11-20)"
+    },
+    {
+      "bucket_id": "x-creator",
+      "files": [
+        "4_Project/X-Creator-Positioning/synthetic.md"
+      ],
+      "message": "chore(x-creator): update X creator artifacts (2026-11-20)"
+    },
+    {
+      "bucket_id": "skill-example",
+      "files": [
+        ".pi/skills/example/SKILL.md",
+        ".pi/skills/example/scripts/run.py"
+      ],
+      "message": "feat(skills): update example"
+    },
+    {
+      "bucket_id": "oss-issues-sample-repo",
+      "files": [
+        "4_Project/OSS/sample-repo/Issues/synthetic.md"
+      ],
+      "message": "docs(oss): sync sample-repo issue metadata"
+    },
+    {
+      "bucket_id": "project-synthetic-project",
+      "files": [
+        "4_Project/Synthetic Project/note.md"
+      ],
+      "message": "docs(synthetic-project): update project notes (2026-11-20)"
+    },
+    {
+      "bucket_id": "other",
+      "files": [
+        "misc/uncategorized.txt"
+      ],
+      "message": "chore: update vault files (2026-11-20)"
+    }
+  ],
+  "excluded": [
+    ".pi-subagents/cache.json",
+    "import_dry.json"
+  ]
+}
