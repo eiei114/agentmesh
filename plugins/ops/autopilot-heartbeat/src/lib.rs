@@ -205,6 +205,7 @@ pub fn parse_dt(value: Option<&str>) -> Option<DateTime<Utc>> {
     .flatten()
     .next()
     .map(|date| date.with_timezone(&Utc))
+    .or_else(|| parse_offset_with_seconds(&normalized))
     .or_else(|| {
         let naive = NaiveDateTime::parse_from_str(&normalized, "%Y-%m-%dT%H:%M:%S%.f")
             .or_else(|_| NaiveDateTime::parse_from_str(&normalized, "%Y-%m-%dT%H:%M:%S"))
@@ -213,6 +214,86 @@ pub fn parse_dt(value: Option<&str>) -> Option<DateTime<Utc>> {
     })?;
     let micros = parsed.timestamp_micros();
     DateTime::from_timestamp_micros(micros)
+}
+
+/// Parse ISO UTC offsets with seconds, which Python's `fromisoformat` accepts
+/// but Chrono's RFC 3339 parser does not. Fractional offset seconds are kept at
+/// Python datetime's microsecond precision.
+fn parse_offset_with_seconds(value: &str) -> Option<DateTime<Utc>> {
+    let offset_index = value.char_indices().skip(10).find_map(|(index, ch)| {
+        if ch == '+' || ch == '-' {
+            Some(index)
+        } else {
+            None
+        }
+    })?;
+    let local_text = &value[..offset_index];
+    let offset_text = &value[offset_index..];
+    let (sign, offset_text) = match offset_text.as_bytes().first()? {
+        b'+' => (1_i64, &offset_text[1..]),
+        b'-' => (-1_i64, &offset_text[1..]),
+        _ => return None,
+    };
+    let (offset_clock, fraction) = offset_text
+        .split_once('.')
+        .map_or((offset_text, None), |(clock, fraction)| {
+            (clock, Some(fraction))
+        });
+
+    let (hours, minutes, seconds) = if offset_clock.contains(':') {
+        let mut parts = offset_clock.split(':');
+        let hours = parse_two_digits(parts.next()?)?;
+        let minutes = parse_two_digits(parts.next()?)?;
+        let seconds = parse_two_digits(parts.next()?)?;
+        if parts.next().is_some() {
+            return None;
+        }
+        (hours, minutes, seconds)
+    } else {
+        if offset_clock.len() != 6 || !offset_clock.bytes().all(|byte| byte.is_ascii_digit()) {
+            return None;
+        }
+        (
+            parse_two_digits(&offset_clock[..2])?,
+            parse_two_digits(&offset_clock[2..4])?,
+            parse_two_digits(&offset_clock[4..6])?,
+        )
+    };
+    if hours >= 24 || minutes >= 60 || seconds >= 60 {
+        return None;
+    }
+
+    let fraction_micros = match fraction {
+        None => 0,
+        Some(digits)
+            if !digits.is_empty()
+                && digits.len() <= 6
+                && digits.bytes().all(|byte| byte.is_ascii_digit()) =>
+        {
+            let mut padded = digits.to_owned();
+            padded.push_str(&"0".repeat(6 - digits.len()));
+            padded.parse::<i64>().ok()?
+        }
+        Some(_) => return None,
+    };
+
+    let naive = NaiveDateTime::parse_from_str(local_text, "%Y-%m-%dT%H:%M:%S%.f").ok()?;
+    let offset_micros = sign
+        * (((i64::from(hours) * 60 + i64::from(minutes)) * 60 + i64::from(seconds)) * 1_000_000
+            + fraction_micros);
+    let utc_micros = naive
+        .and_utc()
+        .timestamp_micros()
+        .checked_sub(offset_micros)?;
+    DateTime::from_timestamp_micros(utc_micros)
+}
+
+fn parse_two_digits(value: &str) -> Option<u32> {
+    if value.len() == 2 && value.bytes().all(|byte| byte.is_ascii_digit()) {
+        value.parse().ok()
+    } else {
+        None
+    }
 }
 
 fn normalize_compact_offset(value: &str) -> String {
@@ -728,7 +809,20 @@ mod tests {
             parse_dt(Some("2026-07-13T09:00:00+02:00")).map(format_dt),
             Some("2026-07-13T07:00:00+00:00".to_owned())
         );
+        assert_eq!(
+            parse_dt(Some("2026-07-13T09:00:00+01:00:30")).map(format_dt),
+            Some("2026-07-13T07:59:30+00:00".to_owned())
+        );
+        assert_eq!(
+            parse_dt(Some("2026-07-13T09:00:00+01:00:30.5")).map(format_dt),
+            Some("2026-07-13T07:59:29.500000+00:00".to_owned())
+        );
+        assert_eq!(
+            parse_dt(Some("2026-07-13T09:00:00+010030")).map(format_dt),
+            Some("2026-07-13T07:59:30+00:00".to_owned())
+        );
         assert!(parse_dt(Some("2026-07-13T09:00:00+25:00")).is_none());
+        assert!(parse_dt(Some("2026-07-13T09:00:00+01:00:60")).is_none());
         assert!(parse_dt(None).is_none());
     }
 

@@ -28,6 +28,10 @@ FIXTURES: dict[str, dict[str, Any]] = {
         "operation": "parse_dt",
         "timestamp": "2026-07-13T09:00:00+02:00",
     },
+    "parse-offset-seconds-timestamp": {
+        "operation": "parse_dt",
+        "timestamp": "2026-07-13T09:00:00+01:00:30",
+    },
     "parse-malformed-timestamp": {
         "operation": "parse_dt",
         "timestamp": "2026-07-13T09:00:00+25:00",
