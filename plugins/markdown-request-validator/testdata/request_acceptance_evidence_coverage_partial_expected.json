@@ -1,0 +1,28 @@
+{
+  "schema_version": "request-acceptance-evidence-coverage-compact.v0",
+  "app_version": "request-acceptance-evidence-coverage.v0",
+  "valid": true,
+  "coverage": {
+    "schema_version": "acceptance-evidence-coverage.v0",
+    "contract_version": "acceptance-evidence-coverage.v0",
+    "scope": "agentmesh:app:request-acceptance-evidence-coverage",
+    "request_digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+    "verdict": "uncovered",
+    "uncovered_criterion_ordinals": [3],
+    "reason_code": "acceptance_criteria_uncovered",
+    "evidence_inventory_sha256": "sha256:2f21165ac3cf8cb2f1fdcb86994b8a83605329203409942c573c364bf108c5fa",
+    "criteria": [
+      {"ordinal": 1, "verdict": "covered", "evidence_ids": ["ev_test-run-1"]},
+      {"ordinal": 2, "verdict": "covered", "evidence_ids": ["ev_build-1"]},
+      {"ordinal": 3, "verdict": "uncovered", "evidence_ids": []}
+    ],
+    "finding_count": 1,
+    "findings": [
+      {"code": "AGENTMESH_REQUEST_ACCEPTANCE_EVIDENCE_COVERAGE_CRITERION_NO_EVIDENCE", "path": "$.request_summary.acceptance_criteria[2]"}
+    ],
+    "findings_truncated": false,
+    "omitted_finding_count": 0
+  },
+  "error_count": 0,
+  "errors": []
+}

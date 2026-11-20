@@ -41,6 +41,11 @@ description = "Request Markdown renderer App contract for canonical request docu
 source = "docs/request-markdown-renderer-v0.md"
 
 [[documents]]
+name = "request-acceptance-evidence-coverage-v0"
+description = "Request acceptance evidence coverage App contract for deterministic per-criterion evidence mapping"
+source = "docs/request-acceptance-evidence-coverage-v0.md"
+
+[[documents]]
 name = "threat-model-v0"
 description = "AgentMesh Phase 0 threat model"
 source = "docs/threat-model-v0.md"

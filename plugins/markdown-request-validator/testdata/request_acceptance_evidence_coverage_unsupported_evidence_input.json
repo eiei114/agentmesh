@@ -1,0 +1,21 @@
+{
+  "schema_version": "request-acceptance-evidence-coverage-input.v0",
+  "contract_version": "request-acceptance-evidence-coverage.v0",
+  "request_summary": {
+    "schema_version": "agentmesh-request-summary.v0",
+    "request_schema_version": "agentmesh-request.v0",
+    "valid": true,
+    "scope": "agentmesh:app:request-acceptance-evidence-coverage",
+    "request_digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+    "acceptance_criteria": [{"ordinal": 1}]
+  },
+  "evidence_inventory": [
+    {
+      "schema_version": "agentmesh-evidence-reference.v9",
+      "id": "ev_future-evidence-1",
+      "digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "evidence_class": "artifact",
+      "criterion_indices": [1]
+    }
+  ]
+}

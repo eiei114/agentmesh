@@ -1,0 +1,28 @@
+{
+  "schema_version": "request-acceptance-evidence-coverage-input.v0",
+  "contract_version": "request-acceptance-evidence-coverage.v0",
+  "request_summary": {
+    "schema_version": "agentmesh-request-summary.v0",
+    "request_schema_version": "agentmesh-request.v0",
+    "valid": true,
+    "scope": "agentmesh:app:request-acceptance-evidence-coverage",
+    "request_digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+    "acceptance_criteria": [{"ordinal": 1}, {"ordinal": 2}, {"ordinal": 3}]
+  },
+  "evidence_inventory": [
+    {
+      "schema_version": "agentmesh-evidence-reference.v0",
+      "id": "ev_test-run-1",
+      "digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "evidence_class": "test",
+      "criterion_indices": [1, 2]
+    },
+    {
+      "schema_version": "agentmesh-evidence-reference.v0",
+      "id": "ev_review-1",
+      "digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "evidence_class": "review",
+      "criterion_indices": [3]
+    }
+  ]
+}

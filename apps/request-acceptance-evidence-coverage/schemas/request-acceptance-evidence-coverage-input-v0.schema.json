@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentmesh.local/schemas/request-acceptance-evidence-coverage-input-v0.schema.json",
+  "title": "Request Acceptance Evidence Coverage Input v0",
+  "description": "A validated, tool-neutral request summary and bounded ordered evidence references. Evidence values, paths, tracker identifiers, credentials, and commands are not accepted.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "contract_version", "request_summary", "evidence_inventory"],
+  "properties": {
+    "schema_version": { "type": "string", "maxLength": 64 },
+    "contract_version": { "type": "string", "maxLength": 64 },
+    "request_summary": { "$ref": "#/$defs/request_summary" },
+    "evidence_inventory": {
+      "type": "array",
+      "maxItems": 128,
+      "items": { "$ref": "#/$defs/evidence_reference" }
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "maxLength": 71
+    },
+    "scope": {
+      "type": "string",
+      "pattern": "^agentmesh:[a-z0-9][a-z0-9:._-]{0,117}$",
+      "maxLength": 128
+    },
+    "request_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "request_schema_version", "valid", "scope", "request_digest", "acceptance_criteria"],
+      "properties": {
+        "schema_version": { "type": "string", "maxLength": 64 },
+        "request_schema_version": { "type": "string", "maxLength": 64 },
+        "valid": { "type": "boolean" },
+        "scope": { "$ref": "#/$defs/scope" },
+        "request_digest": { "$ref": "#/$defs/sha256" },
+        "acceptance_criteria": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 128,
+          "items": { "$ref": "#/$defs/criterion" }
+        }
+      }
+    },
+    "criterion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ordinal"],
+      "properties": {
+        "ordinal": { "type": "integer", "minimum": 1, "maximum": 128 }
+      }
+    },
+    "evidence_reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "id", "digest", "evidence_class", "criterion_indices"],
+      "properties": {
+        "schema_version": { "type": "string", "maxLength": 64 },
+        "id": { "type": "string", "pattern": "^ev_[a-z0-9][a-z0-9._-]{0,59}$", "maxLength": 63 },
+        "digest": { "$ref": "#/$defs/sha256" },
+        "evidence_class": {
+          "enum": ["test", "review", "build", "validation", "artifact", "observation", "other"]
+        },
+        "criterion_indices": {
+          "type": "array",
+          "maxItems": 128,
+          "uniqueItems": true,
+          "items": { "type": "integer", "minimum": 1, "maximum": 128 }
+        }
+      }
+    }
+  }
+}
