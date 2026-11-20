@@ -1,0 +1,19 @@
+{
+  "counts": {
+    "project-silver": 1
+  },
+  "focus_rank": 1,
+  "paced_out": null,
+  "policy": {
+    "focus": [],
+    "paced": {
+      "project-silver": {
+        "key": "project-silver",
+        "max_active": true,
+        "max_in_review": null,
+        "max_running": null
+      }
+    }
+  },
+  "project_id": "project-silver"
+}

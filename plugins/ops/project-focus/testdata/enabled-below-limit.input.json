@@ -1,0 +1,7 @@
+{
+  "policy_text": "{\"enabled\":true,\"focus\":[{\"project_id\":\"project-red\"}],\"paced\":[{\"project_id\":\"project-red\",\"key\":\"Red team\",\"max_active\":2}]}",
+  "issue": {"project_id": "project-red", "status": "todo"},
+  "issues": [{"project_id": "project-red", "status": "todo"}],
+  "statuses": ["todo"],
+  "limit_key": "max_active"
+}

@@ -1,0 +1,11 @@
+{
+  "policy_text": "{\"enabled\":true,\"focus\":[{\"name\":\"ignored\"},{\"project_id\":\"\"}],\"paced\":[{\"key\":\"ignored\",\"max_active\":0},{\"project_id\":\"project-violet\",\"max_active\":null}]}",
+  "issue": {"status": "todo"},
+  "issues": [
+    {"status": "todo"},
+    {"project_id": "", "status": "todo"},
+    {"project_id": "project-violet", "status": "todo"}
+  ],
+  "statuses": ["todo"],
+  "limit_key": "max_active"
+}
