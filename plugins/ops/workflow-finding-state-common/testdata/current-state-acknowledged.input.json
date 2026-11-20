@@ -1,0 +1,6 @@
+{
+  "operation": "current_finding_state",
+  "previous": {
+    "finding_state": "acknowledged"
+  }
+}

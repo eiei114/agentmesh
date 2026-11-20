@@ -1,0 +1,8 @@
+{
+  "operation": "prior_finding_state",
+  "since": "2026-07-30T00:00:00+00:00",
+  "event_lines": [
+    "{\"ts\":\"2026-07-31T23:00:00+00:00\",\"controller\":\"workflow-health-audit\",\"finding_fingerprints\":[{\"fingerprint\":\"old\",\"code\":\"old_code\",\"finding_state\":\"unchanged\"}]}",
+    "{\"ts\":\"2026-08-01T01:00:00+00:00\",\"controller\":\"workflow-health-audit\",\"finding_fingerprints\":[{\"fingerprint\":\"new\",\"code\":\"new_code\",\"finding_state\":\"acknowledged\"}]}"
+  ]
+}

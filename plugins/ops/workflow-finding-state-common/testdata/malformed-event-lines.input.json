@@ -1,0 +1,9 @@
+{
+  "operation": "prior_finding_state",
+  "since": "2026-08-01T00:00:00+00:00",
+  "event_lines": [
+    "{not-json",
+    "{\"ts\":\"timestamp?\",\"controller\":\"workflow-health-audit\",\"finding_fingerprints\":[{\"fingerprint\":\"bad-time\",\"finding_state\":\"new\"}]}",
+    "{\"ts\":\"2026-07-31T23:59:59+00:00\",\"controller\":\"workflow-health-audit\",\"finding_fingerprints\":[{\"fingerprint\":\"too-old\",\"finding_state\":\"new\"}]}"
+  ]
+}

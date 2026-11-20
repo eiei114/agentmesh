@@ -1,0 +1,17 @@
+[package]
+name = "agentmesh-ops-workflow-finding-state-common"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish = false
+rust-version.workspace = true
+description = "Stable workflow-audit finding identity and recurrence state helpers"
+
+[lints]
+workspace = true
+
+[dependencies]
+agentmesh-ops-kit = { path = "../kit" }
+chrono.workspace = true
+serde_json.workspace = true
+sha2.workspace = true
