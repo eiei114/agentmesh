@@ -1,0 +1,10 @@
+{
+  "op": "parse_porcelain_lines",
+  "lines": [
+    "R  old-name.md -> new-name.md",
+    "M  \"4_Project/Synthetic Project/quoted note.md\"",
+    "?? .\\1_Fleeting\\Synthetic\\note.md",
+    "?? 5_Structure/ordinary.md\n\n",
+    ""
+  ]
+}

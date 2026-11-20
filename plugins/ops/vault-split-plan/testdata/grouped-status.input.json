@@ -1,0 +1,11 @@
+{
+  "op": "group_status_entries",
+  "entries": [
+    {"path": "5_Structure/second.md", "raw": " M second"},
+    {"path": "5_Structure/first.md", "raw": " M first"},
+    {"path": "5_Structure/second.md", "raw": "?? duplicate"},
+    {"path": "import_dry.json", "raw": "?? excluded"},
+    {"path": ".pi-subagents/cache.json", "raw": "?? excluded"},
+    {"path": "1_Fleeting/one.md", "raw": "?? one"}
+  ]
+}

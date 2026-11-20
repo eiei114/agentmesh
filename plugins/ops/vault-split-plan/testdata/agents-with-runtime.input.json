@@ -1,0 +1,4 @@
+{
+  "op": "strip_multica_runtime_block",
+  "content": "# AGENTS.md\n\nKeep synthetic local guidance.\n\n<!-- BEGIN MULTICA-RUNTIME (auto-managed; do not edit) -->\nmanaged runtime text\n<!-- END MULTICA-RUNTIME -->\n\nKeep trailing guidance.\n"
+}

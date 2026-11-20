@@ -1,0 +1,15 @@
+{
+  "groups": {
+    "structure": [
+      "5_Structure/first.md",
+      "5_Structure/second.md"
+    ],
+    "fleeting": [
+      "1_Fleeting/one.md"
+    ]
+  },
+  "excluded": [
+    ".pi-subagents/cache.json",
+    "import_dry.json"
+  ]
+}

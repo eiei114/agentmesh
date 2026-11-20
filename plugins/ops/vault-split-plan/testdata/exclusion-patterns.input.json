@@ -1,0 +1,22 @@
+{
+  "op": "exclude_paths",
+  "paths": [
+    ".pi-subagents/artifacts/synthetic.json",
+    ".pi/tmp/session.json",
+    "import_dry.json",
+    ".multica_import_dry.json",
+    "games_out.json",
+    "progress.md",
+    "running",
+    "nul",
+    ".scratch-version-audit.json",
+    "nested/.scratch-cache",
+    ".env",
+    ".env.local",
+    "nested/.env.local",
+    "credentials.json",
+    "nested/credentials.backup.json",
+    "1_Fleeting/Synthetic-Note.md",
+    ".\\pi\\tmp\\windows-session.json"
+  ]
+}

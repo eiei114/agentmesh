@@ -1,0 +1,19 @@
+[
+  {
+    "path": "new-name.md",
+    "raw": "R  old-name.md -> new-name.md"
+  },
+  {
+    "path": "4_Project/Synthetic Project/quoted note.md",
+    "raw": "M  \"4_Project/Synthetic Project/quoted note.md\""
+  },
+  {
+    "path": "1_Fleeting/Synthetic/note.md",
+    "raw": "?? .\\1_Fleeting\\Synthetic\\note.md"
+  },
+  {
+    "path": "5_Structure/ordinary.md",
+    "raw": "?? 5_Structure/ordinary.md"
+  },
+  null
+]

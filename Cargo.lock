@@ -317,6 +317,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "agentmesh-ops-vault-split-plan"
+version = "0.1.0"
+dependencies = [
+ "agentmesh-ops-kit",
+ "chrono",
+ "serde_json",
+]
+
+[[package]]
 name = "agentmesh-production-authority"
 version = "0.1.0"
 dependencies = [
