@@ -4,7 +4,9 @@
 [advisories]
 yanked = "deny"
 unmaintained = "workspace"
-ignore = []
+ignore = [
+    { id = "RUSTSEC-2026-0543", reason = "chrono is unmaintained (an unmaintained notice, not a vulnerability). Replacing chrono is tracked by the follow-up issue 'Replace chrono with a maintained time crate' (DOT-4010); remove this entry when it merges." },
+]
 
 [licenses]
 allow = [
