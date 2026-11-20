@@ -1,0 +1,23 @@
+{
+  "policy": {
+    "schema_version": 2,
+    "max_requeues_per_tick": 5,
+    "labels": {
+      "free_model": {
+        "name": "model/free",
+        "id": "fallback-free"
+      },
+      "quota_hold": {
+        "name": "provider/quota-hold",
+        "id": "fallback-hold"
+      }
+    }
+  },
+  "label_key": "free_model",
+  "issue": {
+    "labels": []
+  },
+  "inventory": {
+    "labels": []
+  }
+}
