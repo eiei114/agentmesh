@@ -1,0 +1,35 @@
+{
+  "schema_version": "request-artifact-admission-compact.v0",
+  "admission_version": "request-artifact-admission.v0",
+  "valid": true,
+  "admission": {
+    "decision": "defer",
+    "contract_version": "request-artifact-admission.v0",
+    "revision_identity": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "gates": [
+      {
+        "ordinal": 1,
+        "name": "source_neutrality",
+        "verdict": "non_neutral",
+        "reason_codes": ["source_not_neutral"],
+        "input_sha256": "sha256:497952758e0352afd389a432dd5b8348b1dd9c4d582961a5be4a6ad166f86d25"
+      },
+      {
+        "ordinal": 2,
+        "name": "acceptance_evidence_coverage",
+        "verdict": "covered",
+        "reason_codes": [],
+        "input_sha256": "sha256:2f5470d80ea5b99f4ef139e61e88722cb188be249a45e4ecc118909946fe747e"
+      },
+      {
+        "ordinal": 3,
+        "name": "revision_lineage",
+        "verdict": "current",
+        "reason_codes": [],
+        "input_sha256": "sha256:791b48439a3d2fe8e99f7149c7039376d01c700a449959a872468cb2d70ec9f3"
+      }
+    ]
+  },
+  "error_count": 0,
+  "errors": []
+}

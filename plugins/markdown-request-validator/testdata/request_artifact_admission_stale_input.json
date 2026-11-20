@@ -1,0 +1,34 @@
+{
+  "schema_version": "request-artifact-admission-input.v0",
+  "contract_version": "request-artifact-admission.v0",
+  "request_summary": {
+    "schema_version": "request-artifact-admission-summary.v0",
+    "scope": "agentmesh:app:request-artifact-admission-gate",
+    "request_digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "revision_identity": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "source_neutrality": {
+    "schema_version": "source-neutrality-result.v0",
+    "contract_version": "source-neutrality.v0",
+    "scope": "agentmesh:app:request-artifact-admission-gate",
+    "request_digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "verdict": "neutral",
+    "reason_code": "none"
+  },
+  "acceptance_evidence": {
+    "schema_version": "acceptance-evidence-coverage.v0",
+    "contract_version": "acceptance-evidence-coverage.v0",
+    "scope": "agentmesh:app:request-artifact-admission-gate",
+    "request_digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "verdict": "covered",
+    "uncovered_criterion_ordinals": [],
+    "reason_code": "none"
+  },
+  "revision_lineage": {
+    "schema_version": "revision-lineage-resolution.v0",
+    "contract_version": "revision-lineage.v0",
+    "scope": "agentmesh:app:request-artifact-admission-gate",
+    "request_digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "current_revision_identity": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  }
+}

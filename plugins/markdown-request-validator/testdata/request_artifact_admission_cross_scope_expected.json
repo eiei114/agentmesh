@@ -1,0 +1,8 @@
+{
+  "schema_version": "request-artifact-admission-compact.v0",
+  "admission_version": "request-artifact-admission.v0",
+  "valid": false,
+  "admission": null,
+  "error_count": 1,
+  "errors": [{"code": "AGENTMESH_REQUEST_ARTIFACT_ADMISSION_CROSS_SCOPE_INPUT"}]
+}
