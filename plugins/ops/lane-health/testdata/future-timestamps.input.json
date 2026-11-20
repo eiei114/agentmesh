@@ -1,0 +1,9 @@
+{
+  "operation": "infra_failure",
+  "now": "2026-11-12T10:00:00+00:00",
+  "tasks": [
+    {"status": "failed", "completed_at": "2026-11-12T10:10:00+00:00", "error": "402"},
+    {"status": "failed", "completed_at": "2026-11-12T10:20:00+00:00", "error": "503"},
+    {"status": "failed", "completed_at": "2026-11-12T10:30:00+00:00", "error": "500"}
+  ]
+}

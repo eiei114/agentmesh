@@ -1,0 +1,11 @@
+{
+  "operation": "checker",
+  "now": "2026-11-12T10:00:00+00:00",
+  "updated_at": null,
+  "tasks": [
+    {"status": "failed", "completed_at": "2026-11-12T09:55:00+00:00", "error": "402"},
+    {"status": "completed", "completed_at": "2026-11-12T09:40:00+00:00"},
+    {"status": "failed", "completed_at": "2026-11-12T09:20:00+00:00", "error": "503"},
+    {"status": "failed", "completed_at": "2026-11-12T09:00:00+00:00", "error": "500"}
+  ]
+}

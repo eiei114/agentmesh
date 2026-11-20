@@ -1,0 +1,10 @@
+{
+  "operation": "checker",
+  "now": "2026-11-12T10:00:00+00:00",
+  "updated_at": null,
+  "tasks": [
+    {"status": "failed", "completed_at": "not a timestamp one", "created_at": "also invalid", "error": "402"},
+    {"status": "failed", "completed_at": "not a timestamp two", "created_at": "also invalid", "error": "503"},
+    {"status": "failed", "completed_at": "not a timestamp three", "created_at": "also invalid", "error": "500"}
+  ]
+}
