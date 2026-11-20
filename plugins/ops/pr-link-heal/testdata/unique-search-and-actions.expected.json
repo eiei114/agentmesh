@@ -1,0 +1,54 @@
+{
+  "actions": {
+    "edit": [
+      {
+        "number": 139,
+        "repo": "eiei114/fixture-project",
+        "title": "DOT-3433: chore(deps): bump setup-node"
+      }
+    ],
+    "github_calls": [
+      {
+        "args": [
+          "pr",
+          "list",
+          "-R",
+          "eiei114/fixture-project",
+          "--state",
+          "open",
+          "--search",
+          "DOT-3433",
+          "--json",
+          "number"
+        ]
+      },
+      {
+        "args": [
+          "pr",
+          "view",
+          "139",
+          "-R",
+          "eiei114/fixture-project",
+          "--json",
+          "state,title,headRefOid,url"
+        ]
+      }
+    ],
+    "set_metadata": [
+      {
+        "issue_id": "fixture-issue-4",
+        "key": "pr_link_heal_at",
+        "value": "2026-11-12T18:00:00+09:00"
+      },
+      {
+        "issue_id": "fixture-issue-4",
+        "key": "pr_url",
+        "value": "https://github.com/fixture/fixture-project/pull/139"
+      }
+    ]
+  },
+  "result": {
+    "requested": "title_prefixed",
+    "url": "https://github.com/fixture/fixture-project/pull/139"
+  }
+}

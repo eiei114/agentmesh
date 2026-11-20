@@ -1,0 +1,11 @@
+{
+  "actions": {
+    "edit": [],
+    "github_calls": [],
+    "set_metadata": []
+  },
+  "result": {
+    "requested": "waiting_for_link",
+    "since": "2026-11-12T17:00:01+09:00"
+  }
+}

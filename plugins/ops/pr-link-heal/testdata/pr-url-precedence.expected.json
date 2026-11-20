@@ -1,0 +1,35 @@
+{
+  "actions": {
+    "edit": [
+      {
+        "number": 139,
+        "repo": "fixture/preferred",
+        "title": "DOT-3433: chore(deps): update dependency"
+      }
+    ],
+    "github_calls": [
+      {
+        "args": [
+          "pr",
+          "view",
+          "139",
+          "-R",
+          "fixture/preferred",
+          "--json",
+          "state,title,headRefOid,url"
+        ]
+      }
+    ],
+    "set_metadata": [
+      {
+        "issue_id": "fixture-issue-1",
+        "key": "pr_link_heal_at",
+        "value": "2026-11-12T18:00:00+09:00"
+      }
+    ]
+  },
+  "result": {
+    "requested": "title_prefixed",
+    "url": "https://github.com/fixture/preferred/pull/139"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "issue": {
+    "id": "fixture-issue-1",
+    "identifier": "DOT-3433",
+    "metadata": {
+      "project_key": "fixture-project",
+      "pr_url": "https://github.com/fixture/preferred/pull/139",
+      "repair_artifact_url": "https://github.com/fixture/repair/pull/55",
+      "pr_number": "888",
+      "pr_head_sha": "b8d898c0aa"
+    }
+  },
+  "now": "2026-11-12T18:00:00+09:00",
+  "pr_search_results": [{ "number": 99 }],
+  "pr_view": {
+    "state": "OPEN",
+    "title": "chore(deps): update dependency",
+    "headRefOid": "b8d898c0aaabcdef",
+    "url": "https://github.com/fixture/preferred/pull/139"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "issue": {
+    "id": "fixture-issue-5",
+    "identifier": "DOT-3433",
+    "metadata": { "project_key": "fixture-project" }
+  },
+  "now": "2026-11-12T18:00:00+09:00",
+  "pr_search_results": [{ "number": 1 }, { "number": 2 }],
+  "pr_view": {
+    "state": "OPEN",
+    "title": "must not be viewed",
+    "headRefOid": "head",
+    "url": "https://github.com/fixture/fixture-project/pull/1"
+  }
+}

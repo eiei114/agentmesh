@@ -1,0 +1,18 @@
+{
+  "issue": {
+    "id": "fixture-issue-11",
+    "identifier": "DOT-3433",
+    "metadata": {
+      "pr_url": "https://github.com/fixture/repo/pull/139",
+      "pr_head_sha": "abcdef1234567890"
+    }
+  },
+  "now": "2026-11-12T18:00:00+09:00",
+  "pr_search_results": [],
+  "pr_view": {
+    "state": "OPEN",
+    "title": "stale revision",
+    "headRefOid": "abcdef1234570000",
+    "url": "https://github.com/fixture/repo/pull/139"
+  }
+}
