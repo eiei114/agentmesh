@@ -1,0 +1,14 @@
+{
+  "operation": "build_watchdog_failure_detail",
+  "now": "2026-07-13T09:00:00Z",
+  "session_path": "synthetic/session.jsonl",
+  "heartbeats": [
+    {
+      "controller": "fixture-controller",
+      "detail": "synthetic phase start",
+      "event": "phase_start",
+      "phase": "fixture_collect",
+      "ts": "2026-07-13T07:00:00Z"
+    }
+  ]
+}

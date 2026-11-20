@@ -1,0 +1,4 @@
+{
+  "operation": "parse_heartbeat_lines",
+  "text": "noise\nMULTICA_HEARTBEAT {\"controller\":\"fixture-controller\",\"detail\":\"line fixture\",\"event\":\"progress\",\"phase\":\"fixture_phase\",\"ts\":\"2026-07-13T09:00:00Z\"}\nMULTICA_HEARTBEAT {malformed}"
+}

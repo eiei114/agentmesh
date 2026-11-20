@@ -1,0 +1,16 @@
+[package]
+name = "agentmesh-autopilot-heartbeat"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish = false
+rust-version.workspace = true
+description = "Deterministic Autopilot heartbeat and watchdog analysis port"
+
+[lints]
+workspace = true
+
+[dependencies]
+agentmesh-ops-kit = { path = "../kit" }
+chrono.workspace = true
+serde_json.workspace = true

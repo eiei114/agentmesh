@@ -1,0 +1,9 @@
+[
+  {
+    "event": "progress",
+    "phase": "fixture_phase",
+    "controller": "fixture-controller",
+    "ts": "2026-07-13T09:00:00Z",
+    "detail": "line fixture"
+  }
+]

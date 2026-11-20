@@ -1,0 +1,16 @@
+{
+  "state": "idle",
+  "threshold_seconds": 900,
+  "last_phase": "fixture_collect",
+  "last_event": "phase_start",
+  "last_detail": null,
+  "last_tool": null,
+  "last_activity_at": "2026-07-13T08:45:00+00:00",
+  "elapsed_seconds": 900.0,
+  "heartbeat_count": 1,
+  "tool_in_flight": false,
+  "provider_wait": false,
+  "session_path": null,
+  "has_user_progress": false,
+  "has_assistant_progress": false
+}

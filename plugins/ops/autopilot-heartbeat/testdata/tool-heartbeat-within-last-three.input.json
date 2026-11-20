@@ -1,0 +1,24 @@
+{
+  "operation": "analyze_watchdog_activity",
+  "now": "2026-07-13T09:00:00Z",
+  "heartbeats": [
+    {
+      "controller": "fixture-controller",
+      "event": "progress",
+      "phase": "a",
+      "ts": "2026-07-13T08:59:10Z"
+    },
+    {
+      "controller": "fixture-controller",
+      "event": "tool_in_flight",
+      "phase": "b",
+      "ts": "2026-07-13T08:59:20Z"
+    },
+    {
+      "controller": "fixture-controller",
+      "event": "progress",
+      "phase": "c",
+      "ts": "2026-07-13T08:59:30Z"
+    }
+  ]
+}

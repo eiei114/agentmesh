@@ -1,0 +1,28 @@
+{
+  "operation": "analyze_watchdog_activity",
+  "now": "2026-07-13T09:20:00Z",
+  "heartbeats": [
+    {
+      "controller": "fixture-controller",
+      "detail": "synthetic tool request",
+      "event": "tool_in_flight",
+      "phase": "fixture_post",
+      "tool": "fixture_tool",
+      "ts": "2026-07-13T09:10:00Z"
+    },
+    {
+      "controller": "fixture-controller",
+      "detail": "synthetic provider response wait",
+      "event": "provider_wait",
+      "phase": "fixture_draft",
+      "ts": "2026-07-13T09:12:00Z"
+    }
+  ],
+  "run_messages": [
+    {
+      "type": "tool_use",
+      "tool": "fixture_tool",
+      "created_at": "2026-07-13T09:12:00Z"
+    }
+  ]
+}
