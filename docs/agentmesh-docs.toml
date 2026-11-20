@@ -46,6 +46,11 @@ description = "Request acceptance evidence coverage App contract for determinist
 source = "docs/request-acceptance-evidence-coverage-v0.md"
 
 [[documents]]
+name = "request-rematerialization-decision-v0"
+description = "Request re-materialization decision App contract for deterministic regenerate, skip, and hold decisions"
+source = "docs/request-rematerialization-decision-v0.md"
+
+[[documents]]
 name = "threat-model-v0"
 description = "AgentMesh Phase 0 threat model"
 source = "docs/threat-model-v0.md"

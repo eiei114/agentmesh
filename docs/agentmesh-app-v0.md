@@ -185,6 +185,18 @@ See [`request-materialization-receipt-v0.md`](request-materialization-receipt-v0
 for the complete JSON contract, fixture list, and guidance for storing and
 reviewing receipts beside written artifacts.
 
+## Request re-materialization decision App
+
+`apps/request-rematerialization-decision/agentmesh-app.toml` declares a
+tool-neutral one-shot decision App. It consumes a supplied admission verdict,
+ordered bounded receipt summaries, and one supplied revision-lineage verdict;
+it never re-derives those results or reads/writes a request or artifact. It
+returns `regenerate`, `skip`, or `hold` plus ordered per-input digests and
+normalized reason codes without echoing source or tracker data.
+
+See [`request-rematerialization-decision-v0.md`](request-rematerialization-decision-v0.md)
+for the full contract, fixture list, and adapter/reviewer procedure.
+
 ## Non-Multica request adapter App
 
 `apps/non-multica-request-adapter/agentmesh-app.toml` declares a tracker-neutral adapter contract for `agentmesh-request.v0` sources. Input accepts exactly one Markdown source or one Markdown-compatible JSON object:

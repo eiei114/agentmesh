@@ -1,0 +1,1 @@
+{"contract_version":"agentmesh-request-rematerialization-decision.v0","decision":null,"error_count":1,"errors":[{"code":"DUPLICATE_RECEIPT_ORDINAL"}],"input_results":[],"reason_codes":[],"schema_version":"request-rematerialization-decision-compact.v0","valid":false}
