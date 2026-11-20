@@ -1,0 +1,3 @@
+{
+  "registry_markdown": "## Projects\n| project_key | multica_project_id | project_name | repo/workspace | status | priority | lead | notes |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| core | n/a | Core Project | workspace-core | active | high | lead-a | ` |\n\n## Local Issue Import mapping\n| project_key | obsidian_project_path | local_issue_dir | local_issue_glob | local_issue_import_enabled |\n| --- | --- | --- | --- | --- |\n| core | projects/core | issues/core | *.md | TRUE |"
+}

@@ -1,0 +1,16 @@
+{
+  "core": {
+    "import_enabled": true,
+    "key": "core",
+    "lead": "lead-a",
+    "local_issue_dir": "issues/core",
+    "local_issue_glob": "*.md",
+    "multica_project_id": "",
+    "notes": "",
+    "obsidian_project_path": "projects/core",
+    "priority": "high",
+    "project_name": "Core Project",
+    "status": "active",
+    "workspace_path": "workspace-core"
+  }
+}

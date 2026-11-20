@@ -8,7 +8,7 @@ use agentmesh_ops_managed_projects_registry::handle_request;
 fn matches_every_python_fixture() {
     let testdata = Path::new(env!("CARGO_MANIFEST_DIR")).join("testdata");
     let count = check_parity(&testdata, handle_request).expect("Python parity cases must match");
-    assert_eq!(count, 5);
+    assert_eq!(count, 6);
 }
 
 #[test]

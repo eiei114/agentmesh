@@ -13,6 +13,7 @@ directory. The fixtures use synthetic Markdown and identifiers only.
 
 Coverage includes all four tables and the table-join override order, missing
 required tables, a header mismatch, missing (`n/a`) ID normalization, invalid
-booleans, whitespace/backtick cleanup, and an escaped pipe. The Python parser
-splits table rows on literal `|`, so an escaped pipe is still rejected as a
-column-count mismatch; this port intentionally preserves that behavior.
+booleans, whitespace/backtick cleanup (including a lone backtick), and an
+escaped pipe. The Python parser splits table rows on literal `|`, so an escaped
+pipe is still rejected as a column-count mismatch; this port intentionally
+preserves that behavior.

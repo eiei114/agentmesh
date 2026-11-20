@@ -100,7 +100,11 @@ pub struct ManagedProject {
 pub fn clean_cell(cell: &str) -> String {
     let mut text = cell.trim();
     if text.starts_with('`') && text.ends_with('`') {
-        text = &text[1..text.len() - 1];
+        text = if text.len() > 1 {
+            &text[1..text.len() - 1]
+        } else {
+            ""
+        };
     }
     text.trim().to_owned()
 }
@@ -495,6 +499,7 @@ mod tests {
     #[test]
     fn cleans_wrapped_cells_and_booleans() {
         assert_eq!(clean_cell("  ` value `  "), "value");
+        assert_eq!(clean_cell("`"), "");
         assert!(parse_bool(" TRUE ").unwrap());
         assert!(!parse_bool("False").unwrap());
         assert_eq!(normalize_multica_project_id(" N/A "), "");

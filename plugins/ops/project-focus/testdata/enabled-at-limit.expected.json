@@ -1,0 +1,34 @@
+{
+  "counts": {
+    "project-orange": 1,
+    "project-red": 2
+  },
+  "focus_rank": 0,
+  "paced_out": {
+    "current": 2,
+    "limit": 2,
+    "limit_key": "max_active",
+    "project": "Red team"
+  },
+  "policy": {
+    "focus": [
+      "project-orange",
+      "project-red"
+    ],
+    "paced": {
+      "project-orange": {
+        "key": "project-orange",
+        "max_active": 1,
+        "max_in_review": null,
+        "max_running": null
+      },
+      "project-red": {
+        "key": "Red team",
+        "max_active": 2,
+        "max_in_review": null,
+        "max_running": 3
+      }
+    }
+  },
+  "project_id": "project-red"
+}

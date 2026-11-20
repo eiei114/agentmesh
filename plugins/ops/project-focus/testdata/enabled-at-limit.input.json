@@ -1,0 +1,13 @@
+{
+  "policy_text": "{\"enabled\":true,\"focus\":[{\"project_id\":\"project-red\"},{\"project_id\":\"project-orange\"},{\"project_id\":\"\"},{\"label\":\"ignored\"}],\"paced\":[{\"project_id\":\"project-red\",\"key\":\"Red team\",\"max_active\":2,\"max_running\":3,\"max_in_review\":null},{\"project_id\":\"project-orange\",\"key\":\"\",\"max_active\":1}]}",
+  "issue": {"project_id": "project-red", "status": "todo"},
+  "issues": [
+    {"project_id": "project-red", "status": "todo"},
+    {"project_id": "project-red", "status": "started_2"},
+    {"project_id": "project-red", "status": "in_review"},
+    {"project_id": "project-orange", "status": "todo"},
+    {"status": "todo"}
+  ],
+  "statuses": ["todo", "started_2"],
+  "limit_key": "max_active"
+}
