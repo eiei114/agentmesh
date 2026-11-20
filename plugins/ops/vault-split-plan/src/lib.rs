@@ -424,7 +424,7 @@ pub fn handle(request: Value) -> Result<Value, OpsError> {
         }
         "build_bucket_plans" => {
             let entries = status_entries(request)?;
-            let today = optional_string(request, "today")?;
+            let today = optional_string(request, "today")?.filter(|value| !value.is_empty());
             let plans = build_bucket_plans(&entries, today);
             Ok(json!({
                 "plans": plans.into_iter().map(|plan| json!({

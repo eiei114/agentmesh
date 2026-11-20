@@ -32,3 +32,21 @@ fn stdio_binary_matches_every_python_fixture() {
         assert_eq!(actual, case.expected, "case {}", case.name);
     }
 }
+
+#[test]
+fn empty_today_matches_omitted_today() {
+    let entries = serde_json::json!({
+        "entries": [{"path": "AGENTS.md", "raw": " M AGENTS.md"}]
+    });
+    let mut empty_today = entries.clone();
+    empty_today["op"] = serde_json::json!("build_bucket_plans");
+    empty_today["today"] = serde_json::json!("");
+
+    let mut omitted_today = entries;
+    omitted_today["op"] = serde_json::json!("build_bucket_plans");
+
+    assert_eq!(
+        handle(empty_today).expect("empty today is valid"),
+        handle(omitted_today).expect("omitted today is valid")
+    );
+}

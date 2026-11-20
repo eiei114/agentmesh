@@ -8,6 +8,14 @@ root in Git Bash, run:
 PYTHONPATH=/c/Users/Keisu/Projects/Notes/obsidian-note/4_Project/Multica-Agent-Strategy/Scripts python plugins/ops/vault-split-plan/testdata/generate_expected.py
 ```
 
+That is the exact command used to generate the checked-in expected files. If
+your vault checkout is elsewhere, substitute the directory containing
+`vault_split_commit_common.py`:
+
+```sh
+PYTHONPATH="/path/to/your/vault/4_Project/Multica-Agent-Strategy/Scripts" python plugins/ops/vault-split-plan/testdata/generate_expected.py
+```
+
 The fixtures use only synthetic paths and content. They cover path
 normalization, every exclusion pattern family, every fixed bucket in
 `BUCKET_ORDER`, dynamic skill/OSS/project buckets, quoted and renamed
