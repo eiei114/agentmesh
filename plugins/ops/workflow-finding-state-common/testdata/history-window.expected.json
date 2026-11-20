@@ -1,0 +1,12 @@
+{
+  "new": {
+    "code": "new_code",
+    "finding_state": "acknowledged",
+    "fingerprint": "new"
+  },
+  "old": {
+    "code": "old_code",
+    "finding_state": "unchanged",
+    "fingerprint": "old"
+  }
+}

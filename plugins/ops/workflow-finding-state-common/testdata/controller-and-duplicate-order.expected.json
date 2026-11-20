@@ -1,0 +1,10 @@
+{
+  "dup": {
+    "finding_state": "acknowledged",
+    "fingerprint": "dup"
+  },
+  "second": {
+    "finding_state": "new",
+    "fingerprint": "second"
+  }
+}

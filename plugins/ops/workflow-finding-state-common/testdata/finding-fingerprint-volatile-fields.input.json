@@ -1,0 +1,12 @@
+{
+  "operation": "finding_fingerprint",
+  "finding": {
+    "evidence": {
+      "detail": "later run",
+      "count": 200
+    },
+    "path": "src/監査.rs",
+    "severity": "info",
+    "code": "workflow_warning"
+  }
+}

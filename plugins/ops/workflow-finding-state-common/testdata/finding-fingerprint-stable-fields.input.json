@@ -1,0 +1,12 @@
+{
+  "operation": "finding_fingerprint",
+  "finding": {
+    "code": "workflow_warning",
+    "path": "src/監査.rs",
+    "severity": "warning",
+    "evidence": {
+      "count": 10,
+      "detail": "first run"
+    }
+  }
+}

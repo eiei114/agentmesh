@@ -1,0 +1,9 @@
+{
+  "operation": "prior_finding_state",
+  "since": "2026-08-01T00:00:00+00:00",
+  "event_lines": [
+    "{\"ts\":\"2026-08-01T01:00:00+00:00\",\"controller\":\"another-controller\",\"finding_fingerprints\":[{\"fingerprint\":\"dup\",\"finding_state\":\"ignored\"}]}",
+    "{\"ts\":\"2026-08-01T02:00:00+00:00\",\"controller\":\"workflow-health-audit\",\"finding_fingerprints\":[{\"fingerprint\":\"dup\",\"finding_state\":\"new\"},{\"fingerprint\":\"second\",\"finding_state\":\"new\"}]}",
+    "{\"ts\":\"2026-08-01T03:00:00+00:00\",\"controller\":\"workflow-health-audit\",\"finding_fingerprints\":[{\"fingerprint\":\"dup\",\"finding_state\":\"acknowledged\"}] }"
+  ]
+}
