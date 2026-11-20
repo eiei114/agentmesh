@@ -1,0 +1,40 @@
+{
+  "actions": {
+    "edit": [
+      {
+        "number": 139,
+        "repo": "eiei114/agentmesh",
+        "title": "DOT-4029: Synthetic unprefixed title"
+      }
+    ],
+    "github_calls": [
+      {
+        "args": [
+          "pr",
+          "view",
+          "139",
+          "-R",
+          "eiei114/agentmesh",
+          "--json",
+          "state,title,headRefOid,url"
+        ]
+      }
+    ],
+    "set_metadata": [
+      {
+        "issue_id": "synthetic-issue-id",
+        "key": "pr_link_heal_at",
+        "value": "2026-11-20T12:00:00+00:00"
+      },
+      {
+        "issue_id": "synthetic-issue-id",
+        "key": "pr_url",
+        "value": "https://github.com/synthetic-owner/synthetic-repo/pull/139"
+      }
+    ]
+  },
+  "result": {
+    "requested": "title_prefixed",
+    "url": "https://github.com/synthetic-owner/synthetic-repo/pull/139"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "issue": {
+    "id": "fixture-issue-7",
+    "identifier": "DOT-3433",
+    "metadata": { "pr_link_heal_at": "2026-11-12T17:00:01+09:00" }
+  },
+  "now": "2026-11-12T18:00:00+09:00",
+  "pr_search_results": [],
+  "pr_view": null
+}

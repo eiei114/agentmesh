@@ -1,0 +1,19 @@
+{
+  "issue": {
+    "id": "synthetic-issue-id",
+    "identifier": "DOT-4029",
+    "metadata": {
+      "project_key": "agentmesh",
+      "pr_number": 139,
+      "pr_head_sha": "12345678901é"
+    }
+  },
+  "now": "2026-11-20T12:00:00+00:00",
+  "pr_search_results": [],
+  "pr_view": {
+    "state": "OPEN",
+    "headRefOid": "12345678901érest",
+    "title": "Synthetic unprefixed title",
+    "url": "https://github.com/synthetic-owner/synthetic-repo/pull/139"
+  }
+}

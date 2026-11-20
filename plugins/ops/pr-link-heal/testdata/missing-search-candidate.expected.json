@@ -1,0 +1,23 @@
+{
+  "actions": {
+    "edit": [],
+    "github_calls": [
+      {
+        "args": [
+          "pr",
+          "list",
+          "-R",
+          "eiei114/fixture-project",
+          "--state",
+          "open",
+          "--search",
+          "DOT-3433",
+          "--json",
+          "number"
+        ]
+      }
+    ],
+    "set_metadata": []
+  },
+  "result": {}
+}

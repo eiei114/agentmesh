@@ -1,0 +1,20 @@
+{
+  "actions": {
+    "edit": [],
+    "github_calls": [
+      {
+        "args": [
+          "pr",
+          "view",
+          "139",
+          "-R",
+          "fixture/repo",
+          "--json",
+          "state,title,headRefOid,url"
+        ]
+      }
+    ],
+    "set_metadata": []
+  },
+  "result": {}
+}
