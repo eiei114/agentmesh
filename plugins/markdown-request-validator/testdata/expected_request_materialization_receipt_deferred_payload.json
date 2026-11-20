@@ -1,0 +1,21 @@
+{
+  "schema_version": "request-materialization-receipt-compact.v0",
+  "valid": true,
+  "receipt": {
+    "receipt_version": "request-materialization-receipt.v0",
+    "contract_version": "agentmesh-request-materialization-receipt.v0",
+    "verdict": "drifted",
+    "fields": [
+      { "field": "scope_key", "ordinal": 1, "compared_values_digest": "sha256:01be8f47ff113afc12ed0a81fc59fea40468106cc36f87cf3f1bb3439fe26625", "code": "matched" },
+      { "field": "request_kind", "ordinal": 2, "compared_values_digest": "sha256:54e14f852e9634eb481399286ad9698d3e39c3244c9a3a023846f9885dc58af5", "code": "matched" },
+      { "field": "title_digest", "ordinal": 3, "compared_values_digest": "sha256:d49d513d729cd8b2b750081e6ac7b53fb3a70279229a0a312ba273714688402b", "code": "matched" },
+      { "field": "criteria_count", "ordinal": 4, "compared_values_digest": "sha256:96a1b00defb1967c7cf00050b628583790af1e6c99f03d56b560be04e26d36ec", "code": "matched" },
+      { "field": "admission_verdict", "ordinal": 5, "compared_values_digest": "sha256:f507e6481e7a0f5c2e427535faf85049c315cd671b15faf2028ca6fa2302e1ed", "code": "admission_not_admitted" },
+      { "field": "source_digest", "ordinal": 6, "compared_values_digest": "sha256:751ec168b12187dcd4b0bc21a91538791a45c32ef605160186117d4a06e7b21d", "code": "matched" },
+      { "field": "artifact_digest", "ordinal": 7, "compared_values_digest": "sha256:c28c521a6480ee7a33c0f5957a1041ed34f39d27eddecb451e7c5c2ed3da92b2", "code": "artifact_digest_recorded" }
+    ],
+    "reason_codes": ["admission_not_admitted"]
+  },
+  "error_count": 0,
+  "errors": []
+}

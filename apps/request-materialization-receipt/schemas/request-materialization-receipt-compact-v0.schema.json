@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentmesh.local/schemas/request-materialization-receipt-compact-v0.schema.json",
+  "title": "Request Materialization Receipt Compact Output v0",
+  "description": "Deterministic bounded correspondence receipt or normalized failure. Failed inputs never return partial receipt fields.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "valid", "receipt", "error_count", "errors"],
+  "properties": {
+    "schema_version": { "const": "request-materialization-receipt-compact.v0" },
+    "valid": { "type": "boolean" },
+    "receipt": { "anyOf": [{ "$ref": "#/$defs/receipt" }, { "type": "null" }] },
+    "error_count": { "type": "integer", "minimum": 0 },
+    "errors": { "type": "array", "items": { "$ref": "#/$defs/error_record" } }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "valid": { "const": true } }, "required": ["valid"] },
+      "then": {
+        "properties": {
+          "receipt": { "$ref": "#/$defs/receipt" },
+          "error_count": { "const": 0 },
+          "errors": { "maxItems": 0 }
+        }
+      },
+      "else": {
+        "properties": {
+          "receipt": { "type": "null" },
+          "error_count": { "const": 1 },
+          "errors": { "minItems": 1, "maxItems": 1 }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["receipt_version", "contract_version", "verdict", "fields", "reason_codes"],
+      "properties": {
+        "receipt_version": { "const": "request-materialization-receipt.v0" },
+        "contract_version": { "const": "agentmesh-request-materialization-receipt.v0" },
+        "verdict": { "enum": ["corresponded", "drifted"] },
+        "fields": {
+          "type": "array",
+          "minItems": 7,
+          "maxItems": 7,
+          "prefixItems": [
+            { "$ref": "#/$defs/scope_key_field" },
+            { "$ref": "#/$defs/request_kind_field" },
+            { "$ref": "#/$defs/title_digest_field" },
+            { "$ref": "#/$defs/criteria_count_field" },
+            { "$ref": "#/$defs/admission_verdict_field" },
+            { "$ref": "#/$defs/source_digest_field" },
+            { "$ref": "#/$defs/artifact_digest_field" }
+          ],
+          "items": false
+        },
+        "reason_codes": { "type": "array", "items": { "$ref": "#/$defs/reason_code" } }
+      }
+    },
+    "field_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["field", "ordinal", "compared_values_digest", "code"],
+      "properties": {
+        "field": { "enum": ["scope_key", "request_kind", "title_digest", "criteria_count", "admission_verdict", "source_digest", "artifact_digest"] },
+        "ordinal": { "type": "integer", "minimum": 1, "maximum": 7 },
+        "compared_values_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "code": { "enum": ["matched", "scope_key_mismatch", "request_kind_mismatch", "title_digest_mismatch", "criteria_count_mismatch", "admission_not_admitted", "source_digest_mismatch", "artifact_digest_recorded"] }
+      }
+    },
+    "scope_key_field": {
+      "allOf": [
+        { "$ref": "#/$defs/field_result" },
+        { "properties": { "field": { "const": "scope_key" }, "ordinal": { "const": 1 }, "code": { "enum": ["matched", "scope_key_mismatch"] } } }
+      ]
+    },
+    "request_kind_field": {
+      "allOf": [
+        { "$ref": "#/$defs/field_result" },
+        { "properties": { "field": { "const": "request_kind" }, "ordinal": { "const": 2 }, "code": { "enum": ["matched", "request_kind_mismatch"] } } }
+      ]
+    },
+    "title_digest_field": {
+      "allOf": [
+        { "$ref": "#/$defs/field_result" },
+        { "properties": { "field": { "const": "title_digest" }, "ordinal": { "const": 3 }, "code": { "enum": ["matched", "title_digest_mismatch"] } } }
+      ]
+    },
+    "criteria_count_field": {
+      "allOf": [
+        { "$ref": "#/$defs/field_result" },
+        { "properties": { "field": { "const": "criteria_count" }, "ordinal": { "const": 4 }, "code": { "enum": ["matched", "criteria_count_mismatch"] } } }
+      ]
+    },
+    "admission_verdict_field": {
+      "allOf": [
+        { "$ref": "#/$defs/field_result" },
+        { "properties": { "field": { "const": "admission_verdict" }, "ordinal": { "const": 5 }, "code": { "enum": ["matched", "admission_not_admitted"] } } }
+      ]
+    },
+    "source_digest_field": {
+      "allOf": [
+        { "$ref": "#/$defs/field_result" },
+        { "properties": { "field": { "const": "source_digest" }, "ordinal": { "const": 6 }, "code": { "enum": ["matched", "source_digest_mismatch"] } } }
+      ]
+    },
+    "artifact_digest_field": {
+      "allOf": [
+        { "$ref": "#/$defs/field_result" },
+        { "properties": { "field": { "const": "artifact_digest" }, "ordinal": { "const": 7 }, "code": { "const": "artifact_digest_recorded" } } }
+      ]
+    },
+    "reason_code": {
+      "enum": ["scope_key_mismatch", "request_kind_mismatch", "title_digest_mismatch", "criteria_count_mismatch", "admission_not_admitted", "source_digest_mismatch"]
+    },
+    "error_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code"],
+      "properties": {
+        "code": { "enum": ["INPUT_TOO_LARGE", "MALFORMED_INPUT", "UNSUPPORTED_SCHEMA_VERSION", "UNSUPPORTED_CONTRACT_VERSION", "REQUIRED_FIELD_MISSING", "INVALID_FIELD", "CROSS_SCOPE_INPUT"] }
+      }
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentmesh.local/schemas/request-materialization-receipt-input-v0.schema.json",
+  "title": "Request Materialization Receipt Input v0",
+  "description": "One supplied admission record, canonical request summary, and bounded adapter artifact descriptor. No source or artifact paths, tracker identifiers, credentials, or request body text are accepted.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "contract_version", "admission_record", "request_summary", "artifact"],
+  "properties": {
+    "schema_version": { "const": "request-materialization-receipt-input.v0" },
+    "contract_version": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "admission_record": { "$ref": "#/$defs/admission_record" },
+    "request_summary": { "$ref": "#/$defs/request_summary" },
+    "artifact": { "$ref": "#/$defs/artifact_descriptor" }
+  },
+  "$defs": {
+    "scope_key": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "pattern": "^[A-Za-z0-9:._-]+$"
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "request_kind": { "enum": ["app", "repair"] },
+    "admission_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["verdict", "scope_key", "request_kind", "title_digest", "criteria_count", "source_digest"],
+      "properties": {
+        "verdict": { "enum": ["admit", "defer"] },
+        "scope_key": { "$ref": "#/$defs/scope_key" },
+        "request_kind": { "$ref": "#/$defs/request_kind" },
+        "title_digest": { "$ref": "#/$defs/digest" },
+        "criteria_count": { "type": "integer", "minimum": 0, "maximum": 10000 },
+        "source_digest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "request_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scope_key", "request_kind", "title_digest", "criteria_count", "source_digest"],
+      "properties": {
+        "scope_key": { "$ref": "#/$defs/scope_key" },
+        "request_kind": { "$ref": "#/$defs/request_kind" },
+        "title_digest": { "$ref": "#/$defs/digest" },
+        "criteria_count": { "type": "integer", "minimum": 0, "maximum": 10000 },
+        "source_digest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "artifact_descriptor": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Adapter identity, artifact kind and digest, plus the source digest the adapter recorded with that artifact for correspondence verification.",
+      "required": ["adapter_id", "artifact_kind", "artifact_digest", "source_digest"],
+      "properties": {
+        "adapter_id": { "type": "string", "minLength": 1, "maxLength": 64, "pattern": "^[a-z][a-z0-9._-]*$" },
+        "artifact_kind": { "type": "string", "minLength": 1, "maxLength": 64, "pattern": "^[a-z][a-z0-9._-]*$" },
+        "artifact_digest": { "$ref": "#/$defs/digest" },
+        "source_digest": { "$ref": "#/$defs/digest" }
+      }
+    }
+  }
+}

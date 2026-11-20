@@ -1,0 +1,25 @@
+{
+  "schema_version": "request-materialization-receipt-input.v0",
+  "contract_version": "agentmesh-request-materialization-receipt.v0",
+  "admission_record": {
+    "verdict": "admit",
+    "scope_key": "tracker:sample-request",
+    "request_kind": "app",
+    "title_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "criteria_count": 3,
+    "source_digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  },
+  "request_summary": {
+    "scope_key": "agentmesh:app:sample-request",
+    "request_kind": "app",
+    "title_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "criteria_count": 3,
+    "source_digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  },
+  "artifact": {
+    "adapter_id": "markdown_adapter",
+    "artifact_kind": "markdown",
+    "artifact_digest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "source_digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  }
+}

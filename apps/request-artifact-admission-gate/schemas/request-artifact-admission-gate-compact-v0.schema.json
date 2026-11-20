@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentmesh.local/schemas/request-artifact-admission-gate-compact-v0.schema.json",
+  "title": "Request Artifact Admission Gate Compact Output v0",
+  "description": "Deterministic, redacted admission record or a normalized failure without partial gate output.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "admission_version", "valid", "admission", "error_count", "errors"],
+  "properties": {
+    "schema_version": { "const": "request-artifact-admission-compact.v0" },
+    "admission_version": { "const": "request-artifact-admission.v0" },
+    "valid": { "type": "boolean" },
+    "admission": {
+      "anyOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["decision", "contract_version", "revision_identity", "gates"],
+          "properties": {
+            "decision": { "enum": ["admit", "defer"] },
+            "contract_version": { "const": "request-artifact-admission.v0" },
+            "revision_identity": { "$ref": "#/$defs/sha256" },
+            "gates": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 3,
+              "prefixItems": [
+                { "$ref": "#/$defs/source_neutrality_result" },
+                { "$ref": "#/$defs/coverage_result" },
+                { "$ref": "#/$defs/lineage_result" }
+              ],
+              "items": false
+            }
+          }
+        }
+      ]
+    },
+    "error_count": { "type": "integer", "enum": [0, 1] },
+    "errors": {
+      "type": "array",
+      "maxItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code"],
+        "properties": {
+          "code": {
+            "enum": [
+              "AGENTMESH_REQUEST_ARTIFACT_ADMISSION_INPUT_INVALID",
+              "AGENTMESH_REQUEST_ARTIFACT_ADMISSION_INPUT_TOO_LARGE",
+              "AGENTMESH_REQUEST_ARTIFACT_ADMISSION_CONTRACT_VERSION_UNSUPPORTED",
+              "AGENTMESH_REQUEST_ARTIFACT_ADMISSION_SUBGATE_VERSION_UNSUPPORTED",
+              "AGENTMESH_REQUEST_ARTIFACT_ADMISSION_CROSS_SCOPE_INPUT"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "valid": { "const": true } } },
+      "then": {
+        "properties": { "admission": { "type": "object" }, "error_count": { "const": 0 }, "errors": { "maxItems": 0 } }
+      },
+      "else": {
+        "properties": { "admission": { "type": "null" }, "error_count": { "const": 1 }, "errors": { "minItems": 1, "maxItems": 1 } }
+      }
+    }
+  ],
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$", "maxLength": 71 },
+    "reason_codes": {
+      "type": "array",
+      "maxItems": 1,
+      "items": { "enum": ["source_not_neutral", "acceptance_criteria_uncovered", "revision_not_current"] }
+    },
+    "gate_base": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ordinal", "name", "verdict", "reason_codes", "input_sha256"],
+      "properties": {
+        "ordinal": { "type": "integer" },
+        "name": { "type": "string" },
+        "verdict": { "type": "string" },
+        "reason_codes": { "$ref": "#/$defs/reason_codes" },
+        "input_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "source_neutrality_result": {
+      "allOf": [
+        { "$ref": "#/$defs/gate_base" },
+        { "properties": { "ordinal": { "const": 1 }, "name": { "const": "source_neutrality" }, "verdict": { "enum": ["neutral", "non_neutral"] } } }
+      ],
+      "oneOf": [
+        { "properties": { "verdict": { "const": "neutral" }, "reason_codes": { "maxItems": 0 } } },
+        { "properties": { "verdict": { "const": "non_neutral" }, "reason_codes": { "const": ["source_not_neutral"] } } }
+      ]
+    },
+    "coverage_result": {
+      "allOf": [
+        { "$ref": "#/$defs/gate_base" },
+        { "properties": { "ordinal": { "const": 2 }, "name": { "const": "acceptance_evidence_coverage" }, "verdict": { "enum": ["covered", "uncovered"] } } }
+      ],
+      "oneOf": [
+        { "properties": { "verdict": { "const": "covered" }, "reason_codes": { "maxItems": 0 } } },
+        { "properties": { "verdict": { "const": "uncovered" }, "reason_codes": { "const": ["acceptance_criteria_uncovered"] } } }
+      ]
+    },
+    "lineage_result": {
+      "allOf": [
+        { "$ref": "#/$defs/gate_base" },
+        { "properties": { "ordinal": { "const": 3 }, "name": { "const": "revision_lineage" }, "verdict": { "enum": ["current", "stale"] } } }
+      ],
+      "oneOf": [
+        { "properties": { "verdict": { "const": "current" }, "reason_codes": { "maxItems": 0 } } },
+        { "properties": { "verdict": { "const": "stale" }, "reason_codes": { "const": ["revision_not_current"] } } }
+      ]
+    }
+  }
+}
