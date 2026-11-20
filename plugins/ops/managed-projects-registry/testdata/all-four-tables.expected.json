@@ -1,0 +1,44 @@
+{
+  "build": {
+    "import_enabled": false,
+    "key": "build",
+    "lead": "lead-b",
+    "local_issue_dir": "issues/build",
+    "local_issue_glob": "issue-*.md",
+    "multica_project_id": "11111111-2222-3333-4444-555555555555",
+    "notes": "build notes",
+    "obsidian_project_path": "projects/build",
+    "priority": "medium",
+    "project_name": "Build Project",
+    "status": "active",
+    "workspace_path": "workspace-build"
+  },
+  "core": {
+    "import_enabled": true,
+    "key": "core",
+    "lead": "lead-a",
+    "local_issue_dir": "issues/core",
+    "local_issue_glob": "*.md",
+    "multica_project_id": "",
+    "notes": "core notes",
+    "obsidian_project_path": "projects/core",
+    "priority": "high",
+    "project_name": "Core Project",
+    "status": "active",
+    "workspace_path": "workspace-core"
+  },
+  "portfolio": {
+    "import_enabled": true,
+    "key": "portfolio",
+    "lead": "lead-c",
+    "local_issue_dir": "issues/portfolio",
+    "local_issue_glob": "*.md",
+    "multica_project_id": "22222222-3333-4444-5555-666666666666",
+    "notes": "meta role",
+    "obsidian_project_path": "projects/portfolio",
+    "priority": "low",
+    "project_name": "Portfolio Project",
+    "status": "active",
+    "workspace_path": ""
+  }
+}

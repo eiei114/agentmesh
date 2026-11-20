@@ -1,0 +1,16 @@
+[package]
+name = "agentmesh-ops-managed-projects-registry"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish = false
+rust-version.workspace = true
+description = "Managed-project registry Markdown parser port"
+
+[lints]
+workspace = true
+
+[dependencies]
+agentmesh-ops-kit = { path = "../kit" }
+serde.workspace = true
+serde_json.workspace = true

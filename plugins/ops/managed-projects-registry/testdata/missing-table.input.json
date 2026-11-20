@@ -1,0 +1,3 @@
+{
+  "registry_markdown": "## Local Issue Import mapping\n| project_key | obsidian_project_path | local_issue_dir | local_issue_glob | local_issue_import_enabled |\n| --- | --- | --- | --- | --- |\n| core | projects/core | issues/core | *.md | true |"
+}
