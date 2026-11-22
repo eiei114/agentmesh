@@ -1,8 +1,9 @@
 //! Audit persistence seams: real filesystem + fault-injection fake.
 
-use chrono::Local;
 use std::path::{Path, PathBuf};
 use thiserror::Error;
+use time::macros::format_description;
+use time::OffsetDateTime;
 
 /// Persistence errors used by lifecycle.
 #[derive(Debug, Error, Clone, PartialEq, Eq)]
@@ -75,7 +76,10 @@ impl AuditStore for FsAuditStore {
         if run_id.contains('/') || run_id.contains('\\') || run_id.contains("..") {
             return Err(AuditError::PathEscape);
         }
-        let day = Local::now().format("%Y-%m-%d").to_string();
+        let day = OffsetDateTime::now_local()
+            .unwrap_or_else(|_| OffsetDateTime::now_utc())
+            .format(format_description!("[year]-[month]-[day]"))
+            .map_err(|e| AuditError::DirCreate(e.to_string()))?;
         let dest_dir = parent_canon.join(&day).join(run_id);
         std::fs::create_dir_all(&dest_dir).map_err(|e| AuditError::DirCreate(e.to_string()))?;
         let dest = dest_dir.join("full.json");

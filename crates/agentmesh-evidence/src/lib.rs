@@ -19,7 +19,6 @@ pub use discovery::{
 };
 pub use graph::{load_graph, validate_graph, Graph};
 
-use chrono::{SecondsFormat, Utc};
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use sha2::{Digest, Sha256};
@@ -30,6 +29,8 @@ use std::io::Read;
 use std::path::{Component, Path, PathBuf};
 use std::time::{Duration, Instant};
 use thiserror::Error;
+use time::macros::format_description;
+use time::{Date, OffsetDateTime};
 
 use serde_yaml::Value as YamlValue;
 
@@ -571,7 +572,7 @@ pub fn compile(
         "namespace": request.namespace,
         "decision_scope": (request.kind == EvidenceKind::Decision)
             .then_some(request.decision_scope.as_str()),
-        "generated_at": Utc::now().to_rfc3339_opts(SecondsFormat::Secs, true),
+        "generated_at": utc_now_rfc3339_secs(),
         "duration_ms": started.elapsed().as_millis(),
         "mode_used": match request.mode {
             EvidenceMode::DirectQmd => "qmd_only",
@@ -739,6 +740,15 @@ pub fn evaluate(
         "promotion": {"pass": promotion, "graph_default_enabled": promotion},
         "fixtures": rows,
     }))
+}
+
+/// Current UTC time as `YYYY-MM-DDTHH:MM:SSZ` (whole seconds, `Z` suffix).
+fn utc_now_rfc3339_secs() -> String {
+    OffsetDateTime::now_utc()
+        .format(format_description!(
+            "[year]-[month]-[day]T[hour]:[minute]:[second]Z"
+        ))
+        .expect("fixed UTC timestamp format cannot fail")
 }
 
 fn evaluation_runs(rows: &[Value]) -> impl Iterator<Item = &Value> {
@@ -1409,8 +1419,11 @@ fn source_freshness(
         .and_then(|frontmatter| frontmatter_text(frontmatter, "stale_after"))
         .or_else(|| legacy_frontmatter.get("stale_after").cloned());
     if let Some(value) = stale_after {
-        if let Ok(date) = chrono::NaiveDate::parse_from_str(&value, "%Y-%m-%d") {
-            return if date < Utc::now().date_naive() {
+        if let Ok(date) = Date::parse(
+            &value,
+            format_description!("[year]-[month padding:none]-[day padding:none]"),
+        ) {
+            return if date < OffsetDateTime::now_utc().date() {
                 "stale"
             } else {
                 "fresh"
@@ -1616,6 +1629,36 @@ fn graph_error_code(error: &EvidenceError) -> &'static str {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn generated_at_is_whole_second_utc_with_z_suffix() {
+        let text = utc_now_rfc3339_secs();
+        let bytes = text.as_bytes();
+        assert_eq!(text.len(), 20, "{text}");
+        assert_eq!(bytes[4], b'-');
+        assert_eq!(bytes[7], b'-');
+        assert_eq!(bytes[10], b'T');
+        assert_eq!(bytes[13], b':');
+        assert_eq!(bytes[16], b':');
+        assert_eq!(bytes[19], b'Z');
+        assert!(text[..19]
+            .chars()
+            .enumerate()
+            .all(|(i, c)| matches!(i, 4 | 7 | 10 | 13 | 16) || c.is_ascii_digit()));
+    }
+
+    #[test]
+    fn stale_after_compares_calendar_dates_against_today() {
+        let freshness = |value: &str| {
+            let text = format!("---\nstale_after: {value}\n---\nbody\n");
+            source_freshness(EvidenceKind::AgentRun, &text, None, None)
+        };
+        assert_eq!(freshness("2000-01-05"), "stale");
+        assert_eq!(freshness("2000-1-5"), "stale");
+        assert_eq!(freshness("2999-12-31"), "fresh");
+        // Text that is not a date falls through to the default.
+        assert_eq!(freshness("not-a-date"), "fresh");
+    }
 
     #[test]
     fn normalizes_qmd_uri_and_line_suffix() {

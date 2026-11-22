@@ -180,6 +180,7 @@ Production (`default-members`):
 Additional production workspace crates (not `default-members`):
 
 - `agentmesh-evidence` — QMD fusion, namespace/sensitivity policy, graph traversal, and Evidence Packet assembly
+- `agentmesh-timefmt` — RFC 3339 parse/format helpers shared by plugins (replaces chrono, keeps the previous timestamp text)
 
 Apps / packaging (version-controlled, not `default-members`):
 

@@ -7,8 +7,9 @@
 use std::collections::BTreeMap;
 
 use agentmesh_ops_kit::OpsError;
-use chrono::{DateTime, Duration, FixedOffset};
 use serde_json::{json, Value};
+use time::format_description::well_known::Rfc3339;
+use time::{Duration, OffsetDateTime};
 
 const OWNER: &str = "eiei114";
 const WAIT: Duration = Duration::hours(1);
@@ -31,7 +32,7 @@ pub fn handle(request: Value) -> Result<Value, OpsError> {
         .get("now")
         .and_then(Value::as_str)
         .ok_or_else(|| OpsError::invalid_request("now must be an ISO-8601 string"))?;
-    let now = DateTime::parse_from_rfc3339(now_text)
+    let now = OffsetDateTime::parse(now_text, &Rfc3339)
         .map_err(|_| OpsError::invalid_request("now must be a valid ISO-8601 timestamp"))?;
     let search_results = request
         .get("pr_search_results")
@@ -69,7 +70,7 @@ pub fn handle(request: Value) -> Result<Value, OpsError> {
 
 fn attempt(
     issue: &Value,
-    now: DateTime<FixedOffset>,
+    now: OffsetDateTime,
     search_results: &Value,
     pr_view: &Value,
     github_calls: &mut Vec<Value>,
@@ -83,8 +84,8 @@ fn attempt(
     let started = md(issue, "pr_link_heal_at");
     if let Some(started) = started.filter(python_truthy) {
         let started_text = python_string(&started);
-        if let Ok(started_at) = DateTime::parse_from_rfc3339(&started_text) {
-            if now.signed_duration_since(started_at) < WAIT {
+        if let Ok(started_at) = OffsetDateTime::parse(&started_text, &Rfc3339) {
+            if now - started_at < WAIT {
                 return Ok(json!({
                     "requested": "waiting_for_link",
                     "since": started,
@@ -341,13 +342,21 @@ fn python_repr(value: &Value) -> String {
     }
 }
 
-fn python_isoformat(now: DateTime<FixedOffset>) -> String {
-    let mut value = now.format("%Y-%m-%dT%H:%M:%S").to_string();
-    let microsecond = now.timestamp_subsec_micros();
+fn python_isoformat(now: OffsetDateTime) -> String {
+    let mut value = format!(
+        "{:04}-{:02}-{:02}T{:02}:{:02}:{:02}",
+        now.year(),
+        u8::from(now.month()),
+        now.day(),
+        now.hour(),
+        now.minute(),
+        now.second()
+    );
+    let microsecond = now.microsecond();
     if microsecond != 0 {
         value.push_str(&format!(".{microsecond:06}"));
     }
-    let offset_seconds = now.offset().local_minus_utc();
+    let offset_seconds = now.offset().whole_seconds();
     let sign = if offset_seconds < 0 { '-' } else { '+' };
     let absolute_offset = offset_seconds.unsigned_abs();
     value.push_str(&format!(

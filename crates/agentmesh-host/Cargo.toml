@@ -10,7 +10,7 @@ description = "AgentMesh Phase 0 process supervision, framing, lifecycle, and au
 agentmesh-proto = { workspace = true }
 anyhow = { workspace = true }
 bytes = { workspace = true }
-chrono = { workspace = true }
+time = { workspace = true }
 hex = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
