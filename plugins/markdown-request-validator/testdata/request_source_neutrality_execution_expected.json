@@ -1,0 +1,34 @@
+{
+  "schema_version": "request-source-neutrality-compact.v0",
+  "neutrality_version": "request-source-neutrality.v0",
+  "valid": true,
+  "neutrality": {
+    "verdict": "non_neutral",
+    "field_count": 7,
+    "finding_count": 2,
+    "findings_truncated": false,
+    "findings": [
+      {
+        "ordinal": 1,
+        "category": "execution_command",
+        "code": "AGENTMESH_REQUEST_SOURCE_NEUTRALITY_EXECUTION_COMMAND",
+        "field_path": "follow_up"
+      },
+      {
+        "ordinal": 2,
+        "category": "execution_command",
+        "code": "AGENTMESH_REQUEST_SOURCE_NEUTRALITY_EXECUTION_COMMAND",
+        "field_path": "verification"
+      }
+    ],
+    "neutral_fields": [
+      "acceptance_criteria.1",
+      "problem",
+      "request_kind",
+      "scope",
+      "title"
+    ]
+  },
+  "error_count": 0,
+  "errors": []
+}

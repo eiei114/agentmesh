@@ -1,0 +1,46 @@
+{
+  "schema_version": "request-source-neutrality-compact.v0",
+  "neutrality_version": "request-source-neutrality.v0",
+  "valid": true,
+  "neutrality": {
+    "verdict": "non_neutral",
+    "field_count": 8,
+    "finding_count": 4,
+    "findings_truncated": false,
+    "findings": [
+      {
+        "ordinal": 1,
+        "category": "tracker_identifier",
+        "code": "AGENTMESH_REQUEST_SOURCE_NEUTRALITY_TRACKER_IDENTIFIER",
+        "field_path": "notes"
+      },
+      {
+        "ordinal": 2,
+        "category": "session_sidecar_path",
+        "code": "AGENTMESH_REQUEST_SOURCE_NEUTRALITY_SESSION_SIDECAR_PATH",
+        "field_path": "notes"
+      },
+      {
+        "ordinal": 3,
+        "category": "readiness_hint",
+        "code": "AGENTMESH_REQUEST_SOURCE_NEUTRALITY_READINESS_HINT",
+        "field_path": "ready_for_multica"
+      },
+      {
+        "ordinal": 4,
+        "category": "tracker_identifier",
+        "code": "AGENTMESH_REQUEST_SOURCE_NEUTRALITY_TRACKER_IDENTIFIER",
+        "field_path": "source_ref"
+      }
+    ],
+    "neutral_fields": [
+      "acceptance_criteria.1",
+      "problem",
+      "request_kind",
+      "scope",
+      "title"
+    ]
+  },
+  "error_count": 0,
+  "errors": []
+}
