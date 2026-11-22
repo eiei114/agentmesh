@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentmesh.local/schemas/request-revision-delta-compact-v0.schema.json",
+  "title": "Request Revision Delta Compact Output v0",
+  "description": "Deterministic field-level revision delta with one contract-affecting flag; failed inputs have no partial delta. Adapter extras are reported by path and change class only.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "valid", "contract_version", "contract_affecting", "canonical_changes", "adapter_extra_changes", "diagnostics", "error_count", "errors"],
+  "properties": {
+    "schema_version": { "const": "request-revision-delta-compact.v0" },
+    "valid": { "type": "boolean" },
+    "contract_version": { "type": ["string", "null"], "maxLength": 128 },
+    "contract_affecting": { "type": ["boolean", "null"] },
+    "canonical_changes": { "type": "array", "maxItems": 5, "items": { "$ref": "#/$defs/canonical_change" } },
+    "adapter_extra_changes": { "type": "array", "maxItems": 64, "items": { "$ref": "#/$defs/extra_change" } },
+    "diagnostics": { "type": "array", "maxItems": 2, "items": { "enum": ["no_change", "canonical_contract_change", "adapter_extras_changed"] } },
+    "error_count": { "type": "integer", "enum": [0, 1] },
+    "errors": { "type": "array", "maxItems": 1, "items": { "$ref": "#/$defs/error_record" } }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "valid": { "const": true } }, "required": ["valid"] },
+      "then": {
+        "properties": {
+          "contract_affecting": { "type": "boolean" },
+          "canonical_changes": { "minItems": 5, "maxItems": 5 },
+          "diagnostics": { "minItems": 1 },
+          "error_count": { "const": 0 },
+          "errors": { "maxItems": 0 }
+        }
+      },
+      "else": {
+        "properties": {
+          "contract_affecting": { "type": "null" },
+          "canonical_changes": { "maxItems": 0 },
+          "adapter_extra_changes": { "maxItems": 0 },
+          "diagnostics": { "maxItems": 0 },
+          "error_count": { "const": 1 },
+          "errors": { "minItems": 1, "maxItems": 1 }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$", "maxLength": 71 },
+    "change_class": { "enum": ["added", "removed", "changed", "unchanged"] },
+    "canonical_change": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "change_class", "base_digest", "revised_digest"],
+      "properties": {
+        "path": { "enum": ["title", "request_kind", "body_summary", "acceptance_criteria", "blocked_by"] },
+        "change_class": { "$ref": "#/$defs/change_class" },
+        "base_digest": { "anyOf": [{ "$ref": "#/$defs/sha256" }, { "type": "null" }] },
+        "revised_digest": { "anyOf": [{ "$ref": "#/$defs/sha256" }, { "type": "null" }] }
+      }
+    },
+    "extra_change": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "change_class"],
+      "properties": {
+        "path": { "type": "string", "maxLength": 64, "pattern": "^[a-z][a-z0-9._-]*$" },
+        "change_class": { "$ref": "#/$defs/change_class" }
+      }
+    },
+    "error_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code"],
+      "properties": {
+        "code": { "enum": ["INPUT_TOO_LARGE", "MALFORMED_INPUT", "UNSUPPORTED_SCHEMA_VERSION", "UNSUPPORTED_CONTRACT_VERSION", "REQUIRED_FIELD_MISSING", "INVALID_FIELD", "CROSS_SCOPE_INPUT"] }
+      }
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentmesh.local/schemas/request-revision-delta-input-v0.schema.json",
+  "title": "Request Revision Delta Input v0",
+  "description": "Two validated canonical request summaries for one scope plus explicit contract versions. Adapter extras are compared but never reported by value.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "contract_version", "base", "revised"],
+  "properties": {
+    "schema_version": { "const": "request-revision-delta-input.v0" },
+    "contract_version": { "const": "agentmesh-request-revision-delta.v0" },
+    "base": { "$ref": "#/$defs/summary" },
+    "revised": { "$ref": "#/$defs/summary" }
+  },
+  "$defs": {
+    "text": { "type": "string", "maxLength": 1024 },
+    "text_list": { "type": "array", "maxItems": 32, "items": { "$ref": "#/$defs/text" } },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "contract_version", "scope_key", "canonical_fields", "adapter_extras"],
+      "properties": {
+        "schema_version": { "const": "request-revision-summary.v0" },
+        "contract_version": { "const": "agentmesh-request-revision-delta.v0" },
+        "scope_key": { "type": "string", "maxLength": 128, "pattern": "^agentmesh:[a-z0-9][a-z0-9:._-]*$" },
+        "canonical_fields": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["title", "request_kind", "acceptance_criteria"],
+          "properties": {
+            "title": { "$ref": "#/$defs/text" },
+            "request_kind": { "$ref": "#/$defs/text" },
+            "body_summary": { "$ref": "#/$defs/text" },
+            "acceptance_criteria": { "$ref": "#/$defs/text_list" },
+            "blocked_by": { "$ref": "#/$defs/text_list" }
+          }
+        },
+        "adapter_extras": {
+          "type": "object",
+          "maxProperties": 32,
+          "propertyNames": { "pattern": "^[a-z][a-z0-9._-]{0,63}$" },
+          "additionalProperties": true
+        }
+      }
+    }
+  }
+}
