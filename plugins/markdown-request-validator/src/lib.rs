@@ -15,6 +15,7 @@ pub mod request_markdown_renderer;
 pub mod request_materialization_audit;
 pub mod request_materialization_receipt;
 pub mod request_rematerialization_decision;
+pub mod request_revision_delta;
 
 use agentmesh_request_evidence::{adapter_evidence_digest, RequestEvidenceFields};
 use serde::Deserialize;

@@ -1,0 +1,50 @@
+{
+  "schema_version": "request-revision-delta-input.v0",
+  "contract_version": "agentmesh-request-revision-delta.v0",
+  "base": {
+    "schema_version": "request-revision-summary.v0",
+    "contract_version": "agentmesh-request-revision-delta.v0",
+    "scope_key": "agentmesh:app:request-revision-delta",
+    "canonical_fields": {
+      "title": "Add a deterministic request revision delta App",
+      "request_kind": "app",
+      "body_summary": "Compare two canonical request summaries for one scope.",
+      "acceptance_criteria": [
+        "Identical summaries produce a byte-identical delta.",
+        "Adapter extras never set the contract-affecting flag."
+      ],
+      "blocked_by": []
+    },
+    "adapter_extras": {
+      "adapter.label": "ready",
+      "adapter.legacy": "old",
+      "adapter.stable": "same",
+      "adapter.credential_ref": "token-value-should-not-leak",
+      "adapter.sidecar": "C:/sidecar/path",
+      "adapter.tracker": "tracker-9999"
+    }
+  },
+  "revised": {
+    "schema_version": "request-revision-summary.v0",
+    "contract_version": "agentmesh-request-revision-delta.v0",
+    "scope_key": "agentmesh:app:request-revision-delta",
+    "canonical_fields": {
+      "title": "Add a deterministic request revision delta App",
+      "request_kind": "app",
+      "body_summary": "Compare two canonical request summaries for one scope.",
+      "acceptance_criteria": [
+        "Identical summaries produce a byte-identical delta with stable field ordering.",
+        "Adapter extras never set the contract-affecting flag."
+      ],
+      "blocked_by": []
+    },
+    "adapter_extras": {
+      "adapter.label": "ready",
+      "adapter.legacy": "old",
+      "adapter.stable": "same",
+      "adapter.credential_ref": "token-value-should-not-leak",
+      "adapter.sidecar": "C:/sidecar/path",
+      "adapter.tracker": "tracker-9999"
+    }
+  }
+}

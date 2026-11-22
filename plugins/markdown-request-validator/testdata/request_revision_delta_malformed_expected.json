@@ -1,0 +1,1 @@
+{"adapter_extra_changes":[],"canonical_changes":[],"contract_affecting":null,"contract_version":"agentmesh-request-revision-delta.v0","diagnostics":[],"error_count":1,"errors":[{"code":"REQUIRED_FIELD_MISSING"}],"schema_version":"request-revision-delta-compact.v0","valid":false}
