@@ -1,0 +1,17 @@
+{
+  "args": [
+    "--since",
+    "2026-08-11T15:00:00+00:00",
+    "--until",
+    "2026-08-12T22:00:00.123456+00:00",
+    "--include-sessions",
+    "--emit-orphan-session-events",
+    "--orphan-top",
+    "8",
+    "--orphan-token-threshold",
+    "250000",
+    "--apply",
+    "--json"
+  ],
+  "script": "summarize-autopilot-metrics.py"
+}

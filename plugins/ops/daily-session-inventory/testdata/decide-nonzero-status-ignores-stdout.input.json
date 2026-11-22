@@ -1,0 +1,9 @@
+{
+  "op": "decide",
+  "now": "2026-08-13T07:00:00+09:00",
+  "runner": {
+    "status": 3,
+    "stdout": "{\"orphan_session_observations\": {\"selected_count\": 3, \"watermark_advanced\": true}}",
+    "stderr": "partial"
+  }
+}

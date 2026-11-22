@@ -1,0 +1,9 @@
+{
+  "op": "decide",
+  "now": "2026-08-13T07:00:00+09:00",
+  "runner": {
+    "status": -9,
+    "stdout": "not-json",
+    "stderr": "killed"
+  }
+}
