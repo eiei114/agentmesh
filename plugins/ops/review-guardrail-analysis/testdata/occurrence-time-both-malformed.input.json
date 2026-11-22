@@ -1,0 +1,7 @@
+{
+  "op": "occurrence_time",
+  "item": {
+    "finding_created_at": "x",
+    "observed_at": "y"
+  }
+}

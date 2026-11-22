@@ -1,0 +1,11 @@
+{
+  "op": "analyze",
+  "records": [],
+  "registry": {
+    "promotion_window_days": 90,
+    "minimum_findings": 3,
+    "minimum_repositories": 2,
+    "guardrails": []
+  },
+  "now": 5
+}

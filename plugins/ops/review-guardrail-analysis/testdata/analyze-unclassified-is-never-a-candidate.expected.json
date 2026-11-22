@@ -1,0 +1,24 @@
+{
+  "window_days": 90,
+  "cutoff": "2026-08-24T00:00:00+00:00",
+  "rows": [
+    {
+      "key": "unclassified",
+      "title": "unclassified",
+      "finding_count": 4,
+      "repository_count": 4,
+      "repositories": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "threshold_met": true,
+      "immediate_candidate": true,
+      "prevention_status": "unregistered",
+      "prevention_target": null,
+      "recurrence_count": 0
+    }
+  ],
+  "promotion_candidates": []
+}

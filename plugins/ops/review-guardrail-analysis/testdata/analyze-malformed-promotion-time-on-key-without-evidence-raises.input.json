@@ -1,0 +1,19 @@
+{
+  "op": "analyze",
+  "records": [],
+  "registry": {
+    "promotion_window_days": 90,
+    "minimum_findings": 3,
+    "minimum_repositories": 2,
+    "guardrails": [
+      {
+        "key": "K",
+        "title": "Title K",
+        "prevention_status": "enforced",
+        "prevention_target": "lint K",
+        "prevention_promoted_at": "soon"
+      }
+    ]
+  },
+  "now": "2026-11-22T00:00:00Z"
+}

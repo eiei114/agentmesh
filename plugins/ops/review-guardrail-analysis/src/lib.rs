@@ -264,7 +264,9 @@ fn parse_time(value: &str) -> Result<Moment, OpsError> {
                 }
             }
         }
-        if hour > 23 || minute > 59 || second > 59 {
+        // Python 3.14 reads exactly `24:00:00` (no fraction) as the next midnight.
+        let midnight_24 = hour == 24 && minute == 0 && second == 0 && fraction == 0;
+        if (hour > 23 && !midnight_24) || minute > 59 || second > 59 {
             return Err(malformed());
         }
         seconds_of_day = hour * 3600 + minute * 60 + second;

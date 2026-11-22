@@ -1,0 +1,24 @@
+{
+  "window_days": 90,
+  "cutoff": "2026-08-24T00:00:00+00:00",
+  "rows": [
+    {
+      "key": "K",
+      "title": "Title K",
+      "finding_count": 4,
+      "repository_count": 4,
+      "repositories": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "threshold_met": true,
+      "immediate_candidate": false,
+      "prevention_status": "enforced",
+      "prevention_target": "lint K",
+      "recurrence_count": 3
+    }
+  ],
+  "promotion_candidates": []
+}

@@ -1,0 +1,21 @@
+{
+  "op": "analyze",
+  "records": [
+    {
+      "normalized_guardrail_key": "K",
+      "repo": "a",
+      "finding_created_at": "2026-09-01T00:00:00Z"
+    }
+  ],
+  "registry": {
+    "guardrails": [
+      {
+        "key": "K",
+        "title": "Title K",
+        "prevention_status": "catalog_only",
+        "prevention_target": "lint K"
+      }
+    ]
+  },
+  "now": "2026-11-22T00:00:00Z"
+}

@@ -1,0 +1,49 @@
+{
+  "op": "analyze",
+  "records": [
+    {
+      "normalized_guardrail_key": "zeta",
+      "repo": "a",
+      "finding_created_at": "2026-11-01T00:00:00Z",
+      "immediate_candidate": true
+    },
+    {
+      "normalized_guardrail_key": "alpha",
+      "repo": "a",
+      "finding_created_at": "2026-11-02T00:00:00Z",
+      "immediate_candidate": true
+    },
+    {
+      "normalized_guardrail_key": "Mid",
+      "repo": "a",
+      "finding_created_at": "2026-11-03T00:00:00Z",
+      "immediate_candidate": true
+    },
+    {
+      "normalized_guardrail_key": "beta",
+      "repo": "a",
+      "finding_created_at": "2026-11-04T00:00:00Z",
+      "immediate_candidate": true
+    }
+  ],
+  "registry": {
+    "promotion_window_days": 90,
+    "minimum_findings": 3,
+    "minimum_repositories": 2,
+    "guardrails": [
+      {
+        "key": "omega",
+        "title": "Title omega",
+        "prevention_status": "catalog_only",
+        "prevention_target": "lint omega"
+      },
+      {
+        "key": "beta",
+        "title": "Title beta",
+        "prevention_status": "catalog_only",
+        "prevention_target": "lint beta"
+      }
+    ]
+  },
+  "now": "2026-11-22T00:00:00Z"
+}

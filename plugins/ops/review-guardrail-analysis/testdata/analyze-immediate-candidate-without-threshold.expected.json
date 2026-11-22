@@ -1,0 +1,36 @@
+{
+  "window_days": 90,
+  "cutoff": "2026-08-24T00:00:00+00:00",
+  "rows": [
+    {
+      "key": "K",
+      "title": "Title K",
+      "finding_count": 1,
+      "repository_count": 1,
+      "repositories": [
+        "a"
+      ],
+      "threshold_met": false,
+      "immediate_candidate": true,
+      "prevention_status": "catalog_only",
+      "prevention_target": "lint K",
+      "recurrence_count": 0
+    }
+  ],
+  "promotion_candidates": [
+    {
+      "key": "K",
+      "title": "Title K",
+      "finding_count": 1,
+      "repository_count": 1,
+      "repositories": [
+        "a"
+      ],
+      "threshold_met": false,
+      "immediate_candidate": true,
+      "prevention_status": "catalog_only",
+      "prevention_target": "lint K",
+      "recurrence_count": 0
+    }
+  ]
+}
