@@ -1,0 +1,4 @@
+{
+  "op": "slugify",
+  "value": "snake_case_name"
+}

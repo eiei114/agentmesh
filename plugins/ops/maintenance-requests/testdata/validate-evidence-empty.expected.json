@@ -1,0 +1,6 @@
+{
+  "error": {
+    "kind": "invalid_request",
+    "message": "evidence must contain 1..8 strings"
+  }
+}

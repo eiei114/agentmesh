@@ -1,0 +1,24 @@
+{
+  "op": "render_issue",
+  "request": {
+    "schema_version": "agentmesh-request.v0",
+    "kind": "app",
+    "title": "Quote \"title\" \\ back — 日本語 ✨",
+    "summary": "Summary with \"quotes\", backslash \\ and 日本語 text.",
+    "problem": "Problem line one.\nProblem line two with `code` and # hash.",
+    "desired_capability": "Desired: yaml-like `key: value` and [[link]].",
+    "acceptance_criteria": [
+      "Criterion with \"quotes\"",
+      "Criterion with 日本語 and emoji 😀"
+    ],
+    "evidence": [
+      "Evidence: https://example.invalid/x?y=1&z=2",
+      "- nested dash"
+    ],
+    "same_scope_key": "agentmesh:app:fancy.scope_1",
+    "target_app": "app \"quoted\" \\ name 日本語",
+    "user_story": "As a user, I say \"hello\" and 日本語."
+  },
+  "now": "2026-07-16T07:40:00+09:00",
+  "source_rel": "synthetic/Requests/日本語 \"q\" \\ x.md"
+}

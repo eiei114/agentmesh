@@ -1,0 +1,10 @@
+{
+  "op": "patrol",
+  "repair_candidates": [
+    {},
+    {
+      "code": "second"
+    }
+  ],
+  "daily_exists": false
+}

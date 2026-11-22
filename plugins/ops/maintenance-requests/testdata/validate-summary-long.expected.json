@@ -1,0 +1,6 @@
+{
+  "error": {
+    "kind": "invalid_request",
+    "message": "summary length must be 10..500"
+  }
+}

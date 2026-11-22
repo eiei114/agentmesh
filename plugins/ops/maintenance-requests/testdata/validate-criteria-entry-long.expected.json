@@ -1,0 +1,6 @@
+{
+  "error": {
+    "kind": "invalid_request",
+    "message": "acceptance_criteria entries must be strings of length 3..500"
+  }
+}

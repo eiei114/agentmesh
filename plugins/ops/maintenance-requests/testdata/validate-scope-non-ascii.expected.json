@@ -1,0 +1,6 @@
+{
+  "error": {
+    "kind": "invalid_request",
+    "message": "same_scope_key must match agentmesh:<stable-scope>"
+  }
+}

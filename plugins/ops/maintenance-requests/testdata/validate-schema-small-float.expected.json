@@ -1,0 +1,6 @@
+{
+  "error": {
+    "kind": "invalid_request",
+    "message": "unsupported schema_version: 1e-05"
+  }
+}

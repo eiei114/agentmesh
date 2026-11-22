@@ -1,0 +1,19 @@
+{
+  "acceptance_criteria": [
+    "Manifest validates through pinned CLI.",
+    "Fixtures produce deterministic output."
+  ],
+  "desired_capability": "Add a fixture-driven Markdown normalization App without Multica domain types.",
+  "evidence": [
+    "AgentMesh roadmap requests a non-Multica Markdown App."
+  ],
+  "kind": "app",
+  "problem": "Markdown tools currently need orchestrator-specific glue and duplicate parsing.",
+  "request_id": "2026-07-16-markdown-normalization-app",
+  "same_scope_key": "agentmesh:app:markdown-normalizer",
+  "schema_version": "agentmesh-request.v0",
+  "summary": "Normalize deterministic Markdown documents through an AgentMesh App.",
+  "target_app": "42",
+  "title": "Markdown normalization app",
+  "user_story": "As a tool author, I can invoke one pinned Markdown App from different orchestrators."
+}

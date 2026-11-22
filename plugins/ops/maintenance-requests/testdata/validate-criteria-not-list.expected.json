@@ -1,0 +1,6 @@
+{
+  "error": {
+    "kind": "invalid_request",
+    "message": "acceptance_criteria must contain 2..8 strings"
+  }
+}

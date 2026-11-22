@@ -1,0 +1,9 @@
+{
+  "op": "patrol",
+  "repair_candidates": [
+    {
+      "code": "main_ci_failed"
+    }
+  ],
+  "daily_exists": false
+}

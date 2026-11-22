@@ -1,0 +1,6 @@
+{
+  "error": {
+    "kind": "invalid_request",
+    "message": "request_id must be lowercase ASCII kebab-case"
+  }
+}
