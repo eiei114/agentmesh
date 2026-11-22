@@ -1,0 +1,16 @@
+[package]
+name = "agentmesh-ops-daily-session-inventory"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish = false
+rust-version.workspace = true
+description = "AgentMesh daily session inventory window and result decision port (unstable)"
+
+[lints]
+workspace = true
+
+[dependencies]
+agentmesh-ops-kit = { path = "../kit" }
+serde_json.workspace = true
+time.workspace = true
