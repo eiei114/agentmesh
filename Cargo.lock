@@ -286,6 +286,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "agentmesh-ops-escape-sensitive-edits"
+version = "0.1.0"
+dependencies = [
+ "agentmesh-ops-kit",
+ "serde_json",
+]
+
+[[package]]
 name = "agentmesh-ops-kit"
 version = "0.1.0"
 dependencies = [
