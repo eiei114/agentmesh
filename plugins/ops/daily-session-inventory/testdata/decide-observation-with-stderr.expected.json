@@ -1,0 +1,8 @@
+{
+  "status": 0,
+  "stderr": "warning: slow scan",
+  "summary": {
+    "selected_count": 3,
+    "watermark_advanced": true
+  }
+}
