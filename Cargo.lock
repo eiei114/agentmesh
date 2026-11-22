@@ -277,6 +277,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "agentmesh-ops-daily-session-inventory"
+version = "0.1.0"
+dependencies = [
+ "agentmesh-ops-kit",
+ "serde_json",
+ "time",
+]
+
+[[package]]
 name = "agentmesh-ops-kit"
 version = "0.1.0"
 dependencies = [
