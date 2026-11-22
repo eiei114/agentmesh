@@ -1,0 +1,24 @@
+{
+  "op": "select_top_orphan_sessions",
+  "session_records": [
+    {
+      "session_id": "high",
+      "session_file": "C:/Synthetic/Sessions/high.jsonl",
+      "total_tokens": 150000,
+      "size_bytes": 2000,
+      "estimated_cost_usd": 0.4
+    },
+    {
+      "session_id": "missing",
+      "session_file": "C:/Synthetic/Sessions/missing.jsonl",
+      "total_tokens": 0,
+      "size_bytes": 512,
+      "missing_usage": true
+    }
+  ],
+  "matched_session_paths": [
+    "c:/synthetic/sessions/high.jsonl"
+  ],
+  "top_n": 5,
+  "token_threshold": 100000
+}

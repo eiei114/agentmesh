@@ -1,0 +1,14 @@
+{
+  "op": "compact_orphan_session",
+  "item": {
+    "session_id": "",
+    "session_file": null,
+    "total_tokens": 0,
+    "estimated_cost_usd": 0.0,
+    "size_bytes": 0,
+    "model_provider": "",
+    "model_name": null,
+    "warnings": [],
+    "missing_usage": false
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "op": "select_top_orphan_sessions",
+  "session_records": [
+    {
+      "session_id": "quiet",
+      "session_file": "/s/quiet.jsonl",
+      "total_tokens": 10,
+      "size_bytes": 1,
+      "estimated_cost_usd": "free"
+    },
+    {
+      "session_id": "loud",
+      "session_file": "/s/loud.jsonl",
+      "total_tokens": 300000,
+      "size_bytes": 1
+    }
+  ]
+}

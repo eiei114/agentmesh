@@ -1,0 +1,9 @@
+[
+  {
+    "session_id": "above",
+    "session_file": "/s/above.jsonl",
+    "total_tokens": 250001,
+    "estimated_cost_usd": 0.1,
+    "size_bytes": 10
+  }
+]

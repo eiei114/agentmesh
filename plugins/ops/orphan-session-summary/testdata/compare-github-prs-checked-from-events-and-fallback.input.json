@@ -1,0 +1,32 @@
+{
+  "op": "compare_log_aware_summaries",
+  "baseline": {
+    "top_scan_events": [
+      {
+        "controller": "coderabbit-monitor",
+        "github_prs_checked": 3
+      },
+      {
+        "controller": "coderabbit-monitor",
+        "github_prs_checked": 4
+      },
+      {
+        "controller": "review-feedback-harvester",
+        "github_prs_checked": 99
+      }
+    ]
+  },
+  "current": {
+    "top_scan_events": [
+      {
+        "controller": "coderabbit-monitor",
+        "github_prs_checked": "x"
+      }
+    ],
+    "controller_summary": {
+      "coderabbit-monitor": {
+        "github_prs_checked": 11
+      }
+    }
+  }
+}

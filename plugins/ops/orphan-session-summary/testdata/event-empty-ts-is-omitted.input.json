@@ -1,0 +1,10 @@
+{
+  "op": "build_orphan_session_observation_event",
+  "session": {
+    "session_id": "s-ts",
+    "session_file": "/s/ts.jsonl",
+    "total_tokens": 10,
+    "size_bytes": 1
+  },
+  "ts": ""
+}

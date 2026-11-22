@@ -1,0 +1,11 @@
+{
+  "op": "compare_log_aware_summaries",
+  "baseline": {
+    "controller_summary": [
+      "not",
+      "an",
+      "object"
+    ]
+  },
+  "current": {}
+}

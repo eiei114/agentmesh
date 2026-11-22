@@ -1,0 +1,18 @@
+{
+  "op": "sum_event_field",
+  "summary": {
+    "top_scan_events": [
+      {
+        "controller": "other",
+        "github_prs_checked": 5
+      }
+    ],
+    "controller_summary": {
+      "coderabbit-monitor": {
+        "github_prs_checked": 50
+      }
+    }
+  },
+  "controller": "coderabbit-monitor",
+  "field": "github_prs_checked"
+}

@@ -1,0 +1,27 @@
+{
+  "op": "select_top_orphan_sessions",
+  "session_records": [
+    {
+      "session_id": "no-file",
+      "total_tokens": 900000,
+      "size_bytes": 1
+    },
+    {
+      "session_id": "empty-file",
+      "session_file": "",
+      "total_tokens": 900000,
+      "size_bytes": 1
+    },
+    {
+      "session_id": "null-file",
+      "session_file": null,
+      "total_tokens": 900000
+    },
+    {
+      "session_id": "ok",
+      "session_file": "/s/ok.jsonl",
+      "total_tokens": 900000,
+      "size_bytes": 1
+    }
+  ]
+}

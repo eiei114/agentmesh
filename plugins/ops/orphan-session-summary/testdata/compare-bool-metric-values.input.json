@@ -1,0 +1,23 @@
+{
+  "op": "compare_log_aware_summaries",
+  "baseline": {
+    "controller_summary": {
+      "coderabbit-monitor": {
+        "prefilter_skip_count": true
+      }
+    },
+    "session_feedback_join": {
+      "orphan_session_count": true
+    }
+  },
+  "current": {
+    "controller_summary": {
+      "coderabbit-monitor": {
+        "prefilter_skip_count": false
+      }
+    },
+    "session_feedback_join": {
+      "orphan_session_count": false
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "op": "compact_orphan_session",
+  "item": {
+    "session_id": "s-obj",
+    "warnings": "text-warning",
+    "missing_usage": {},
+    "model_name": {}
+  }
+}

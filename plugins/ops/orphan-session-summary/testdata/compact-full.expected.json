@@ -1,0 +1,14 @@
+{
+  "session_id": "s-full",
+  "session_file": "C:/synthetic/a.jsonl",
+  "total_tokens": 300000,
+  "estimated_cost_usd": 1.25,
+  "size_bytes": 4096,
+  "model_provider": "provider-a",
+  "model_name": "model-a",
+  "warnings": [
+    "w1",
+    "w2"
+  ],
+  "missing_usage": true
+}

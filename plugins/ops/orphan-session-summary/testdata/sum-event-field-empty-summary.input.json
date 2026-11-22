@@ -1,0 +1,6 @@
+{
+  "op": "sum_event_field",
+  "summary": {},
+  "controller": "c",
+  "field": "f"
+}

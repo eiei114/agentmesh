@@ -1,0 +1,12 @@
+{
+  "op": "sum_event_field",
+  "summary": {
+    "controller_summary": {
+      "c": {
+        "f": 7.9
+      }
+    }
+  },
+  "controller": "c",
+  "field": "f"
+}

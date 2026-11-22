@@ -1,0 +1,8 @@
+[
+  {
+    "session_id": "loud",
+    "session_file": "/s/loud.jsonl",
+    "total_tokens": 300000,
+    "size_bytes": 1
+  }
+]

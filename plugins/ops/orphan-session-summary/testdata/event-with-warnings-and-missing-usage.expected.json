@@ -1,0 +1,17 @@
+{
+  "ts": "2026-07-06T12:00:00+09:00",
+  "feedback_version": 1,
+  "event_type": "observation",
+  "project_key": "workspace",
+  "controller": "session-inventory",
+  "run_source": "cli",
+  "result_type": "orphan_session",
+  "feedback_code": "session_inventory_orphan_session",
+  "feedback_note": "session-inventory orphan_session session_id=s-warn tokens=0",
+  "session_file": "/s/w.jsonl",
+  "session_id": "s-warn",
+  "warning_flags": [
+    "truncated"
+  ],
+  "missing_usage": true
+}

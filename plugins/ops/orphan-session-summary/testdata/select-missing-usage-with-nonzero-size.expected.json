@@ -1,0 +1,26 @@
+[
+  {
+    "session_id": "flag-with-tokens",
+    "session_file": "/s/z4.jsonl",
+    "total_tokens": 10,
+    "size_bytes": 5,
+    "missing_usage": true
+  },
+  {
+    "session_id": "string-flag",
+    "session_file": "/s/z6.jsonl",
+    "total_tokens": 10,
+    "size_bytes": 5,
+    "missing_usage": "false"
+  },
+  {
+    "session_id": "zero-tokens-size",
+    "session_file": "/s/z1.jsonl",
+    "size_bytes": 4096
+  },
+  {
+    "session_id": "absent-tokens-size",
+    "session_file": "/s/z3.jsonl",
+    "size_bytes": 10
+  }
+]

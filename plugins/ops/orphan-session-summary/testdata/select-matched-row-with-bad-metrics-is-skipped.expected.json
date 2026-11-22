@@ -1,0 +1,8 @@
+[
+  {
+    "session_id": "good",
+    "session_file": "/s/good.jsonl",
+    "total_tokens": 300000,
+    "size_bytes": 1
+  }
+]

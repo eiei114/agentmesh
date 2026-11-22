@@ -1,0 +1,49 @@
+{
+  "op": "select_top_orphan_sessions",
+  "session_records": [
+    {
+      "session_id": "zero-tokens-size",
+      "session_file": "/s/z1.jsonl",
+      "total_tokens": 0,
+      "size_bytes": 4096
+    },
+    {
+      "session_id": "zero-tokens-no-size",
+      "session_file": "/s/z2.jsonl",
+      "total_tokens": 0,
+      "size_bytes": 0
+    },
+    {
+      "session_id": "absent-tokens-size",
+      "session_file": "/s/z3.jsonl",
+      "size_bytes": 10
+    },
+    {
+      "session_id": "flag-with-tokens",
+      "session_file": "/s/z4.jsonl",
+      "total_tokens": 10,
+      "size_bytes": 5,
+      "missing_usage": true
+    },
+    {
+      "session_id": "flag-no-size",
+      "session_file": "/s/z5.jsonl",
+      "total_tokens": 10,
+      "size_bytes": 0,
+      "missing_usage": true
+    },
+    {
+      "session_id": "string-flag",
+      "session_file": "/s/z6.jsonl",
+      "total_tokens": 10,
+      "size_bytes": 5,
+      "missing_usage": "false"
+    },
+    {
+      "session_id": "negative-size",
+      "session_file": "/s/z7.jsonl",
+      "total_tokens": 0,
+      "size_bytes": -5
+    }
+  ]
+}

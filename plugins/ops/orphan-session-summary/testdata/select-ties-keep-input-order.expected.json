@@ -1,0 +1,43 @@
+[
+  {
+    "session_id": "t6",
+    "session_file": "/s/t6.jsonl",
+    "total_tokens": 500000,
+    "size_bytes": 1
+  },
+  {
+    "session_id": "t5",
+    "session_file": "/s/t5.jsonl",
+    "total_tokens": 400000,
+    "estimated_cost_usd": 0.5,
+    "size_bytes": 200
+  },
+  {
+    "session_id": "t4",
+    "session_file": "/s/t4.jsonl",
+    "total_tokens": 400000,
+    "estimated_cost_usd": 2.0,
+    "size_bytes": 100
+  },
+  {
+    "session_id": "t1",
+    "session_file": "/s/t1.jsonl",
+    "total_tokens": 400000,
+    "estimated_cost_usd": 1.0,
+    "size_bytes": 100
+  },
+  {
+    "session_id": "t2",
+    "session_file": "/s/t2.jsonl",
+    "total_tokens": 400000,
+    "estimated_cost_usd": 1.0,
+    "size_bytes": 100
+  },
+  {
+    "session_id": "t3",
+    "session_file": "/s/t3.jsonl",
+    "total_tokens": 400000,
+    "estimated_cost_usd": 1.0,
+    "size_bytes": 100
+  }
+]

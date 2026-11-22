@@ -1,0 +1,14 @@
+[
+  {
+    "session_id": "c",
+    "session_file": "/s/c.jsonl",
+    "total_tokens": 500000,
+    "size_bytes": 1
+  },
+  {
+    "session_id": "b",
+    "session_file": "/s/b.jsonl",
+    "total_tokens": 400000,
+    "size_bytes": 1
+  }
+]

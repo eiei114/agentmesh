@@ -1,0 +1,52 @@
+{
+  "comparison_rows": [
+    {
+      "metric": "orphan_session_count",
+      "before": 12,
+      "after": 5,
+      "delta": -7.0
+    },
+    {
+      "metric": "coderabbit_no_candidate_rate",
+      "before": 0.8,
+      "after": 0.4,
+      "delta": -0.4
+    },
+    {
+      "metric": "coderabbit_prefilter_skip_count",
+      "before": 1,
+      "after": 8,
+      "delta": 7.0
+    },
+    {
+      "metric": "coderabbit_github_prs_checked",
+      "before": 0,
+      "after": 0,
+      "delta": 0.0
+    },
+    {
+      "metric": "review_harvester_total_tokens",
+      "before": 2000000,
+      "after": 500000,
+      "delta": -1500000.0
+    },
+    {
+      "metric": "review_harvester_cooldown_skip_count",
+      "before": 0,
+      "after": 6,
+      "delta": 6.0
+    },
+    {
+      "metric": "daemon_findings_downgraded",
+      "before": 1,
+      "after": 2,
+      "delta": 1.0
+    },
+    {
+      "metric": "daemon_findings_actionable",
+      "before": 1,
+      "after": 0,
+      "delta": -1.0
+    }
+  ]
+}

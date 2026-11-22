@@ -1,0 +1,14 @@
+[
+  {
+    "session_id": "m3",
+    "session_file": "C:/Users/Me/s3.jsonl",
+    "total_tokens": 300000,
+    "size_bytes": 1
+  },
+  {
+    "session_id": "m4",
+    "session_file": "C:/Users/Me/s4.jsonl",
+    "total_tokens": 300000,
+    "size_bytes": 1
+  }
+]

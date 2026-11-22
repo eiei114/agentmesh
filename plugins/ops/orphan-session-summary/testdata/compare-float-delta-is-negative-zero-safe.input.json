@@ -1,0 +1,17 @@
+{
+  "op": "compare_log_aware_summaries",
+  "baseline": {
+    "controller_summary": {
+      "coderabbit-monitor": {
+        "no_candidate_rate": 0.5
+      }
+    }
+  },
+  "current": {
+    "controller_summary": {
+      "coderabbit-monitor": {
+        "no_candidate_rate": 0.4999999999
+      }
+    }
+  }
+}

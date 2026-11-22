@@ -1,0 +1,9 @@
+{
+  "op": "compare_log_aware_summaries",
+  "baseline": {
+    "top_scan_events": [
+      "oops"
+    ]
+  },
+  "current": {}
+}

@@ -1,0 +1,22 @@
+{
+  "op": "sum_event_field",
+  "summary": {
+    "top_scan_events": [
+      {
+        "controller": "c",
+        "f": 2
+      },
+      {
+        "controller": "c",
+        "f": -2
+      }
+    ],
+    "controller_summary": {
+      "c": {
+        "f": 8
+      }
+    }
+  },
+  "controller": "c",
+  "field": "f"
+}

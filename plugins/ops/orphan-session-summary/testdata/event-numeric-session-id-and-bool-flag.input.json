@@ -1,0 +1,12 @@
+{
+  "op": "build_orphan_session_observation_event",
+  "session": {
+    "session_id": 42,
+    "session_file": "/s/n.jsonl",
+    "total_tokens": 5,
+    "size_bytes": 1,
+    "missing_usage": 1,
+    "warnings": "single"
+  },
+  "ts": "2026-07-06T12:00:00+09:00"
+}
