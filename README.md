@@ -214,6 +214,7 @@ Apps / packaging (version-controlled, not `default-members`):
 - `apps/production-authority/` — production authority modes, promotion gates, and Cursor recovery manifest + IO schemas
 - `apps/production-evaluation-report/` — 7-day rollback / 30-day evaluation report manifest + IO schemas
 - `apps/request-artifact-admission-gate/` — deterministic pre-materialization request admission gate manifest + IO schemas
+- `apps/request-source-neutrality-gate/` — deterministic request source neutrality gate manifest + IO schemas
 - `toolchains/*.toml` — consumer pins for private prereleases (see `docs/private-prerelease-v0.md`)
 
 Internal / test-only:
@@ -249,6 +250,7 @@ Internal / test-only:
 - `agentmesh-production-authority` — authority modes through todo_runner with promotion gates and allowed CLI argv (plugin-owned types only)
 - `agentmesh-production-evaluation-report` — compact aggregate evaluation report for rollback/result windows (plugin-owned types only)
 - `agentmesh-request-artifact-admission-gate` — deterministic pre-materialization admission record binary (`markdown-request-validator` package)
+- `agentmesh-request-source-neutrality-gate` — deterministic request source neutrality report binary (`markdown-request-validator` package; contract in `docs/request-source-neutrality-gate-v0.md`)
 
 Every crate is `publish = false` during private Phase 0/1.0.
 
