@@ -1,0 +1,15 @@
+[package]
+name = "agentmesh-ops-escape-sensitive-edits"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish = false
+rust-version.workspace = true
+description = "Escape-sensitive JS/TS edit checks port"
+
+[lints]
+workspace = true
+
+[dependencies]
+agentmesh-ops-kit = { path = "../kit" }
+serde_json.workspace = true
