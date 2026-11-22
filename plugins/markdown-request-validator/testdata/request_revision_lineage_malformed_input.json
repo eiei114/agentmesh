@@ -1,0 +1,14 @@
+{
+  "schema_version": "request-revision-lineage-input.v0",
+  "contract_version": "request-revision-lineage.v0",
+  "scope_key": "agentmesh:app:request-revision-lineage",
+  "revisions": [
+    {
+      "revision_id": "r1",
+      "scope_key": "agentmesh:app:request-revision-lineage",
+      "digest": "not-a-digest",
+      "supersedes": []
+    }
+  ],
+  "materialization_reference_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+}

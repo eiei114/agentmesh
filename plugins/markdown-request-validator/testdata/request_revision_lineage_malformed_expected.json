@@ -1,0 +1,12 @@
+{
+  "schema_version": "request-revision-lineage-compact.v0",
+  "lineage_version": "request-revision-lineage.v0",
+  "valid": false,
+  "lineage": null,
+  "error_count": 1,
+  "errors": [
+    {
+      "code": "AGENTMESH_REQUEST_REVISION_LINEAGE_INPUT_INVALID"
+    }
+  ]
+}
