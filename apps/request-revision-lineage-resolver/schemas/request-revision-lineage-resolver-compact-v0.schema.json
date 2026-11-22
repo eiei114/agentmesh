@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentmesh.local/schemas/request-revision-lineage-resolver-compact-v0.schema.json",
+  "title": "Request Revision Lineage Resolver Compact Output v0",
+  "description": "Deterministic revision lineage with one current revision, an ordered supersession chain and a bounded materialization verdict, or a normalized failure without partial lineage output.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "lineage_version", "valid", "lineage", "error_count", "errors"],
+  "properties": {
+    "schema_version": { "const": "request-revision-lineage-compact.v0" },
+    "lineage_version": { "const": "request-revision-lineage.v0" },
+    "valid": { "type": "boolean" },
+    "lineage": {
+      "anyOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["scope_key", "revision_count", "current_revision_id", "current_digest", "chain", "materialization"],
+          "properties": {
+            "scope_key": { "type": "string", "maxLength": 96 },
+            "revision_count": { "type": "integer", "minimum": 1, "maximum": 32 },
+            "current_revision_id": { "type": "string", "maxLength": 64 },
+            "current_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+            "chain": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 32,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["ordinal", "revision_id", "digest", "role", "superseded_by"],
+                "properties": {
+                  "ordinal": { "type": "integer", "minimum": 1, "maximum": 32 },
+                  "revision_id": { "type": "string", "maxLength": 64 },
+                  "digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+                  "role": { "enum": ["current", "superseded"] },
+                  "superseded_by": { "anyOf": [{ "type": "null" }, { "type": "string", "maxLength": 64 }] }
+                }
+              }
+            },
+            "materialization": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["verdict", "reason_count", "reasons"],
+              "properties": {
+                "verdict": { "enum": ["current", "stale", "unknown"] },
+                "reason_count": { "type": "integer", "minimum": 0, "maximum": 1 },
+                "reasons": {
+                  "type": "array",
+                  "maxItems": 1,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["code", "field_path"],
+                    "properties": {
+                      "code": {
+                        "enum": [
+                          "AGENTMESH_REQUEST_REVISION_LINEAGE_MATERIALIZATION_ABSENT",
+                          "AGENTMESH_REQUEST_REVISION_LINEAGE_MATERIALIZATION_SUPERSEDED",
+                          "AGENTMESH_REQUEST_REVISION_LINEAGE_MATERIALIZATION_UNRECOGNIZED"
+                        ]
+                      },
+                      "field_path": { "type": "string", "maxLength": 96 }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "error_count": { "type": "integer", "enum": [0, 1] },
+    "errors": {
+      "type": "array",
+      "maxItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code"],
+        "properties": {
+          "code": {
+            "enum": [
+              "AGENTMESH_REQUEST_REVISION_LINEAGE_INPUT_INVALID",
+              "AGENTMESH_REQUEST_REVISION_LINEAGE_INPUT_TOO_LARGE",
+              "AGENTMESH_REQUEST_REVISION_LINEAGE_SCHEMA_VERSION_UNSUPPORTED",
+              "AGENTMESH_REQUEST_REVISION_LINEAGE_DUPLICATE_REVISION_ID",
+              "AGENTMESH_REQUEST_REVISION_LINEAGE_SCOPE_MISMATCH",
+              "AGENTMESH_REQUEST_REVISION_LINEAGE_DANGLING_REFERENCE",
+              "AGENTMESH_REQUEST_REVISION_LINEAGE_CYCLE_DETECTED",
+              "AGENTMESH_REQUEST_REVISION_LINEAGE_BRANCHED_LINEAGE",
+              "AGENTMESH_REQUEST_REVISION_LINEAGE_MULTIPLE_CURRENT"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "valid": { "const": true } } },
+      "then": {
+        "properties": { "lineage": { "type": "object" }, "error_count": { "const": 0 }, "errors": { "maxItems": 0 } }
+      },
+      "else": {
+        "properties": { "lineage": { "type": "null" }, "error_count": { "const": 1 }, "errors": { "minItems": 1, "maxItems": 1 } }
+      }
+    }
+  ]
+}
