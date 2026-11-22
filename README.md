@@ -215,6 +215,7 @@ Apps / packaging (version-controlled, not `default-members`):
 - `apps/production-evaluation-report/` — 7-day rollback / 30-day evaluation report manifest + IO schemas
 - `apps/request-artifact-admission-gate/` — deterministic pre-materialization request admission gate manifest + IO schemas
 - `apps/request-source-neutrality-gate/` — deterministic request source neutrality gate manifest + IO schemas
+- `apps/request-revision-lineage-resolver/` — deterministic request revision lineage resolver manifest + IO schemas
 - `toolchains/*.toml` — consumer pins for private prereleases (see `docs/private-prerelease-v0.md`)
 
 Internal / test-only:
@@ -251,6 +252,7 @@ Internal / test-only:
 - `agentmesh-production-evaluation-report` — compact aggregate evaluation report for rollback/result windows (plugin-owned types only)
 - `agentmesh-request-artifact-admission-gate` — deterministic pre-materialization admission record binary (`markdown-request-validator` package)
 - `agentmesh-request-source-neutrality-gate` — deterministic request source neutrality report binary (`markdown-request-validator` package; contract in `docs/request-source-neutrality-gate-v0.md`)
+- `agentmesh-request-revision-lineage-resolver` — deterministic request revision lineage and materialization staleness binary (`markdown-request-validator` package; contract in `docs/request-revision-lineage-resolver-v0.md`)
 
 Every crate is `publish = false` during private Phase 0/1.0.
 
