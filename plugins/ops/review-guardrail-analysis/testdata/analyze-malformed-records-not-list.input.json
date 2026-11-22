@@ -1,0 +1,13 @@
+{
+  "op": "analyze",
+  "records": {
+    "a": 1
+  },
+  "registry": {
+    "promotion_window_days": 90,
+    "minimum_findings": 3,
+    "minimum_repositories": 2,
+    "guardrails": []
+  },
+  "now": "2026-11-22T00:00:00Z"
+}

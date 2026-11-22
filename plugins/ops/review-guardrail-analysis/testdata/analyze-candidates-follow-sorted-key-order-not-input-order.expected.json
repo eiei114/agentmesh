@@ -1,0 +1,132 @@
+{
+  "window_days": 90,
+  "cutoff": "2026-08-24T00:00:00+00:00",
+  "rows": [
+    {
+      "key": "Mid",
+      "title": "Mid",
+      "finding_count": 1,
+      "repository_count": 1,
+      "repositories": [
+        "a"
+      ],
+      "threshold_met": false,
+      "immediate_candidate": true,
+      "prevention_status": "unregistered",
+      "prevention_target": null,
+      "recurrence_count": 0
+    },
+    {
+      "key": "alpha",
+      "title": "alpha",
+      "finding_count": 1,
+      "repository_count": 1,
+      "repositories": [
+        "a"
+      ],
+      "threshold_met": false,
+      "immediate_candidate": true,
+      "prevention_status": "unregistered",
+      "prevention_target": null,
+      "recurrence_count": 0
+    },
+    {
+      "key": "beta",
+      "title": "Title beta",
+      "finding_count": 1,
+      "repository_count": 1,
+      "repositories": [
+        "a"
+      ],
+      "threshold_met": false,
+      "immediate_candidate": true,
+      "prevention_status": "catalog_only",
+      "prevention_target": "lint beta",
+      "recurrence_count": 0
+    },
+    {
+      "key": "omega",
+      "title": "Title omega",
+      "finding_count": 0,
+      "repository_count": 0,
+      "repositories": [],
+      "threshold_met": false,
+      "immediate_candidate": false,
+      "prevention_status": "catalog_only",
+      "prevention_target": "lint omega",
+      "recurrence_count": 0
+    },
+    {
+      "key": "zeta",
+      "title": "zeta",
+      "finding_count": 1,
+      "repository_count": 1,
+      "repositories": [
+        "a"
+      ],
+      "threshold_met": false,
+      "immediate_candidate": true,
+      "prevention_status": "unregistered",
+      "prevention_target": null,
+      "recurrence_count": 0
+    }
+  ],
+  "promotion_candidates": [
+    {
+      "key": "Mid",
+      "title": "Mid",
+      "finding_count": 1,
+      "repository_count": 1,
+      "repositories": [
+        "a"
+      ],
+      "threshold_met": false,
+      "immediate_candidate": true,
+      "prevention_status": "unregistered",
+      "prevention_target": null,
+      "recurrence_count": 0
+    },
+    {
+      "key": "alpha",
+      "title": "alpha",
+      "finding_count": 1,
+      "repository_count": 1,
+      "repositories": [
+        "a"
+      ],
+      "threshold_met": false,
+      "immediate_candidate": true,
+      "prevention_status": "unregistered",
+      "prevention_target": null,
+      "recurrence_count": 0
+    },
+    {
+      "key": "beta",
+      "title": "Title beta",
+      "finding_count": 1,
+      "repository_count": 1,
+      "repositories": [
+        "a"
+      ],
+      "threshold_met": false,
+      "immediate_candidate": true,
+      "prevention_status": "catalog_only",
+      "prevention_target": "lint beta",
+      "recurrence_count": 0
+    },
+    {
+      "key": "zeta",
+      "title": "zeta",
+      "finding_count": 1,
+      "repository_count": 1,
+      "repositories": [
+        "a"
+      ],
+      "threshold_met": false,
+      "immediate_candidate": true,
+      "prevention_status": "unregistered",
+      "prevention_target": null,
+      "recurrence_count": 0
+    }
+  ]
+}

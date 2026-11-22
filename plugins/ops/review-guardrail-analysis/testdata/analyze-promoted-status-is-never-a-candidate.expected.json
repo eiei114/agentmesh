@@ -1,0 +1,36 @@
+{
+  "window_days": 90,
+  "cutoff": "2026-08-24T00:00:00+00:00",
+  "rows": [
+    {
+      "key": "K",
+      "title": "Title K",
+      "finding_count": 3,
+      "repository_count": 2,
+      "repositories": [
+        "a",
+        "b"
+      ],
+      "threshold_met": true,
+      "immediate_candidate": false,
+      "prevention_status": "mechanized",
+      "prevention_target": "lint K",
+      "recurrence_count": 0
+    },
+    {
+      "key": "P",
+      "title": "Title P",
+      "finding_count": 1,
+      "repository_count": 1,
+      "repositories": [
+        "a"
+      ],
+      "threshold_met": false,
+      "immediate_candidate": true,
+      "prevention_status": "enforced",
+      "prevention_target": "lint P",
+      "recurrence_count": 0
+    }
+  ],
+  "promotion_candidates": []
+}
