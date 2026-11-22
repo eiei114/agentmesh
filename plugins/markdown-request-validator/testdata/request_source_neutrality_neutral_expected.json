@@ -1,0 +1,21 @@
+{
+  "schema_version": "request-source-neutrality-compact.v0",
+  "neutrality_version": "request-source-neutrality.v0",
+  "valid": true,
+  "neutrality": {
+    "verdict": "neutral",
+    "field_count": 5,
+    "finding_count": 0,
+    "findings_truncated": false,
+    "findings": [],
+    "neutral_fields": [
+      "acceptance_criteria.1",
+      "problem",
+      "request_kind",
+      "scope",
+      "title"
+    ]
+  },
+  "error_count": 0,
+  "errors": []
+}

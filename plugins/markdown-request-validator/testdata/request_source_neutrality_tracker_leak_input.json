@@ -1,0 +1,41 @@
+{
+  "schema_version": "request-source-neutrality-input.v0",
+  "contract_version": "request-source-neutrality.v0",
+  "source": {
+    "schema_version": "request-source-neutrality-source.v0",
+    "fields": [
+      {
+        "path": "title",
+        "value": "Add a deterministic request source neutrality gate"
+      },
+      {
+        "path": "scope",
+        "value": "agentmesh:app:request-source-neutrality-gate"
+      },
+      {
+        "path": "request_kind",
+        "value": "app"
+      },
+      {
+        "path": "problem",
+        "value": "A request source can still carry hints that belong to a downstream tool."
+      },
+      {
+        "path": "acceptance_criteria.1",
+        "value": "Neutral sources produce a passing report."
+      },
+      {
+        "path": "source_ref",
+        "value": "DOT-3474"
+      },
+      {
+        "path": "ready_for_multica",
+        "value": "true"
+      },
+      {
+        "path": "notes",
+        "value": "see the .multica/pi-sessions/a.jsonl file"
+      }
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "schema_version": "request-source-neutrality-input.v0",
+  "contract_version": "request-source-neutrality.v0",
+  "source": {
+    "schema_version": "request-source-neutrality-source.v0",
+    "fields": {
+      "title": "x"
+    }
+  }
+}
