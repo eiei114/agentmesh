@@ -1,0 +1,24 @@
+{
+  "schema_version": "request-revision-lineage-input.v0",
+  "contract_version": "request-revision-lineage.v0",
+  "scope_key": "agentmesh:app:request-revision-lineage",
+  "revisions": [
+    {
+      "revision_id": "r1",
+      "scope_key": "agentmesh:app:request-revision-lineage",
+      "digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "supersedes": [
+        "r2"
+      ]
+    },
+    {
+      "revision_id": "r2",
+      "scope_key": "agentmesh:app:request-revision-lineage",
+      "digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "supersedes": [
+        "r1"
+      ]
+    }
+  ],
+  "materialization_reference_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+}

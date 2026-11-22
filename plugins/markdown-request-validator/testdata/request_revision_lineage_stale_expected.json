@@ -1,0 +1,46 @@
+{
+  "schema_version": "request-revision-lineage-compact.v0",
+  "lineage_version": "request-revision-lineage.v0",
+  "valid": true,
+  "lineage": {
+    "scope_key": "agentmesh:app:request-revision-lineage",
+    "revision_count": 3,
+    "current_revision_id": "r3",
+    "current_digest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "chain": [
+      {
+        "ordinal": 1,
+        "revision_id": "r3",
+        "digest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "role": "current",
+        "superseded_by": null
+      },
+      {
+        "ordinal": 2,
+        "revision_id": "r2",
+        "digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "role": "superseded",
+        "superseded_by": "r3"
+      },
+      {
+        "ordinal": 3,
+        "revision_id": "r1",
+        "digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "role": "superseded",
+        "superseded_by": "r2"
+      }
+    ],
+    "materialization": {
+      "verdict": "stale",
+      "reason_count": 1,
+      "reasons": [
+        {
+          "code": "AGENTMESH_REQUEST_REVISION_LINEAGE_MATERIALIZATION_SUPERSEDED",
+          "field_path": "revisions[1].digest"
+        }
+      ]
+    }
+  },
+  "error_count": 0,
+  "errors": []
+}
