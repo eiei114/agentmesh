@@ -1,0 +1,11 @@
+{
+  "op": "build_orphan_session_observation_event",
+  "session": {
+    "session_id": "s-big",
+    "session_file": "/s/big.jsonl",
+    "total_tokens": 1.5e+16,
+    "size_bytes": 1,
+    "estimated_cost_usd": 1e-05
+  },
+  "ts": "2026-07-06T12:00:00+09:00"
+}

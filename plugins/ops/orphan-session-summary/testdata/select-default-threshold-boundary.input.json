@@ -1,0 +1,26 @@
+{
+  "op": "select_top_orphan_sessions",
+  "session_records": [
+    {
+      "session_id": "at",
+      "session_file": "/s/at.jsonl",
+      "total_tokens": 250000,
+      "size_bytes": 10,
+      "estimated_cost_usd": 0.1
+    },
+    {
+      "session_id": "above",
+      "session_file": "/s/above.jsonl",
+      "total_tokens": 250001,
+      "size_bytes": 10,
+      "estimated_cost_usd": 0.1
+    },
+    {
+      "session_id": "below-with-usage",
+      "session_file": "/s/below.jsonl",
+      "total_tokens": 249999,
+      "size_bytes": 999,
+      "estimated_cost_usd": 0.1
+    }
+  ]
+}

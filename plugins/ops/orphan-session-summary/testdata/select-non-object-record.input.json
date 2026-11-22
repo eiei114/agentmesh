@@ -1,0 +1,6 @@
+{
+  "op": "select_top_orphan_sessions",
+  "session_records": [
+    "not-an-object"
+  ]
+}

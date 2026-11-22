@@ -1,0 +1,15 @@
+{
+  "op": "compare_log_aware_summaries",
+  "baseline": {
+    "controller_summary": null,
+    "session_feedback_join": null,
+    "daemon_health": null,
+    "top_scan_events": null
+  },
+  "current": {
+    "controller_summary": {},
+    "session_feedback_join": [],
+    "daemon_health": {},
+    "top_scan_events": []
+  }
+}

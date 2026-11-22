@@ -1,0 +1,12 @@
+{
+  "op": "select_top_orphan_sessions",
+  "session_records": [
+    {
+      "session_id": "a",
+      "session_file": "/s/a.jsonl",
+      "total_tokens": 300000,
+      "size_bytes": 1
+    }
+  ],
+  "top_n": 0
+}

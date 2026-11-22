@@ -1,0 +1,15 @@
+{
+  "op": "compare_log_aware_summaries",
+  "baseline": {},
+  "current": {
+    "controller_summary": {
+      "coderabbit-monitor": {
+        "no_candidate_rate": 0.25,
+        "prefilter_skip_count": 3
+      }
+    },
+    "session_feedback_join": {
+      "orphan_session_count": 2
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "op": "sum_event_field",
+  "summary": {
+    "top_scan_events": [
+      {
+        "controller": "coderabbit-monitor",
+        "github_prs_checked": 3
+      },
+      {
+        "controller": "coderabbit-monitor",
+        "github_prs_checked": 4
+      },
+      {
+        "controller": "other",
+        "github_prs_checked": 100
+      },
+      {
+        "controller": "coderabbit-monitor",
+        "github_prs_checked": 2.5
+      },
+      {
+        "controller": "coderabbit-monitor",
+        "github_prs_checked": "9"
+      },
+      {
+        "controller": "coderabbit-monitor",
+        "github_prs_checked": true
+      },
+      {
+        "controller": "coderabbit-monitor"
+      }
+    ],
+    "controller_summary": {
+      "coderabbit-monitor": {
+        "github_prs_checked": 50
+      }
+    }
+  },
+  "controller": "coderabbit-monitor",
+  "field": "github_prs_checked"
+}

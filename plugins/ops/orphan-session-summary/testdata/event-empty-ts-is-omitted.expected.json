@@ -1,0 +1,13 @@
+{
+  "feedback_version": 1,
+  "event_type": "observation",
+  "project_key": "workspace",
+  "controller": "session-inventory",
+  "run_source": "cli",
+  "result_type": "orphan_session",
+  "feedback_code": "session_inventory_orphan_session",
+  "feedback_note": "session-inventory orphan_session session_id=s-ts tokens=10",
+  "session_file": "/s/ts.jsonl",
+  "session_id": "s-ts",
+  "total_tokens": 10
+}

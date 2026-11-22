@@ -1,0 +1,24 @@
+{
+  "op": "compare_log_aware_summaries",
+  "baseline": {
+    "daemon_health": {
+      "findings": [
+        "a",
+        1,
+        null,
+        {
+          "downgraded": 1
+        },
+        {},
+        {
+          "downgraded": ""
+        }
+      ]
+    }
+  },
+  "current": {
+    "daemon_health": {
+      "findings": "text"
+    }
+  }
+}

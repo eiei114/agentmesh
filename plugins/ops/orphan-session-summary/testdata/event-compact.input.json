@@ -1,0 +1,16 @@
+{
+  "op": "build_orphan_session_observation_event",
+  "session": {
+    "session_id": "s-event",
+    "session_file": "C:/Synthetic/Sessions/e.jsonl",
+    "total_tokens": 200000,
+    "size_bytes": 4096,
+    "estimated_cost_usd": 0.75,
+    "model_provider": "provider-a",
+    "model_name": "model-a",
+    "message": "raw",
+    "content": "raw",
+    "size_bytes_extra": 1
+  },
+  "ts": "2026-07-06T12:00:00+09:00"
+}

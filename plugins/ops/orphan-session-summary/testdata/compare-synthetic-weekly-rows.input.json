@@ -1,0 +1,55 @@
+{
+  "op": "compare_log_aware_summaries",
+  "baseline": {
+    "controller_summary": {
+      "coderabbit-monitor": {
+        "no_candidate_rate": 0.8,
+        "prefilter_skip_count": 1,
+        "total_tokens": 100
+      },
+      "review-feedback-harvester": {
+        "total_tokens": 2000000,
+        "cooldown_skip_count": 0
+      }
+    },
+    "session_feedback_join": {
+      "orphan_session_count": 12
+    },
+    "daemon_health": {
+      "findings": [
+        {
+          "downgraded": true
+        },
+        {
+          "downgraded": false
+        }
+      ]
+    }
+  },
+  "current": {
+    "controller_summary": {
+      "coderabbit-monitor": {
+        "no_candidate_rate": 0.4,
+        "prefilter_skip_count": 8,
+        "total_tokens": 80
+      },
+      "review-feedback-harvester": {
+        "total_tokens": 500000,
+        "cooldown_skip_count": 6
+      }
+    },
+    "session_feedback_join": {
+      "orphan_session_count": 5
+    },
+    "daemon_health": {
+      "findings": [
+        {
+          "downgraded": true
+        },
+        {
+          "downgraded": true
+        }
+      ]
+    }
+  }
+}

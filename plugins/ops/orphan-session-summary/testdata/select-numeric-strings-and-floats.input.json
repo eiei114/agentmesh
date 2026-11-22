@@ -1,0 +1,37 @@
+{
+  "op": "select_top_orphan_sessions",
+  "session_records": [
+    {
+      "session_id": "s-underscore",
+      "session_file": "/s/n1.jsonl",
+      "total_tokens": "300_000",
+      "size_bytes": 1
+    },
+    {
+      "session_id": "s-spaces",
+      "session_file": "/s/n2.jsonl",
+      "total_tokens": " 400000 ",
+      "size_bytes": "7"
+    },
+    {
+      "session_id": "s-float",
+      "session_file": "/s/n3.jsonl",
+      "total_tokens": 500000.9,
+      "size_bytes": 2.9,
+      "estimated_cost_usd": "1.5"
+    },
+    {
+      "session_id": "s-bool-size",
+      "session_file": "/s/n4.jsonl",
+      "total_tokens": 0,
+      "size_bytes": true
+    },
+    {
+      "session_id": "s-plus",
+      "session_file": "/s/n5.jsonl",
+      "total_tokens": "+260000",
+      "size_bytes": 0,
+      "estimated_cost_usd": true
+    }
+  ]
+}

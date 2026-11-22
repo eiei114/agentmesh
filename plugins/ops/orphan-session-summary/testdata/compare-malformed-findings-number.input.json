@@ -1,0 +1,9 @@
+{
+  "op": "compare_log_aware_summaries",
+  "baseline": {},
+  "current": {
+    "daemon_health": {
+      "findings": 3
+    }
+  }
+}

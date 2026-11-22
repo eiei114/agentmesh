@@ -1,0 +1,27 @@
+{
+  "op": "compare_log_aware_summaries",
+  "baseline": {
+    "controller_summary": {
+      "coderabbit-monitor": {
+        "no_candidate_rate": 0.1,
+        "prefilter_skip_count": 0.1234564
+      },
+      "review-feedback-harvester": {
+        "total_tokens": 0.0,
+        "cooldown_skip_count": 1.0000004
+      }
+    }
+  },
+  "current": {
+    "controller_summary": {
+      "coderabbit-monitor": {
+        "no_candidate_rate": 0.3,
+        "prefilter_skip_count": 0.1234568
+      },
+      "review-feedback-harvester": {
+        "total_tokens": 0.0078125,
+        "cooldown_skip_count": 1.0000012
+      }
+    }
+  }
+}

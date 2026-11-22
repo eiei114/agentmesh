@@ -1,0 +1,10 @@
+{
+  "op": "build_orphan_session_observation_event",
+  "session": {
+    "session_id": "s-frac",
+    "session_file": "/s/frac.jsonl",
+    "total_tokens": 123456.789,
+    "size_bytes": 1
+  },
+  "ts": "2026-07-06T12:00:00+09:00"
+}
