@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentmesh.local/schemas/request-source-neutrality-gate-compact-v0.schema.json",
+  "title": "Request Source Neutrality Gate Compact Output v0",
+  "description": "Deterministic neutrality report with category and field path findings only, or a normalized failure without a partial verdict.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "neutrality_version", "valid", "neutrality", "error_count", "errors"],
+  "properties": {
+    "schema_version": { "const": "request-source-neutrality-compact.v0" },
+    "neutrality_version": { "const": "request-source-neutrality.v0" },
+    "valid": { "type": "boolean" },
+    "neutrality": {
+      "anyOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["verdict", "field_count", "finding_count", "findings_truncated", "findings", "neutral_fields"],
+          "properties": {
+            "verdict": { "enum": ["neutral", "non_neutral"] },
+            "field_count": { "type": "integer", "minimum": 0, "maximum": 64 },
+            "finding_count": { "type": "integer", "minimum": 0 },
+            "findings_truncated": { "type": "boolean" },
+            "findings": {
+              "type": "array",
+              "maxItems": 32,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["ordinal", "category", "code", "field_path"],
+                "properties": {
+                  "ordinal": { "type": "integer", "minimum": 1, "maximum": 32 },
+                  "category": {
+                    "enum": ["readiness_hint", "tracker_identifier", "execution_command", "session_sidecar_path", "credential_token"]
+                  },
+                  "code": {
+                    "enum": [
+                      "AGENTMESH_REQUEST_SOURCE_NEUTRALITY_READINESS_HINT",
+                      "AGENTMESH_REQUEST_SOURCE_NEUTRALITY_TRACKER_IDENTIFIER",
+                      "AGENTMESH_REQUEST_SOURCE_NEUTRALITY_EXECUTION_COMMAND",
+                      "AGENTMESH_REQUEST_SOURCE_NEUTRALITY_SESSION_SIDECAR_PATH",
+                      "AGENTMESH_REQUEST_SOURCE_NEUTRALITY_CREDENTIAL_TOKEN"
+                    ]
+                  },
+                  "field_path": { "type": "string", "maxLength": 96 }
+                }
+              }
+            },
+            "neutral_fields": {
+              "type": "array",
+              "maxItems": 64,
+              "items": { "type": "string", "maxLength": 96 }
+            }
+          }
+        }
+      ]
+    },
+    "error_count": { "type": "integer", "enum": [0, 1] },
+    "errors": {
+      "type": "array",
+      "maxItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code"],
+        "properties": {
+          "code": {
+            "enum": [
+              "AGENTMESH_REQUEST_SOURCE_NEUTRALITY_INPUT_INVALID",
+              "AGENTMESH_REQUEST_SOURCE_NEUTRALITY_INPUT_TOO_LARGE",
+              "AGENTMESH_REQUEST_SOURCE_NEUTRALITY_SCHEMA_VERSION_UNSUPPORTED",
+              "AGENTMESH_REQUEST_SOURCE_NEUTRALITY_REQUIRED_FIELD_MISSING"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "valid": { "const": true } } },
+      "then": {
+        "properties": { "neutrality": { "type": "object" }, "error_count": { "const": 0 }, "errors": { "maxItems": 0 } }
+      },
+      "else": {
+        "properties": { "neutrality": { "type": "null" }, "error_count": { "const": 1 }, "errors": { "minItems": 1, "maxItems": 1 } }
+      }
+    }
+  ]
+}
