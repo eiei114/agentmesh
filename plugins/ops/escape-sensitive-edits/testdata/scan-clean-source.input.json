@@ -1,0 +1,5 @@
+{
+  "op": "scan_escape_corruption",
+  "path": "a.ts",
+  "content": "const a = \"x\\n\";\nconst b = \"q\\\\\";\n"
+}

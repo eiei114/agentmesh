@@ -1,0 +1,4 @@
+{
+  "op": "scan_escape_corruption",
+  "content": "x = \"\n\";\n"
+}

@@ -1,0 +1,4 @@
+{
+  "op": "flag_unsafe_js_ts_shell_edit",
+  "command": "perl -pi -e 's/a/b/' a.mjs; AWK -i INPLACE '{}' b.cjs"
+}

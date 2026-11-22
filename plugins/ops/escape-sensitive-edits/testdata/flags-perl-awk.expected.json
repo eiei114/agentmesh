@@ -1,0 +1,10 @@
+[
+  [
+    "\\bperl\\s+-pi\\b",
+    "perl -pi in-place replacement"
+  ],
+  [
+    "\\bawk\\s+-i\\s+inplace\\b",
+    "awk in-place replacement"
+  ]
+]

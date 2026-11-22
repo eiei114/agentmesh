@@ -1,0 +1,10 @@
+[
+  [
+    "powershell\\s+-c\\b",
+    "powershell -c one-liner edit"
+  ],
+  [
+    "pwsh\\s+-c\\b",
+    "pwsh -c one-liner edit"
+  ]
+]

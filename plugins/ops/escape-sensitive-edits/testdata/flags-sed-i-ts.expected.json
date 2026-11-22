@@ -1,0 +1,6 @@
+[
+  [
+    "\\bsed\\s+-i\\b",
+    "sed -i in-place replacement"
+  ]
+]

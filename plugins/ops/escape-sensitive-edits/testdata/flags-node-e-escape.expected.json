@@ -1,0 +1,6 @@
+[
+  [
+    "node\\s+-e\\b",
+    "node -e one-liner edit"
+  ]
+]

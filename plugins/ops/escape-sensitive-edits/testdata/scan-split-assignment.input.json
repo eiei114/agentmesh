@@ -1,0 +1,5 @@
+{
+  "op": "scan_escape_corruption",
+  "path": "a.js",
+  "content": "const a = 1;\nconst s = \"\n\";\nconst t = 2;\n"
+}

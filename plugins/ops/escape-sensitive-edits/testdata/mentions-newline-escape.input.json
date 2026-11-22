@@ -1,0 +1,4 @@
+{
+  "op": "command_mentions_escape_literal",
+  "command": "printf 'a\\nb'"
+}
