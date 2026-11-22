@@ -1,0 +1,22 @@
+{
+  "op": "render_source",
+  "request": {
+    "schema_version": "agentmesh-request.v0",
+    "kind": "app",
+    "title": "  Padded  title  ",
+    "summary": "  Padded summary text.  ",
+    "problem": "Markdown tools currently need orchestrator-specific glue and duplicate parsing.",
+    "desired_capability": "Add a fixture-driven Markdown normalization App without Multica domain types.",
+    "acceptance_criteria": [
+      "Manifest validates through pinned CLI.",
+      "Fixtures produce deterministic output."
+    ],
+    "evidence": [
+      "AgentMesh roadmap requests a non-Multica Markdown App."
+    ],
+    "same_scope_key": "agentmesh:app:markdown-normalizer"
+  },
+  "now": "2026-07-16T07:40:00+09:00",
+  "created_at": "2026-07-16T07:40:00+09:00",
+  "issue_rel": "synthetic/Issues/padded.md"
+}

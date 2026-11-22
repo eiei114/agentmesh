@@ -1,0 +1,23 @@
+{
+  "op": "render_issue",
+  "request": {
+    "schema_version": "agentmesh-request.v0",
+    "kind": "repair",
+    "title": "Repair pinned CLI validation",
+    "summary": "Normalize deterministic Markdown documents through an AgentMesh App.",
+    "problem": "Markdown tools currently need orchestrator-specific glue and duplicate parsing.",
+    "desired_capability": "Add a fixture-driven Markdown normalization App without Multica domain types.",
+    "acceptance_criteria": [
+      "Manifest validates through pinned CLI.",
+      "Fixtures produce deterministic output."
+    ],
+    "evidence": [
+      "AgentMesh roadmap requests a non-Multica Markdown App."
+    ],
+    "same_scope_key": "agentmesh:repair:pinned-cli-validation",
+    "target_app": "markdown-normalizer",
+    "user_story": "As a tool author, I can invoke one pinned Markdown App from different orchestrators."
+  },
+  "now": "2026-07-16T07:40:00+09:00",
+  "source_rel": "synthetic/Requests/Repair/repair.md"
+}

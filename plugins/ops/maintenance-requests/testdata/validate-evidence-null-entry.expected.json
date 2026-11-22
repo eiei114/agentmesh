@@ -1,0 +1,6 @@
+{
+  "error": {
+    "kind": "invalid_request",
+    "message": "evidence entries must be strings of length 3..500"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "op": "patrol",
+  "repair_candidates": [
+    {
+      "title": "no code"
+    }
+  ],
+  "daily_exists": false
+}
