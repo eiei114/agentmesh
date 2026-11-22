@@ -6,11 +6,12 @@
 //! handling.
 
 use agentmesh_markdown_request_validator::adapter_error_contract::normalize_adapter_errors;
-use chrono::{DateTime, FixedOffset};
 use serde::Deserialize;
 use serde_json::{json, Map, Value};
 use sha2::{Digest, Sha256};
 use std::collections::{BTreeMap, BTreeSet};
+use time::format_description::well_known::Rfc3339;
+use time::OffsetDateTime;
 
 /// Plugin/schema version exposed in compact output.
 pub const APP_VERSION: &str = "adapter-metadata-canonicalizer.v0";
@@ -4121,8 +4122,8 @@ fn readiness_report_unsigned_count(
     }
 }
 
-fn parse_readiness_report_timestamp(value: &str) -> Option<DateTime<FixedOffset>> {
-    DateTime::parse_from_rfc3339(value.trim()).ok()
+fn parse_readiness_report_timestamp(value: &str) -> Option<OffsetDateTime> {
+    OffsetDateTime::parse(value.trim(), &Rfc3339).ok()
 }
 
 fn check_report_freshness(

@@ -18,7 +18,6 @@ use agentmesh_proto::rpc::{
     JsonRpcVersion, RunParams, RunResult,
 };
 use agentmesh_proto::{HOST_VERSION, PROTOCOL_VERSION};
-use chrono::Utc;
 use serde_json::Value;
 use sha2::{Digest, Sha256};
 use std::collections::BTreeMap;
@@ -52,7 +51,7 @@ pub async fn execute_run_with<A: AuditStore, S: CompactSink>(
         .unwrap_or_else(|| Uuid::new_v4().to_string());
     let failures = FailureCoordinator::new();
     let mut timings = BTreeMap::new();
-    let started = Utc::now();
+    let started = std::time::Instant::now();
     let mut messages = Vec::new();
     let mut unknown_headers = Vec::new();
     let mut plugin_version = None;
@@ -397,7 +396,7 @@ pub async fn execute_run_with<A: AuditStore, S: CompactSink>(
         &init_body,
     );
 
-    let t_init = Utc::now();
+    let t_init = std::time::Instant::now();
     if let Some(ref mut si) = stdin {
         if let Err(e) = si.write_all(&init_frame).await {
             failures.record(FailureRecord::new(
@@ -406,10 +405,7 @@ pub async fn execute_run_with<A: AuditStore, S: CompactSink>(
             ));
             terminate_child(&mut child, &cancel, &mut interruption, &mut exit_status).await;
             stderr_cap = stderr_task.await.unwrap_or(stderr_cap);
-            timings.insert(
-                "initialize_ms".into(),
-                (Utc::now() - t_init).num_milliseconds().max(0) as u64,
-            );
+            timings.insert("initialize_ms".into(), t_init.elapsed().as_millis() as u64);
             return finish(
                 &run_id,
                 &config,
@@ -433,10 +429,7 @@ pub async fn execute_run_with<A: AuditStore, S: CompactSink>(
     let init_timeout = Duration::from_millis(config.limits.initialize_timeout_ms);
     let init_read = read_one_frame(&mut stdout, frame_limits, init_timeout, &cancel);
     let init_frame_res = init_read.await;
-    timings.insert(
-        "initialize_ms".into(),
-        (Utc::now() - t_init).num_milliseconds().max(0) as u64,
-    );
+    timings.insert("initialize_ms".into(), t_init.elapsed().as_millis() as u64);
 
     let init_decoded = match init_frame_res {
         Ok(frame) => frame,
@@ -630,7 +623,7 @@ pub async fn execute_run_with<A: AuditStore, S: CompactSink>(
         &run_body,
     );
 
-    let t_run = Utc::now();
+    let t_run = std::time::Instant::now();
     if let Some(ref mut si) = stdin {
         if let Err(e) = si.write_all(&run_frame).await {
             failures.record(FailureRecord::new(
@@ -639,10 +632,7 @@ pub async fn execute_run_with<A: AuditStore, S: CompactSink>(
             ));
             terminate_child(&mut child, &cancel, &mut interruption, &mut exit_status).await;
             stderr_cap = stderr_task.await.unwrap_or(stderr_cap);
-            timings.insert(
-                "run_ms".into(),
-                (Utc::now() - t_run).num_milliseconds().max(0) as u64,
-            );
+            timings.insert("run_ms".into(), t_run.elapsed().as_millis() as u64);
             return finish(
                 &run_id,
                 &config,
@@ -665,10 +655,7 @@ pub async fn execute_run_with<A: AuditStore, S: CompactSink>(
 
     let run_timeout = Duration::from_millis(config.limits.run_timeout_ms);
     let run_frame_res = read_one_frame(&mut stdout, frame_limits, run_timeout, &cancel).await;
-    timings.insert(
-        "run_ms".into(),
-        (Utc::now() - t_run).num_milliseconds().max(0) as u64,
-    );
+    timings.insert("run_ms".into(), t_run.elapsed().as_millis() as u64);
     let run_decoded = match run_frame_res {
         Ok(frame) => frame,
         Err(e) => {
@@ -778,7 +765,7 @@ pub async fn execute_run_with<A: AuditStore, S: CompactSink>(
     // Close stdin and exit grace: probe stdout to EOF; first additional byte => unexpected_output.
     drop(stdin);
     let grace = Duration::from_millis(config.limits.exit_grace_ms);
-    let t_close = Utc::now();
+    let t_close = std::time::Instant::now();
     close_and_reap(
         &mut child,
         &mut stdout,
@@ -789,15 +776,9 @@ pub async fn execute_run_with<A: AuditStore, S: CompactSink>(
         &failures,
     )
     .await;
-    timings.insert(
-        "close_ms".into(),
-        (Utc::now() - t_close).num_milliseconds().max(0) as u64,
-    );
+    timings.insert("close_ms".into(), t_close.elapsed().as_millis() as u64);
     stderr_cap = stderr_task.await.unwrap_or(stderr_cap);
-    timings.insert(
-        "total_ms".into(),
-        (Utc::now() - started).num_milliseconds().max(0) as u64,
-    );
+    timings.insert("total_ms".into(), started.elapsed().as_millis() as u64);
 
     finish(
         &run_id,

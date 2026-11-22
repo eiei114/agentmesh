@@ -7,10 +7,11 @@ use agentmesh_local_control_ledger::run_local_control_ledger;
 use agentmesh_multica_cli_adapter::{
     resolve_cli_timeout_ms, run_multica_cli_adapter, ProcessRunner,
 };
-use chrono::{DateTime, FixedOffset};
+use agentmesh_timefmt::{parse_rfc3339, to_rfc3339};
 use serde::Deserialize;
 use serde_json::{json, Value};
 use sha2::{Digest, Sha256};
+use time::Duration;
 
 /// Plugin/schema version exposed in compact output.
 pub const PRODUCTION_CONTROLLER_OBSERVER_VERSION: &str = "production-controller-observer.v0";
@@ -67,10 +68,9 @@ fn resolve_lease_ttl_seconds(raw: Option<u64>) -> Result<u64, String> {
 }
 
 fn lease_expires_at(now: &str, ttl_seconds: u64) -> Result<String, String> {
-    let parsed = DateTime::parse_from_rfc3339(now).map_err(|e| e.to_string())?;
-    let expires: DateTime<FixedOffset> =
-        parsed + chrono::Duration::seconds(i64::try_from(ttl_seconds).unwrap());
-    Ok(expires.to_rfc3339())
+    let parsed = parse_rfc3339(now).map_err(|e| e.to_string())?;
+    let expires = parsed + Duration::seconds(i64::try_from(ttl_seconds).unwrap());
+    Ok(to_rfc3339(expires))
 }
 
 fn compact(

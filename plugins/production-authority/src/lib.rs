@@ -16,10 +16,11 @@ use agentmesh_multica_cli_adapter::{
     resolve_cli_timeout_ms, run_multica_cli_adapter, ProcessRunner, DEFAULT_CLI_TIMEOUT_MS,
     QUERY_OPERATION_ARGS,
 };
-use chrono::{DateTime, FixedOffset};
+use agentmesh_timefmt::{parse_rfc3339, to_rfc3339};
 use serde::Deserialize;
 use serde_json::{json, Value};
 use sha2::{Digest, Sha256};
+use time::Duration;
 
 /// Plugin/schema version exposed in compact output.
 pub const PRODUCTION_AUTHORITY_VERSION: &str = "production-authority.v0";
@@ -166,16 +167,15 @@ fn resolve_lease_ttl_seconds(raw: Option<u64>) -> Result<u64, String> {
 }
 
 fn lease_expires_at(now: &str, ttl_seconds: u64) -> Result<String, String> {
-    let parsed = DateTime::parse_from_rfc3339(now).map_err(|e| e.to_string())?;
-    let expires: DateTime<FixedOffset> =
-        parsed + chrono::Duration::seconds(i64::try_from(ttl_seconds).unwrap());
-    Ok(expires.to_rfc3339())
+    let parsed = parse_rfc3339(now).map_err(|e| e.to_string())?;
+    let expires = parsed + Duration::seconds(i64::try_from(ttl_seconds).unwrap());
+    Ok(to_rfc3339(expires))
 }
 
 fn since_ts(now: &str, days: i64) -> Result<String, String> {
-    let parsed = DateTime::parse_from_rfc3339(now).map_err(|e| e.to_string())?;
-    let since = parsed - chrono::Duration::days(days);
-    Ok(since.to_rfc3339())
+    let parsed = parse_rfc3339(now).map_err(|e| e.to_string())?;
+    let since = parsed - Duration::days(days);
+    Ok(to_rfc3339(since))
 }
 
 fn compact(
@@ -1442,12 +1442,12 @@ mod tests {
     use super::*;
     use agentmesh_local_control_ledger::run_local_control_ledger;
     use agentmesh_multica_cli_adapter::{CliCommandSpec, CliInvokeResult};
-    use chrono::{DateTime, Duration, FixedOffset};
     use std::fs;
     use std::sync::{
         atomic::{AtomicUsize, Ordering},
         Arc,
     };
+    use time::OffsetDateTime;
 
     struct FakeRunner {
         exit_code: i32,
@@ -1821,8 +1821,7 @@ mod tests {
             stdout: br#"{}"#.to_vec(),
         };
 
-        let base_now: DateTime<FixedOffset> =
-            DateTime::parse_from_rfc3339("2026-08-30T12:00:00+09:00").unwrap();
+        let base_now: OffsetDateTime = parse_rfc3339("2026-08-30T12:00:00+09:00").unwrap();
         let since = base_now - Duration::days(7);
 
         for i in 0..50 {
@@ -1831,7 +1830,7 @@ mod tests {
             input["multica_operation"] = json!("safe_writer_done_reconcile");
             input["operation_params"] = json!({"issue_id": format!("AM-{}", i)});
             input["lease_id"] = json!(format!("lease-{}", i));
-            input["now"] = json!((since + Duration::days((i * 7) / 49)).to_rfc3339());
+            input["now"] = json!(to_rfc3339(since + Duration::days((i * 7) / 49)));
 
             let output = run_production_authority(&input, &runner);
             assert_eq!(output["valid"], json!(true));
@@ -1842,7 +1841,7 @@ mod tests {
         check["operation"] = json!("check_promotion");
         check["target_mode"] = json!("safe_writer");
         check["execution_kind"] = json!("shadow");
-        check["now"] = json!(base_now.to_rfc3339());
+        check["now"] = json!(to_rfc3339(base_now));
 
         let output = run_production_authority(&check, &runner);
         assert_eq!(output["valid"], json!(true));
@@ -1868,8 +1867,7 @@ mod tests {
             stdout: br#"{}"#.to_vec(),
         };
 
-        let base_now: DateTime<FixedOffset> =
-            DateTime::parse_from_rfc3339("2026-08-30T12:00:00+09:00").unwrap();
+        let base_now: OffsetDateTime = parse_rfc3339("2026-08-30T12:00:00+09:00").unwrap();
         let too_old = base_now - Duration::days(8);
 
         for i in 0..50 {
@@ -1878,7 +1876,7 @@ mod tests {
             input["multica_operation"] = json!("safe_writer_done_reconcile");
             input["operation_params"] = json!({"issue_id": format!("AM-{}", i)});
             input["lease_id"] = json!(format!("lease-{}", i));
-            input["now"] = json!(too_old.to_rfc3339());
+            input["now"] = json!(to_rfc3339(too_old));
 
             let output = run_production_authority(&input, &runner);
             assert_eq!(output["valid"], json!(true));
@@ -1889,7 +1887,7 @@ mod tests {
         check["operation"] = json!("check_promotion");
         check["target_mode"] = json!("safe_writer");
         check["execution_kind"] = json!("shadow");
-        check["now"] = json!(base_now.to_rfc3339());
+        check["now"] = json!(to_rfc3339(base_now));
 
         let output = run_production_authority(&check, &runner);
         assert_eq!(output["valid"], json!(false));
@@ -1911,8 +1909,7 @@ mod tests {
             stdout: br#"{}"#.to_vec(),
         };
 
-        let base_now: DateTime<FixedOffset> =
-            DateTime::parse_from_rfc3339("2026-08-30T12:00:00+09:00").unwrap();
+        let base_now: OffsetDateTime = parse_rfc3339("2026-08-30T12:00:00+09:00").unwrap();
         let since = base_now - Duration::days(7);
 
         for i in 0..49 {
@@ -1921,7 +1918,7 @@ mod tests {
             input["multica_operation"] = json!("safe_writer_done_reconcile");
             input["operation_params"] = json!({"issue_id": format!("AM-{}", i)});
             input["lease_id"] = json!(format!("lease-{}", i));
-            input["now"] = json!((since + Duration::days((i * 7) / 48)).to_rfc3339());
+            input["now"] = json!(to_rfc3339(since + Duration::days((i * 7) / 48)));
 
             let output = run_production_authority(&input, &runner);
             assert_eq!(output["valid"], json!(true));
@@ -1932,7 +1929,7 @@ mod tests {
         check["operation"] = json!("check_promotion");
         check["target_mode"] = json!("safe_writer");
         check["execution_kind"] = json!("shadow");
-        check["now"] = json!(base_now.to_rfc3339());
+        check["now"] = json!(to_rfc3339(base_now));
 
         let output = run_production_authority(&check, &runner);
         assert_eq!(output["valid"], json!(false));
@@ -1956,8 +1953,7 @@ mod tests {
             stdout: br#"{}"#.to_vec(),
         };
 
-        let base_now: DateTime<FixedOffset> =
-            DateTime::parse_from_rfc3339("2026-08-30T12:00:00+09:00").unwrap();
+        let base_now: OffsetDateTime = parse_rfc3339("2026-08-30T12:00:00+09:00").unwrap();
         let since = base_now - Duration::days(7);
         let target_mode = "safe_writer";
         let shadow_decision_code = format!("{target_mode}_shadow_run_once");
@@ -1976,7 +1972,7 @@ mod tests {
                 "input_hash": format!("sha256:in-{}", i),
                 "output_hash": format!("sha256:out-{}", i),
                 "hard_gate_pass": i != 0,
-                "recorded_at": decision_now.to_rfc3339(),
+                "recorded_at": to_rfc3339(decision_now),
             }));
         }
 
@@ -1984,7 +1980,7 @@ mod tests {
         check["operation"] = json!("check_promotion");
         check["target_mode"] = json!(target_mode);
         check["execution_kind"] = json!("shadow");
-        check["now"] = json!(base_now.to_rfc3339());
+        check["now"] = json!(to_rfc3339(base_now));
 
         let output = run_production_authority(&check, &runner);
         assert_eq!(output["valid"], json!(false));
@@ -2009,8 +2005,7 @@ mod tests {
             stdout: br#"{}"#.to_vec(),
         };
 
-        let base_now: DateTime<FixedOffset> =
-            DateTime::parse_from_rfc3339("2026-08-30T12:00:00+09:00").unwrap();
+        let base_now: OffsetDateTime = parse_rfc3339("2026-08-30T12:00:00+09:00").unwrap();
         let since = base_now - Duration::days(7);
 
         for i in 0..50 {
@@ -2019,7 +2014,7 @@ mod tests {
             input["multica_operation"] = json!("safe_writer_done_reconcile");
             input["operation_params"] = json!({"issue_id": format!("AM-{}", i)});
             input["lease_id"] = json!(format!("lease-{}", i));
-            input["now"] = json!((since + Duration::days((i * 7) / 49)).to_rfc3339());
+            input["now"] = json!(to_rfc3339(since + Duration::days((i * 7) / 49)));
 
             let output = run_production_authority(&input, &runner);
             assert_eq!(output["valid"], json!(true));
@@ -2031,7 +2026,7 @@ mod tests {
         wrong["multica_operation"] = json!("safe_writer_done_reconcile");
         wrong["operation_params"] = json!({"issue_id": "AM-live-viol"});
         wrong["lease_id"] = json!("lease-wrong");
-        wrong["now"] = json!(base_now.to_rfc3339());
+        wrong["now"] = json!(to_rfc3339(base_now));
 
         let wrong_out = run_production_authority(&wrong, &runner);
         assert_eq!(wrong_out["valid"], json!(false));
@@ -2042,7 +2037,7 @@ mod tests {
         check["operation"] = json!("check_promotion");
         check["target_mode"] = json!("safe_writer");
         check["execution_kind"] = json!("shadow");
-        check["now"] = json!(base_now.to_rfc3339());
+        check["now"] = json!(to_rfc3339(base_now));
 
         let output = run_production_authority(&check, &runner);
         assert_eq!(output["valid"], json!(false));

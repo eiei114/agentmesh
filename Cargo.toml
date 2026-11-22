@@ -8,6 +8,7 @@ members = [
     "crates/agentmesh-conformance",
     "crates/agentmesh-request-evidence",
     "crates/agentmesh-evidence",
+    "crates/agentmesh-timefmt",
     "test-support/agentmesh-fixture-support",
     "plugins/fixtures/echo",
     "plugins/fixtures/bad-json",
@@ -47,6 +48,7 @@ rust-version = "1.97"
 
 [workspace.dependencies]
 agentmesh-proto = { path = "crates/agentmesh-proto" }
+agentmesh-timefmt = { path = "crates/agentmesh-timefmt" }
 agentmesh-host = { path = "crates/agentmesh-host" }
 agentmesh-fixture-support = { path = "test-support/agentmesh-fixture-support" }
 agentmesh-multica-selector-shadow = { path = "plugins/multica-selector-shadow" }
@@ -77,7 +79,7 @@ tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 clap = { version = "4.5", features = ["derive"] }
 sha2 = "0.11"
 hex = "0.4"
-chrono = { version = "0.4", default-features = false, features = ["clock", "std"] }
+time = { version = "0.3", default-features = false, features = ["std", "formatting", "parsing", "macros", "local-offset"] }
 uuid = { version = "1.16", features = ["v4"] }
 schemars = "1.2"
 tempfile = "3.20"

@@ -8,7 +8,7 @@ rust-version.workspace = true
 description = "Read-only source-linked evidence compiler with full QMD candidate fusion"
 
 [dependencies]
-chrono.workspace = true
+time.workspace = true
 hex.workspace = true
 serde.workspace = true
 serde_json.workspace = true

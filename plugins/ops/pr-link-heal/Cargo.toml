@@ -12,5 +12,5 @@ workspace = true
 
 [dependencies]
 agentmesh-ops-kit = { path = "../kit" }
-chrono.workspace = true
+time.workspace = true
 serde_json.workspace = true

@@ -3,8 +3,9 @@
 //! Wall-clock access, session-file access, and controller side effects are
 //! intentionally absent. Callers supply timestamps and progress summaries.
 
-use chrono::{DateTime, NaiveDateTime, Utc};
 use serde_json::{json, Map, Value};
+use time::format_description::well_known::Rfc3339;
+use time::{Date, Month, OffsetDateTime, PrimitiveDateTime, Time, UtcOffset};
 
 use agentmesh_ops_kit::OpsError;
 
@@ -180,7 +181,7 @@ fn python_optional_string(value: Option<&Value>) -> Option<String> {
 ///
 /// Naive timestamps are interpreted as UTC so results never depend on the
 /// machine's local timezone. Callers should prefer timestamps with an offset.
-pub fn parse_dt(value: Option<&str>) -> Option<DateTime<Utc>> {
+pub fn parse_dt(value: Option<&str>) -> Option<OffsetDateTime> {
     let value = value.filter(|value| !value.is_empty())?;
     let mut normalized = value.to_owned();
     if normalized
@@ -196,30 +197,86 @@ pub fn parse_dt(value: Option<&str>) -> Option<DateTime<Utc>> {
     }
     normalized = normalize_compact_offset(&normalized);
 
-    let parsed = [
-        DateTime::parse_from_rfc3339(&normalized).ok(),
-        DateTime::parse_from_str(&normalized, "%Y-%m-%dT%H:%M:%S%.f%:z").ok(),
-        DateTime::parse_from_str(&normalized, "%Y-%m-%dT%H:%M:%S%:z").ok(),
-    ]
-    .into_iter()
-    .flatten()
-    .next()
-    .map(|date| date.with_timezone(&Utc))
-    .or_else(|| parse_offset_with_seconds(&normalized))
-    .or_else(|| {
-        let naive = NaiveDateTime::parse_from_str(&normalized, "%Y-%m-%dT%H:%M:%S%.f")
-            .or_else(|_| NaiveDateTime::parse_from_str(&normalized, "%Y-%m-%dT%H:%M:%S"))
-            .ok()?;
-        Some(DateTime::from_naive_utc_and_offset(naive, Utc))
-    })?;
-    let micros = parsed.timestamp_micros();
-    DateTime::from_timestamp_micros(micros)
+    let parsed = OffsetDateTime::parse(&normalized, &Rfc3339)
+        .ok()
+        .map(|date| date.to_offset(UtcOffset::UTC))
+        .or_else(|| parse_offset_with_seconds(&normalized))
+        .or_else(|| parse_local(&normalized).map(PrimitiveDateTime::assume_utc))?;
+    from_timestamp_micros(timestamp_micros(parsed))
+}
+
+/// Whole microseconds since the Unix epoch, rounded toward negative infinity.
+fn timestamp_micros(value: OffsetDateTime) -> i128 {
+    value.unix_timestamp_nanos().div_euclid(1_000)
+}
+
+fn from_timestamp_micros(micros: i128) -> Option<OffsetDateTime> {
+    OffsetDateTime::from_unix_timestamp_nanos(micros.checked_mul(1_000)?).ok()
+}
+
+/// Parse `YYYY-MM-DDTHH:MM:SS[.f]` without an offset.
+///
+/// Month, day, hour, minute and second accept one or two digits and the
+/// fraction any number of digits, as the previous chrono format strings did.
+fn parse_local(value: &str) -> Option<PrimitiveDateTime> {
+    let (date_text, clock_text) = value.split_once('T')?;
+    let mut date_parts = date_text.split('-');
+    let year = parse_digits(date_parts.next()?, 4)?;
+    let month = parse_digits(date_parts.next()?, 2)?;
+    let day = parse_digits(date_parts.next()?, 2)?;
+    if date_parts.next().is_some() {
+        return None;
+    }
+    let (clock, fraction) = match clock_text.split_once('.') {
+        Some((clock, fraction)) => (clock, Some(fraction)),
+        None => (clock_text, None),
+    };
+    let mut clock_parts = clock.split(':');
+    let hour = parse_digits(clock_parts.next()?, 2)?;
+    let minute = parse_digits(clock_parts.next()?, 2)?;
+    let second = parse_digits(clock_parts.next()?, 2)?;
+    if clock_parts.next().is_some() {
+        return None;
+    }
+    let nanosecond = match fraction {
+        None => 0,
+        Some(digits) => {
+            if digits.is_empty() || !digits.bytes().all(|byte| byte.is_ascii_digit()) {
+                return None;
+            }
+            let mut padded: String = digits.chars().take(9).collect();
+            padded.push_str(&"0".repeat(9 - padded.len()));
+            padded.parse::<u32>().ok()?
+        }
+    };
+    let date = Date::from_calendar_date(
+        i32::try_from(year).ok()?,
+        Month::try_from(u8::try_from(month).ok()?).ok()?,
+        u8::try_from(day).ok()?,
+    )
+    .ok()?;
+    let time = Time::from_hms_nano(
+        u8::try_from(hour).ok()?,
+        u8::try_from(minute).ok()?,
+        u8::try_from(second).ok()?,
+        nanosecond,
+    )
+    .ok()?;
+    Some(PrimitiveDateTime::new(date, time))
+}
+
+fn parse_digits(value: &str, max_len: usize) -> Option<u32> {
+    if value.is_empty() || value.len() > max_len || !value.bytes().all(|byte| byte.is_ascii_digit())
+    {
+        return None;
+    }
+    value.parse().ok()
 }
 
 /// Parse ISO UTC offsets with seconds, which Python's `fromisoformat` accepts
-/// but Chrono's RFC 3339 parser does not. Fractional offset seconds are kept at
+/// but the RFC 3339 parser does not. Fractional offset seconds are kept at
 /// Python datetime's microsecond precision.
-fn parse_offset_with_seconds(value: &str) -> Option<DateTime<Utc>> {
+fn parse_offset_with_seconds(value: &str) -> Option<OffsetDateTime> {
     let offset_index = value.char_indices().skip(10).find_map(|(index, ch)| {
         if ch == '+' || ch == '-' {
             Some(index)
@@ -244,7 +301,7 @@ fn parse_offset_with_seconds(value: &str) -> Option<DateTime<Utc>> {
         let mut parts = offset_clock.split(':');
         let hours = parse_two_digits(parts.next()?)?;
         let minutes = parse_two_digits(parts.next()?)?;
-        let seconds = parse_two_digits(parts.next()?)?;
+        let seconds = parts.next().map_or(Some(0), parse_two_digits)?;
         if parts.next().is_some() {
             return None;
         }
@@ -277,15 +334,12 @@ fn parse_offset_with_seconds(value: &str) -> Option<DateTime<Utc>> {
         Some(_) => return None,
     };
 
-    let naive = NaiveDateTime::parse_from_str(local_text, "%Y-%m-%dT%H:%M:%S%.f").ok()?;
+    let naive = parse_local(local_text)?;
     let offset_micros = sign
         * (((i64::from(hours) * 60 + i64::from(minutes)) * 60 + i64::from(seconds)) * 1_000_000
             + fraction_micros);
-    let utc_micros = naive
-        .and_utc()
-        .timestamp_micros()
-        .checked_sub(offset_micros)?;
-    DateTime::from_timestamp_micros(utc_micros)
+    let utc_micros = timestamp_micros(naive.assume_utc()).checked_sub(i128::from(offset_micros))?;
+    from_timestamp_micros(utc_micros)
 }
 
 fn parse_two_digits(value: &str) -> Option<u32> {
@@ -316,9 +370,17 @@ fn normalize_compact_offset(value: &str) -> String {
     }
 }
 
-fn format_dt(value: DateTime<Utc>) -> String {
-    let base = value.format("%Y-%m-%dT%H:%M:%S").to_string();
-    let micros = value.timestamp_subsec_micros();
+fn format_dt(value: OffsetDateTime) -> String {
+    let base = format!(
+        "{:04}-{:02}-{:02}T{:02}:{:02}:{:02}",
+        value.year(),
+        u8::from(value.month()),
+        value.day(),
+        value.hour(),
+        value.minute(),
+        value.second()
+    );
+    let micros = value.microsecond();
     if micros == 0 {
         format!("{base}+00:00")
     } else {
@@ -337,7 +399,7 @@ pub fn parse_heartbeat_lines(text: Option<&str>) -> Vec<HeartbeatEvent> {
 /// Return the latest event by parsed timestamp, keeping the first on ties.
 pub fn latest_heartbeat(events: &[HeartbeatEvent]) -> Option<&HeartbeatEvent> {
     let mut latest: Option<&HeartbeatEvent> = None;
-    let mut latest_at: Option<DateTime<Utc>> = None;
+    let mut latest_at: Option<OffsetDateTime> = None;
     for event in events {
         let at = parse_dt(Some(&event.ts));
         if latest.is_none() || at > latest_at {
@@ -349,7 +411,7 @@ pub fn latest_heartbeat(events: &[HeartbeatEvent]) -> Option<&HeartbeatEvent> {
 }
 
 /// Return the latest timestamp among heartbeat events that count as activity.
-pub fn heartbeat_activity_at(events: &[HeartbeatEvent]) -> Option<DateTime<Utc>> {
+pub fn heartbeat_activity_at(events: &[HeartbeatEvent]) -> Option<OffsetDateTime> {
     events
         .iter()
         .filter(|event| ACTIVITY_HEARTBEAT_EVENTS.contains(&event.event.as_str()))
@@ -376,7 +438,7 @@ fn last_run_message(messages: &[Value]) -> Option<&Value> {
 }
 
 /// Return the timestamp of the lexicographically latest run-message summary.
-pub fn run_message_activity_at(messages: &[Value]) -> Option<DateTime<Utc>> {
+pub fn run_message_activity_at(messages: &[Value]) -> Option<OffsetDateTime> {
     let message = last_run_message(messages)?;
     let created_at = message.get("created_at");
     let value = if python_truthy(created_at) {
@@ -387,8 +449,8 @@ pub fn run_message_activity_at(messages: &[Value]) -> Option<DateTime<Utc>> {
     parse_dt(Some(&value))
 }
 
-fn activity_delta_seconds(now: DateTime<Utc>, activity: DateTime<Utc>) -> f64 {
-    (now.timestamp_micros() - activity.timestamp_micros()) as f64 / 1_000_000.0
+fn activity_delta_seconds(now: OffsetDateTime, activity: OffsetDateTime) -> f64 {
+    (timestamp_micros(now) - timestamp_micros(activity)) as f64 / 1_000_000.0
 }
 
 /// Analyze watchdog activity using the caller's explicit clock and threshold.
@@ -396,7 +458,7 @@ pub fn analyze_watchdog_activity(
     heartbeats: &[HeartbeatEvent],
     run_messages: &[Value],
     session_progress: Option<&Value>,
-    now: DateTime<Utc>,
+    now: OffsetDateTime,
     threshold_seconds: i64,
 ) -> Value {
     let last_hb = latest_heartbeat(heartbeats);
@@ -485,7 +547,7 @@ pub fn is_watchdog_idle(
     heartbeats: &[HeartbeatEvent],
     run_messages: &[Value],
     session_progress: Option<&Value>,
-    now: DateTime<Utc>,
+    now: OffsetDateTime,
     threshold_seconds: i64,
 ) -> bool {
     analyze_watchdog_activity(
@@ -504,7 +566,7 @@ pub fn build_watchdog_failure_detail(
     run_messages: &[Value],
     session_path: Option<&str>,
     session_progress: Option<&Value>,
-    now: DateTime<Utc>,
+    now: OffsetDateTime,
     threshold_seconds: i64,
 ) -> Value {
     let analysis = analyze_watchdog_activity(
@@ -534,7 +596,7 @@ struct AnalysisRequest {
     heartbeats: Vec<HeartbeatEvent>,
     run_messages: Vec<Value>,
     session_progress: Option<Value>,
-    now: DateTime<Utc>,
+    now: OffsetDateTime,
     threshold_seconds: i64,
 }
 
@@ -824,6 +886,43 @@ mod tests {
         assert!(parse_dt(Some("2026-07-13T09:00:00+25:00")).is_none());
         assert!(parse_dt(Some("2026-07-13T09:00:00+01:00:60")).is_none());
         assert!(parse_dt(None).is_none());
+    }
+
+    #[test]
+    fn timestamp_forms_normalize_to_the_same_utc_text() {
+        let normalized = |value: &str| parse_dt(Some(value)).map(format_dt);
+        // Fractions are truncated to microseconds.
+        assert_eq!(
+            normalized("2026-11-22T10:00:00.1234567+09:00").as_deref(),
+            Some("2026-11-22T01:00:00.123456+00:00")
+        );
+        // Space separator, compact offset, trailing Z and naive text.
+        assert_eq!(
+            normalized("2026-11-22 10:00:00+0900").as_deref(),
+            Some("2026-11-22T01:00:00+00:00")
+        );
+        assert_eq!(
+            normalized("2026-11-22T10:00:00Z").as_deref(),
+            Some("2026-11-22T10:00:00+00:00")
+        );
+        assert_eq!(
+            normalized("2026-11-22T10:00:00.25").as_deref(),
+            Some("2026-11-22T10:00:00.250000+00:00")
+        );
+        // Unpadded fields and an hour-minute offset on unpadded text.
+        assert_eq!(
+            normalized("2026-1-5T1:2:3").as_deref(),
+            Some("2026-01-05T01:02:03+00:00")
+        );
+        assert_eq!(
+            normalized("2026-1-5T1:2:3-05:30").as_deref(),
+            Some("2026-01-05T06:32:03+00:00")
+        );
+        // Invalid input is rejected rather than guessed.
+        assert_eq!(normalized("2026-13-01T00:00:00Z"), None);
+        assert_eq!(normalized("2026-11-22T25:00:00Z"), None);
+        assert_eq!(normalized("2026-11-22"), None);
+        assert_eq!(normalized("2026-11-22T10:00:00."), None);
     }
 
     #[test]

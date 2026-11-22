@@ -17,7 +17,8 @@ path = "src/lib.rs"
 [dependencies]
 agentmesh-fixture-support = { workspace = true }
 agentmesh-proto = { workspace = true }
-chrono = { workspace = true }
+agentmesh-timefmt = { workspace = true }
+time = { workspace = true }
 hex = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }

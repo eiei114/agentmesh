@@ -277,7 +277,14 @@ pub fn summarize_bucket(bucket_id: &str, files: &[String], today: Option<&str>) 
     let day = if let Some(today) = today {
         today
     } else {
-        current_day = chrono::Local::now().date_naive().to_string();
+        let now =
+            time::OffsetDateTime::now_local().unwrap_or_else(|_| time::OffsetDateTime::now_utc());
+        current_day = format!(
+            "{:04}-{:02}-{:02}",
+            now.year(),
+            u8::from(now.month()),
+            now.day()
+        );
         &current_day
     };
     match bucket_id {

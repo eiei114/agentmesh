@@ -1,8 +1,10 @@
 //! Full Python-parity backlog selection over snapshot v0 (Multica-free).
 
-use chrono::{DateTime, FixedOffset, TimeZone, Timelike, Utc};
+use agentmesh_timefmt::{date_string, parse_rfc3339, to_rfc3339};
 use serde_json::{json, Map, Value};
 use sha2::{Digest, Sha256};
+use time::format_description;
+use time::OffsetDateTime;
 
 const SNAPSHOT_SCHEMA_VERSION: &str = "backlog-promoter-snapshot.v0";
 const AI_TODO_CAP: i64 = 30;
@@ -434,7 +436,7 @@ pub fn select_compact_from_snapshot(snapshot: &Value) -> Result<Value, ParityErr
             "candidate_issue_keys": candidate_issue_keys,
         },
         "run_context": {
-            "now_jst": now.to_rfc3339(),
+            "now_jst": to_rfc3339(now),
             "deterministic_mode": true,
             "selection_input_mode": "snapshot",
             "consumed_snapshot_hash": hash,
@@ -470,7 +472,7 @@ struct CandidateRow<'a> {
 }
 
 fn stop_compact(
-    now: &DateTime<FixedOffset>,
+    now: &OffsetDateTime,
     hash: &str,
     reason: Value,
     cap_state: Value,
@@ -491,7 +493,7 @@ fn stop_compact(
             "candidate_issue_keys": [],
         },
         "run_context": {
-            "now_jst": now.to_rfc3339(),
+            "now_jst": to_rfc3339(*now),
             "deterministic_mode": true,
             "selection_input_mode": "snapshot",
             "consumed_snapshot_hash": hash,
@@ -514,7 +516,7 @@ fn stop_compact(
     })
 }
 
-fn evaluate_controller_admission(rows: &[Value], now: &DateTime<FixedOffset>) -> Value {
+fn evaluate_controller_admission(rows: &[Value], now: &OffsetDateTime) -> Value {
     let controller_key = "backlog-promoter";
     let title = "Schedule - Backlog Promoter";
     let me_rows: Vec<&Value> = rows
@@ -581,7 +583,7 @@ fn evaluate_controller_admission(rows: &[Value], now: &DateTime<FixedOffset>) ->
     })
 }
 
-fn is_active_controller_row(row: &Value, now: &DateTime<FixedOffset>) -> bool {
+fn is_active_controller_row(row: &Value, now: &OffsetDateTime) -> bool {
     let status = row
         .get("last_run_status")
         .and_then(Value::as_str)
@@ -599,15 +601,15 @@ fn is_active_controller_row(row: &Value, now: &DateTime<FixedOffset>) -> bool {
     false
 }
 
-fn same_valve_tick(left: &DateTime<FixedOffset>, right: &DateTime<FixedOffset>) -> bool {
+fn same_valve_tick(left: &OffsetDateTime, right: &OffsetDateTime) -> bool {
     valve_tick_start(left) == valve_tick_start(right)
 }
 
-fn valve_tick_start(dt: &DateTime<FixedOffset>) -> DateTime<FixedOffset> {
+fn valve_tick_start(dt: &OffsetDateTime) -> OffsetDateTime {
     let minute = (dt.minute() / 30) * 30;
-    dt.date_naive()
-        .and_hms_opt(dt.hour(), minute, 0)
-        .and_then(|naive| dt.timezone().from_local_datetime(&naive).single())
+    dt.replace_minute(minute)
+        .and_then(|value| value.replace_second(0))
+        .and_then(|value| value.replace_nanosecond(0))
         .unwrap_or(*dt)
 }
 
@@ -644,10 +646,7 @@ fn replenish_candidate(skipped_summary: &Map<String, Value>, candidate_count: us
     })
 }
 
-fn priority_bucket(
-    issue: &Value,
-    now: &DateTime<FixedOffset>,
-) -> (i64, (i64, String), &'static str) {
+fn priority_bucket(issue: &Value, now: &OffsetDateTime) -> (i64, (i64, String), &'static str) {
     let age_days = backlog_age_days(issue, now);
     let created = string_field(issue, "created_at");
     if metadata_bool(issue, "age_boosted") == Some(true) {
@@ -660,7 +659,7 @@ fn priority_bucket(
         return (3, (0, created), "dependency_unblock");
     }
     if let Some(target) = metadata_str(issue, "today_review_target") {
-        if target == now.date_naive().to_string() {
+        if target == date_string(*now) {
             let order = metadata_i64(issue, "today_review_order").unwrap_or(9999);
             return (4, (order, created), "today_committed_batch");
         }
@@ -671,7 +670,7 @@ fn priority_bucket(
     (6, (-age_days, created), "older_backlog")
 }
 
-fn build_age_boost_action(issue: &Value, now: &DateTime<FixedOffset>) -> Option<Value> {
+fn build_age_boost_action(issue: &Value, now: &OffsetDateTime) -> Option<Value> {
     if metadata_headroom(issue, AGE_BOOST_KEYS) < 0 {
         return None;
     }
@@ -681,7 +680,7 @@ fn build_age_boost_action(issue: &Value, now: &DateTime<FixedOffset>) -> Option<
         "metadata_key_count": count_metadata_items(issue),
         "set": {
             "age_boosted": true,
-            "age_boosted_at": now.to_rfc3339(),
+            "age_boosted_at": to_rfc3339(*now),
         }
     }))
 }
@@ -908,7 +907,7 @@ fn title_hyphenated_project_prefix(title_lower: &str) -> Option<String> {
     None
 }
 
-fn backlog_age_days(issue: &Value, now: &DateTime<FixedOffset>) -> i64 {
+fn backlog_age_days(issue: &Value, now: &OffsetDateTime) -> i64 {
     let created_raw = string_field(issue, "created_at");
     if created_raw.is_empty() {
         return 0;
@@ -916,16 +915,29 @@ fn backlog_age_days(issue: &Value, now: &DateTime<FixedOffset>) -> i64 {
     let Ok(created) = parse_now(&created_raw) else {
         return 0;
     };
-    (*now - created).num_days().max(0)
+    (*now - created).whole_days().max(0)
 }
 
-fn parse_now(raw: &str) -> Result<DateTime<FixedOffset>, ParityError> {
-    if let Ok(dt) = DateTime::parse_from_rfc3339(raw) {
+const LENIENT_TIMESTAMP_FORMATS: [&str; 4] = [
+    "[year]-[month]-[day]T[hour]:[minute]:[second][optional [.[subsecond]]][offset_hour sign:mandatory][offset_minute]",
+    "[year]-[month]-[day] [hour]:[minute]:[second][optional [.[subsecond]]][offset_hour sign:mandatory][offset_minute]",
+    "[year]-[month]-[day] [hour]:[minute]:[second][optional [.[subsecond]]] [offset_hour sign:mandatory]:[offset_minute]",
+    "[year]-[month]-[day] [hour]:[minute]:[second][optional [.[subsecond]]] [offset_hour sign:mandatory][offset_minute]",
+];
+
+fn parse_now(raw: &str) -> Result<OffsetDateTime, ParityError> {
+    if let Ok(dt) = parse_rfc3339(raw) {
         return Ok(dt);
     }
-    // Accept trailing Z via UTC.
-    if let Ok(dt) = raw.parse::<DateTime<Utc>>() {
-        return Ok(dt.fixed_offset());
+    // chrono's lenient `FromStr` also took a space separator and a
+    // colon-less offset such as `+0900`; keep accepting those.
+    for pattern in LENIENT_TIMESTAMP_FORMATS {
+        let Ok(items) = format_description::parse_owned::<2>(pattern) else {
+            continue;
+        };
+        if let Ok(dt) = OffsetDateTime::parse(raw, &items) {
+            return Ok(dt);
+        }
     }
     Err(ParityError::Invalid(format!("invalid timestamp: {raw}")))
 }
@@ -1046,6 +1058,49 @@ fn bump(map: &mut Map<String, Value>, key: &str) {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn parse_now_keeps_offset_and_accepts_lenient_forms() {
+        let jst = parse_now("2026-11-22T14:35:10.5+09:00").unwrap();
+        assert_eq!(to_rfc3339(jst), "2026-11-22T14:35:10.500+09:00");
+        let utc = parse_now("2026-11-22T05:35:10Z").unwrap();
+        assert_eq!(to_rfc3339(utc), "2026-11-22T05:35:10+00:00");
+        assert_eq!(jst.date().to_string(), "2026-11-22");
+        let compact = parse_now("2026-11-22T14:35:10+0900").unwrap();
+        assert_eq!(to_rfc3339(compact), "2026-11-22T14:35:10+09:00");
+        let spaced = parse_now("2026-11-22 14:35:10 +09:00").unwrap();
+        assert_eq!(to_rfc3339(spaced), "2026-11-22T14:35:10+09:00");
+        assert!(parse_now("2026-11-22").is_err());
+        assert!(parse_now("garbage").is_err());
+    }
+
+    #[test]
+    fn valve_tick_start_truncates_to_the_half_hour_in_local_offset() {
+        let late = parse_now("2026-11-22T14:59:59.9+09:00").unwrap();
+        assert_eq!(
+            to_rfc3339(valve_tick_start(&late)),
+            "2026-11-22T14:30:00+09:00"
+        );
+        let early = parse_now("2026-11-22T14:29:59+09:00").unwrap();
+        assert_eq!(
+            to_rfc3339(valve_tick_start(&early)),
+            "2026-11-22T14:00:00+09:00"
+        );
+        assert!(!same_valve_tick(&late, &early));
+        assert!(same_valve_tick(
+            &late,
+            &parse_now("2026-11-22T05:30:00Z").unwrap()
+        ));
+    }
+
+    #[test]
+    fn backlog_age_counts_whole_days_and_clamps_negative() {
+        let now = parse_now("2026-11-22T00:00:00+09:00").unwrap();
+        let issue = json!({"created_at": "2026-11-19T12:00:00+09:00"});
+        assert_eq!(backlog_age_days(&issue, &now), 2);
+        let future = json!({"created_at": "2026-11-30T00:00:00+09:00"});
+        assert_eq!(backlog_age_days(&future, &now), 0);
+    }
 
     #[test]
     fn one_candidate_snapshot_selects_am_201() {
