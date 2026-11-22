@@ -1,0 +1,4 @@
+{
+  "op": "flag_unsafe_js_ts_shell_edit",
+  "command": "python -c a; node -e b; sed -i c; perl -pi d; awk -i inplace e; powershell -c f; pwsh -c g; x.js"
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "line": 1,
+    "kind": "split_string_assignment",
+    "message": "string literal split across lines (classic Python triple-quote \\\"\\\\n\\\" corruption)"
+  },
+  {
+    "line": 5,
+    "kind": "split_string_assignment",
+    "message": "string literal split across lines (classic Python triple-quote \\\"\\\\n\\\" corruption)"
+  },
+  {
+    "line": 2,
+    "kind": "physical_newline_in_quoted_string",
+    "message": "physical newline inside double-quoted string literal; expected escaped \\\\n sequence"
+  },
+  {
+    "line": 4,
+    "kind": "physical_newline_in_quoted_string",
+    "message": "physical newline inside double-quoted string literal; expected escaped \\\\n sequence"
+  },
+  {
+    "line": 5,
+    "kind": "physical_newline_in_quoted_string",
+    "message": "physical newline inside double-quoted string literal; expected escaped \\\\n sequence"
+  },
+  {
+    "line": 6,
+    "kind": "physical_newline_in_quoted_string",
+    "message": "physical newline inside double-quoted string literal; expected escaped \\\\n sequence"
+  }
+]

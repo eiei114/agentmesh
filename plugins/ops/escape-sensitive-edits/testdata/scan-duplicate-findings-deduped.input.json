@@ -1,0 +1,5 @@
+{
+  "op": "scan_escape_corruption",
+  "path": "a.js",
+  "content": "x = \"\n\";\nok = 1;\n"
+}

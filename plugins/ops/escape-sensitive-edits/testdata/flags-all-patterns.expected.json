@@ -1,0 +1,30 @@
+[
+  [
+    "python3?\\s+-c\\b",
+    "python -c one-liner edit"
+  ],
+  [
+    "node\\s+-e\\b",
+    "node -e one-liner edit"
+  ],
+  [
+    "\\bsed\\s+-i\\b",
+    "sed -i in-place replacement"
+  ],
+  [
+    "\\bperl\\s+-pi\\b",
+    "perl -pi in-place replacement"
+  ],
+  [
+    "\\bawk\\s+-i\\s+inplace\\b",
+    "awk in-place replacement"
+  ],
+  [
+    "powershell\\s+-c\\b",
+    "powershell -c one-liner edit"
+  ],
+  [
+    "pwsh\\s+-c\\b",
+    "pwsh -c one-liner edit"
+  ]
+]

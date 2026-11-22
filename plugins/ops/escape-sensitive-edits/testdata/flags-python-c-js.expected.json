@@ -1,0 +1,6 @@
+[
+  [
+    "python3?\\s+-c\\b",
+    "python -c one-liner edit"
+  ]
+]

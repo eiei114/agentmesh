@@ -1,0 +1,4 @@
+{
+  "op": "scan_physical_newline_in_strings",
+  "content": "a = \"x\ny = \"z\nw = \"open"
+}

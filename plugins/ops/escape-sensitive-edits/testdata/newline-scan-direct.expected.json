@@ -1,0 +1,17 @@
+[
+  {
+    "line": 1,
+    "kind": "physical_newline_in_quoted_string",
+    "message": "physical newline inside double-quoted string literal; expected escaped \\\\n sequence"
+  },
+  {
+    "line": 2,
+    "kind": "physical_newline_in_quoted_string",
+    "message": "physical newline inside double-quoted string literal; expected escaped \\\\n sequence"
+  },
+  {
+    "line": 3,
+    "kind": "unterminated_string_literal",
+    "message": "unterminated double-quoted string literal"
+  }
+]

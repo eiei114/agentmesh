@@ -1,0 +1,7 @@
+[
+  {
+    "line": 2,
+    "kind": "unterminated_string_literal",
+    "message": "unterminated double-quoted string literal"
+  }
+]
