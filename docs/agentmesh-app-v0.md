@@ -197,6 +197,20 @@ normalized reason codes without echoing source or tracker data.
 See [`request-rematerialization-decision-v0.md`](request-rematerialization-decision-v0.md)
 for the full contract, fixture list, and adapter/reviewer procedure.
 
+## Request revision delta App
+
+`apps/request-revision-delta/agentmesh-app.toml` declares a tool-neutral
+one-shot App. It compares two validated canonical request summaries for one
+scope and returns ordered field-level change classes (`added`, `removed`,
+`changed`, `unchanged`), per-field digests for canonical fields, one
+contract-affecting flag, and a bounded diagnostic list. Adapter-owned extras are
+reported by field path and change class only, and never set the flag. It reads
+and writes no files and echoes no values, credentials, or tracker identifiers.
+
+See [`request-revision-delta-v0.md`](request-revision-delta-v0.md) for the full
+contract, fixture list, and how a runner decides whether regeneration and
+re-materialization are needed.
+
 ## Non-Multica request adapter App
 
 `apps/non-multica-request-adapter/agentmesh-app.toml` declares a tracker-neutral adapter contract for `agentmesh-request.v0` sources. Input accepts exactly one Markdown source or one Markdown-compatible JSON object:

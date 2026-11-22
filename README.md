@@ -28,6 +28,8 @@ The request materialization receipt App (`agentmesh-request-materialization-rece
 
 The request re-materialization decision App (`agentmesh-request-rematerialization-decision`) joins supplied admission, receipt, and revision-lineage verdicts into a deterministic regenerate/skip/hold result with bounded input digests and no source or tracker data.
 
+The request revision delta App (`agentmesh-request-revision-delta`) compares two canonical request summaries for one scope and emits a deterministic field-level delta that separates contract-affecting canonical changes from adapter-owned extras, without exposing adapter values or tracker data.
+
 The Markdown adapter replay fixture App (`agentmesh-markdown-adapter-replay-fixture`) replays one validated request Markdown document against a declared adapter fixture and expected canonical result, emitting deterministic pass or mismatch diagnostics for local adapter regression replay.
 
 The adapter metadata canonicalizer App (`agentmesh-adapter-metadata-canonicalizer`) compares two adapter request metadata payloads, promotes only equal stable fields into a deterministic canonical subset, and preserves adapter-specific extensions separately.
@@ -188,6 +190,7 @@ Apps / packaging (version-controlled, not `default-members`):
 - `apps/request-materialization-audit/` — deterministic request materialization + same-scope dedupe audit manifest + IO schemas
 - `apps/request-materialization-receipt/` — deterministic post-write request correspondence receipt manifest + IO schemas
 - `apps/request-rematerialization-decision/` — deterministic request re-materialization decision manifest + IO schemas
+- `apps/request-revision-delta/` — deterministic request revision delta manifest + IO schemas
 - `apps/request-markdown-normalizer/` — deterministic request Markdown projection normalizer manifest + IO schemas
 - `apps/request-markdown-renderer/` — deterministic canonical request Markdown renderer + round-trip digest manifest + IO schemas
 - `apps/request-acceptance-evidence-coverage/` — deterministic per-criterion evidence coverage manifest + IO schemas
@@ -237,6 +240,7 @@ Internal / test-only:
 - `agentmesh-request-materialization-audit` — deterministic request materialization + same-scope dedupe audit binary (`markdown-request-validator` package)
 - `agentmesh-request-materialization-receipt` — deterministic post-write request correspondence receipt binary (`markdown-request-validator` package)
 - `agentmesh-request-rematerialization-decision` — deterministic request re-materialization decision binary (`markdown-request-validator` package)
+- `agentmesh-request-revision-delta` — deterministic request revision delta binary (`markdown-request-validator` package)
 - `agentmesh-request-markdown-normalizer` — deterministic request Markdown projection normalizer binary (`markdown-request-validator` package)
 - `agentmesh-request-markdown-renderer` — deterministic canonical request Markdown renderer binary (`markdown-request-validator` package)
 - `agentmesh-request-acceptance-evidence-coverage` — deterministic per-criterion request evidence coverage binary (`markdown-request-validator` package)
