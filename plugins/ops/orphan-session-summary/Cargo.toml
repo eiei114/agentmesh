@@ -1,0 +1,15 @@
+[package]
+name = "agentmesh-ops-orphan-session-summary"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish = false
+rust-version.workspace = true
+description = "Orphan-session summary decisions port (unstable)"
+
+[lints]
+workspace = true
+
+[dependencies]
+agentmesh-ops-kit = { path = "../kit" }
+serde_json.workspace = true
