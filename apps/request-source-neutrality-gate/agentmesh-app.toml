@@ -1,0 +1,20 @@
+schema_version = "agentmesh-app.v0"
+name = "request-source-neutrality-gate"
+protocol_version = "2026-07-15"
+
+[plugin]
+logical_name = "agentmesh-request-source-neutrality-gate"
+
+[limits]
+input_max_bytes = 65536
+
+[schemas]
+input = "schemas/request-source-neutrality-gate-input-v0.schema.json"
+output = "schemas/request-source-neutrality-gate-compact-v0.schema.json"
+
+[sidecar]
+retention_class = "owner_local"
+capture_plugin_stderr = false
+
+[conformance]
+cargo_package = "agentmesh-markdown-request-validator"
