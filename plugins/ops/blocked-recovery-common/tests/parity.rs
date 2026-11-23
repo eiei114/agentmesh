@@ -1,3 +1,4 @@
+use std::fs;
 use std::io::Write;
 use std::path::{Path, PathBuf};
 use std::process::{Command, Output, Stdio};
@@ -29,7 +30,9 @@ fn stdio(input: &[u8]) -> Output {
 #[test]
 fn binary_returns_one_result_per_request() {
     for case in load_parity_cases(&testdata()).unwrap() {
-        let output = stdio(&serde_json::to_vec(&case.input).unwrap());
+        // Feed the original wire bytes, not a parsed and reserialized request.
+        let input = fs::read(testdata().join(format!("{}.input.json", case.name))).unwrap();
+        let output = stdio(&input);
         assert!(output.status.success(), "{}: {output:?}", case.name);
         assert!(output.stderr.is_empty(), "{}: {output:?}", case.name);
         assert_eq!(
@@ -37,6 +40,21 @@ fn binary_returns_one_result_per_request() {
             case.expected,
             "{}",
             case.name
+        );
+    }
+}
+
+#[test]
+fn binary_preserves_large_integer_on_the_wire() {
+    for name in ["large-integer-context", "large-integer-serialized-context"] {
+        let input = fs::read(testdata().join(format!("{name}.input.json"))).unwrap();
+        let output = stdio(&input);
+        assert!(output.status.success(), "{name}: {output:?}");
+        let stdout = String::from_utf8(output.stdout).unwrap();
+        // Comparing parsed Values alone can hide the same rounding on both sides.
+        assert!(
+            stdout.contains(r#""value":18446744073709551617}"#),
+            "{name}: {stdout}"
         );
     }
 }

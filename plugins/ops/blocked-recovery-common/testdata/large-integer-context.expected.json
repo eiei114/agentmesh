@@ -1,0 +1,7 @@
+{
+  "writer": "windows-tick",
+  "mode": "assess",
+  "original_required_capabilities": {
+    "value": 18446744073709551617
+  }
+}

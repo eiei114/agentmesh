@@ -18,6 +18,8 @@ cargo test -p agentmesh-ops-blocked-recovery-common --test parity
 
 The test suite compares all pairs with `agentmesh_ops_kit::check_parity`, then
 checks the binary against the same pairs and rejects malformed wire requests.
+The large-integer cases also check stdout directly to catch rounding in either
+object-valued or serialized contexts.
 
 ## JSON stdio contract
 
