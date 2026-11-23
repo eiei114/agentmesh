@@ -33,4 +33,4 @@ tempfile.workspace = true
 windows-spawn = "=0.1.0"
 
 [target."cfg(unix)".dependencies]
-nix = { version = "=0.31.3", features = ["signal", "process"] }
+nix = { version = "=0.32.0", features = ["signal", "process"] }
