@@ -1,3 +1,4 @@
+use std::collections::BTreeMap;
 use std::fs;
 use std::io::Write;
 use std::path::{Path, PathBuf};
@@ -5,7 +6,7 @@ use std::process::{Command, Output, Stdio};
 
 use agentmesh_ops_blocked_recovery_common::handle;
 use agentmesh_ops_kit::{check_parity, load_parity_cases, EXIT_INVALID_REQUEST};
-use serde_json::Value;
+use serde_json::{value::RawValue, Value};
 
 fn testdata() -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR")).join("testdata")
@@ -50,11 +51,14 @@ fn binary_preserves_large_integer_on_the_wire() {
         let input = fs::read(testdata().join(format!("{name}.input.json"))).unwrap();
         let output = stdio(&input);
         assert!(output.status.success(), "{name}: {output:?}");
-        let stdout = String::from_utf8(output.stdout).unwrap();
         // Comparing parsed Values alone can hide the same rounding on both sides.
-        assert!(
-            stdout.contains(r#""value":18446744073709551617}"#),
-            "{name}: {stdout}"
+        let context: BTreeMap<String, &RawValue> = serde_json::from_slice(&output.stdout).unwrap();
+        let capabilities: BTreeMap<String, &RawValue> =
+            serde_json::from_str(context["original_required_capabilities"].get()).unwrap();
+        assert_eq!(
+            capabilities["value"].get(),
+            "18446744073709551617",
+            "{name}"
         );
     }
 }

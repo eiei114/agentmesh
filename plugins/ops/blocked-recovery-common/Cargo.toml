@@ -12,5 +12,4 @@ workspace = true
 
 [dependencies]
 agentmesh-ops-kit = { path = "../kit" }
-# Preserve exact numbers when parsing the request or decoding serialized context.
-serde_json = { workspace = true, features = ["arbitrary_precision"] }
+serde_json = { workspace = true, features = ["raw_value"] }

@@ -31,5 +31,7 @@ Send one JSON object and close stdin; the binary writes one JSON result.
 | `assessment_context` | `issue`: an issue object with optional `metadata`, or a wrapper with an object-valued `issue` | The unchanged decoded `blocked_recovery_context` object if its writer is `windows-tick`, its mode is `assess`, and `routed_agent` is `Pi Blocked Recovery Luna Assessor`; otherwise `null`. Serialized metadata maps and values are decoded as in Python. |
 
 Negative decisions are successful results (exit 0); malformed wire requests
-use the shared kit's `invalid_request` result (exit 2). The Rust crate reads no
-policy files and is not wired into any controller. Python remains authoritative.
+use the shared kit's `invalid_request` result (exit 2). The binary uses raw JSON
+for the request and result: the kit's `run_stdio` converts through `Value`, which
+would round large integers. The Rust crate reads no policy files and is not wired
+into any controller. Python remains authoritative.
