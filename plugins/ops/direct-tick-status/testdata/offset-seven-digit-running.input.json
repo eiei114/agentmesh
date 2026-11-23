@@ -1,0 +1,22 @@
+{
+  "spec": {
+    "key": "synthetic",
+    "task": "Synthetic-Tick",
+    "interval": 10,
+    "limit": 30,
+    "hours": [
+      9
+    ]
+  },
+  "rows": [
+    {
+      "finished_at": "2026-06-01T00:00:00+00:00",
+      "ok": true
+    }
+  ],
+  "task": {
+    "state": "Running",
+    "last_run": "2026-05-31T19:30:00.1234567-05:00"
+  },
+  "now": "2026-06-01T00:45:00+00:00"
+}

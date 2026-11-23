@@ -1,0 +1,24 @@
+{
+  "assessment": {
+    "controller": "synthetic",
+    "task": "Synthetic-Tick",
+    "ticks": 1,
+    "limit": 30,
+    "by_health": {
+      "ok": 1
+    },
+    "task_state": "Running",
+    "last_task_result": null,
+    "last_task_run": "2026-05-31T19:30:00.1234567-05:00",
+    "next_run": null,
+    "last_tick": "2026-06-01T09:00+09:00",
+    "in_flight": {
+      "started_at": "2026-06-01T09:30+09:00",
+      "minutes": 15.0,
+      "over_limit": false
+    },
+    "verdict": "running",
+    "consecutive_failures": 0
+  },
+  "findings": []
+}

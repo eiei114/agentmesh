@@ -1,0 +1,29 @@
+{
+  "assessment": {
+    "controller": "work-queue",
+    "task": "Synthetic-Tick",
+    "ticks": 2,
+    "limit": 30,
+    "by_health": {
+      "ok": 1,
+      "retry": 1
+    },
+    "task_state": "Ready",
+    "last_task_result": 0,
+    "last_task_run": null,
+    "next_run": null,
+    "last_failure": {
+      "at": "2026-06-01T00:40:00Z",
+      "reason": "retry"
+    },
+    "last_tick": "2026-06-01T09:40+09:00",
+    "verdict": "degraded",
+    "consecutive_failures": 1,
+    "held_sources": [
+      {
+        "source": "synthetic-source"
+      }
+    ]
+  },
+  "findings": []
+}

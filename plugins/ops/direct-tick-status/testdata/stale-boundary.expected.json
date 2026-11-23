@@ -1,0 +1,19 @@
+{
+  "assessment": {
+    "controller": "synthetic",
+    "task": "Synthetic-Tick",
+    "ticks": 1,
+    "limit": 30,
+    "by_health": {
+      "ok": 1
+    },
+    "task_state": "Ready",
+    "last_task_result": 0,
+    "last_task_run": null,
+    "next_run": null,
+    "last_tick": "2026-06-01T09:00+09:00",
+    "verdict": "healthy",
+    "consecutive_failures": 0
+  },
+  "findings": []
+}

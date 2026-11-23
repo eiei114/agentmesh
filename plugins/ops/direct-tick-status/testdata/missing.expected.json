@@ -1,0 +1,31 @@
+{
+  "assessment": {
+    "controller": "synthetic",
+    "task": "Synthetic-Tick",
+    "ticks": 0,
+    "limit": 30,
+    "by_health": {},
+    "last_tick": null,
+    "verdict": "missing",
+    "consecutive_failures": 0
+  },
+  "findings": [
+    {
+      "code": "direct_controller_tick_missing",
+      "severity": "warning",
+      "detail": {
+        "controller": "synthetic",
+        "task": "Synthetic-Tick",
+        "last_tick": null,
+        "consecutive_failures": 0,
+        "last_failure": null,
+        "task_state": null,
+        "last_task_result": null,
+        "last_task_run": null,
+        "in_flight": null
+      },
+      "count": 1,
+      "next_action": "Register it with `register-direct-controller-tasks.ps1`, or resume its paused Autopilot (never both)."
+    }
+  ]
+}

@@ -296,6 +296,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "agentmesh-ops-direct-tick-status"
+version = "0.1.0"
+dependencies = [
+ "agentmesh-ops-kit",
+ "serde",
+ "serde_json",
+ "time",
+]
+
+[[package]]
 name = "agentmesh-ops-escape-sensitive-edits"
 version = "0.1.0"
 dependencies = [

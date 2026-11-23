@@ -1,0 +1,46 @@
+{
+  "assessment": {
+    "controller": "synthetic",
+    "task": "Synthetic-Tick",
+    "ticks": 1,
+    "limit": 30,
+    "by_health": {
+      "ok": 1
+    },
+    "task_state": "Running",
+    "last_task_result": null,
+    "last_task_run": "2026-06-01T09:14:59.9999999",
+    "next_run": null,
+    "last_tick": "2026-06-01T09:00+09:00",
+    "in_flight": {
+      "started_at": "2026-06-01T09:14+09:00",
+      "minutes": 30.0,
+      "over_limit": true
+    },
+    "verdict": "stale",
+    "consecutive_failures": 0
+  },
+  "findings": [
+    {
+      "code": "direct_controller_tick_stale",
+      "severity": "warning",
+      "detail": {
+        "controller": "synthetic",
+        "task": "Synthetic-Tick",
+        "last_tick": "2026-06-01T09:00+09:00",
+        "consecutive_failures": 0,
+        "last_failure": null,
+        "task_state": "Running",
+        "last_task_result": null,
+        "last_task_run": "2026-06-01T09:14:59.9999999",
+        "in_flight": {
+          "started_at": "2026-06-01T09:14+09:00",
+          "minutes": 30.0,
+          "over_limit": true
+        }
+      },
+      "count": 1,
+      "next_action": "Task Scheduler is not firing (or an in-flight tick outlived its ExecutionTimeLimit): check the task state, the PC session and `register-direct-controller-tasks.ps1`."
+    }
+  ]
+}

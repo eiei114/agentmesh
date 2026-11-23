@@ -1,0 +1,56 @@
+{
+  "assessment": {
+    "controller": "review-sentinel",
+    "task": "Synthetic-Tick",
+    "ticks": 4,
+    "limit": 30,
+    "by_health": {
+      "ok": 1,
+      "failed": 2,
+      "review_triggered": 1
+    },
+    "task_state": "Running",
+    "last_task_result": null,
+    "last_task_run": "2026-06-01T09:30:00+09:00",
+    "next_run": null,
+    "last_failure": {
+      "at": "2026-06-01T00:03:00Z",
+      "reason": "失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失"
+    },
+    "last_tick": "2026-06-01T09:03+09:00",
+    "in_flight": {
+      "started_at": "2026-06-01T09:30+09:00",
+      "minutes": 15.0,
+      "over_limit": false
+    },
+    "verdict": "failing",
+    "consecutive_failures": 3,
+    "review_wakeups": 1
+  },
+  "findings": [
+    {
+      "code": "direct_controller_tick_failing",
+      "severity": "warning",
+      "detail": {
+        "controller": "review-sentinel",
+        "task": "Synthetic-Tick",
+        "last_tick": "2026-06-01T09:03+09:00",
+        "consecutive_failures": 3,
+        "last_failure": {
+          "at": "2026-06-01T00:03:00Z",
+          "reason": "失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失失"
+        },
+        "task_state": "Running",
+        "last_task_result": null,
+        "last_task_run": "2026-06-01T09:30:00+09:00",
+        "in_flight": {
+          "started_at": "2026-06-01T09:30+09:00",
+          "minutes": 15.0,
+          "over_limit": false
+        }
+      },
+      "count": 1,
+      "next_action": "Read last_failure and fix that step; the tick retries every interval but repeats the same error."
+    }
+  ]
+}
