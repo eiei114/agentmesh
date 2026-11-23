@@ -1,0 +1,22 @@
+{
+  "op": "assessment_context",
+  "issue": {
+    "issue": {},
+    "metadata": {
+      "blocked_recovery_context": {
+        "writer": "windows-tick",
+        "mode": "assess",
+        "evidence": {
+          "summary": "合成データ",
+          "findings": [
+            "sample-a",
+            null
+          ],
+          "score": 1.0,
+          "accepted": false
+        }
+      },
+      "routed_agent": "Pi Blocked Recovery Luna Assessor"
+    }
+  }
+}

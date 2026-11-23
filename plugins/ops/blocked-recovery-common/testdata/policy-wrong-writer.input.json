@@ -1,0 +1,9 @@
+{
+  "op": "owns_blocked",
+  "policy": {
+    "sweeper": {
+      "enabled": true,
+      "writer": "windows-tick "
+    }
+  }
+}
