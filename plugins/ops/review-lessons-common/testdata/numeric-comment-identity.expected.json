@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "built_at": "2026-10-11T09:00:00+00:00",
+  "window_days": 90,
+  "evidence_count": 1,
+  "lessons": [
+    {
+      "key": "G10-behavioral-test-contract",
+      "attributes": {},
+      "project_counts": {
+        "synthetic": 1
+      },
+      "finding_count": 1,
+      "stats": {
+        "findings_7d": 1,
+        "findings_30d": 1,
+        "findings_90d": 1,
+        "last_finding_at": "2026-10-11T09:00:00+00:00",
+        "recently_observed_open": 0
+      },
+      "project_stats": {
+        "synthetic": {
+          "findings_7d": 1,
+          "findings_30d": 1,
+          "findings_90d": 1,
+          "last_finding_at": "2026-10-11T09:00:00+00:00",
+          "recently_observed_open": 0
+        }
+      },
+      "immediate_risk": false,
+      "repository_count": 1,
+      "common": false,
+      "scope_level": "global",
+      "project_keys": [],
+      "exception_adr": null,
+      "sources": {
+        "synthetic": []
+      }
+    }
+  ]
+}

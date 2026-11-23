@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "built_at": "2026-10-11T09:00:00+00:00",
+  "window_days": 90,
+  "evidence_count": 7,
+  "lessons": [
+    {
+      "key": "G10-behavioral-test-contract",
+      "attributes": {
+        "artifact": [
+          "test"
+        ]
+      },
+      "project_counts": {
+        "pi-a": 5
+      },
+      "finding_count": 5,
+      "stats": {
+        "findings_7d": 5,
+        "findings_30d": 5,
+        "findings_90d": 5,
+        "last_finding_at": "2026-10-11T09:00:00+00:00",
+        "recently_observed_open": 2
+      },
+      "project_stats": {
+        "pi-a": {
+          "findings_7d": 5,
+          "findings_30d": 5,
+          "findings_90d": 5,
+          "last_finding_at": "2026-10-11T09:00:00+00:00",
+          "recently_observed_open": 2
+        }
+      },
+      "immediate_risk": true,
+      "repository_count": 1,
+      "common": false,
+      "scope_level": "global",
+      "project_keys": [],
+      "exception_adr": null,
+      "sources": {
+        "pi-a": [
+          "https://github.com/eiei114/pi-a/pull/1#discussion_r2",
+          "https://github.com/eiei114/pi-a/pull/1#discussion_r3",
+          "https://github.com/eiei114/pi-a/pull/1#discussion_r4"
+        ]
+      }
+    }
+  ]
+}

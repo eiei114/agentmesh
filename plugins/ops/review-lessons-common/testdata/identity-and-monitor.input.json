@@ -1,0 +1,97 @@
+{
+  "op": "build_index",
+  "now": "2026-10-11T09:00:00+00:00",
+  "records": [
+    {
+      "evidence_id": "1",
+      "repo": "eiei114/pi-a",
+      "observed_at": "2026-10-11T09:00:00+00:00",
+      "normalized_guardrail_key": "G10-behavioral-test-contract",
+      "finding_url": "https://github.com/eiei114/pi-a/pull/1#discussion_r1"
+    },
+    {
+      "evidence_id": "different",
+      "repo": "eiei114/pi-b",
+      "observed_at": "2026-10-10T09:00:00+00:00",
+      "normalized_guardrail_key": "G10-behavioral-test-contract",
+      "finding_url": "https://github.com/eiei114/pi-a/pull/1#discussion_r1"
+    },
+    {
+      "evidence_id": "2",
+      "repo": "eiei114/pi-a",
+      "observed_at": "2026-10-11T09:00:00+00:00",
+      "normalized_guardrail_key": "G10-behavioral-test-contract",
+      "finding_url": "https://github.com/eiei114/pi-a/pull/1#discussion_r2",
+      "source": "coderabbit-monitor",
+      "category": "summary"
+    },
+    {
+      "evidence_id": "2",
+      "repo": "eiei114/pi-a",
+      "observed_at": "2026-10-11T09:00:00+00:00",
+      "normalized_guardrail_key": "G10-behavioral-test-contract",
+      "finding_url": "https://github.com/eiei114/pi-a/pull/1#discussion_r2",
+      "source": "coderabbit-monitor",
+      "category": "inline_comment"
+    },
+    {
+      "evidence_id": "3",
+      "repo": "eiei114/pi-a",
+      "observed_at": "2026-10-11T09:00:00+00:00",
+      "normalized_guardrail_key": "G10-behavioral-test-contract",
+      "finding_url": "https://github.com/eiei114/pi-a/pull/1#discussion_r3",
+      "source": "coderabbit-monitor"
+    },
+    {
+      "evidence_id": "4",
+      "repo": "eiei114/pi-a",
+      "observed_at": "2026-10-11T09:00:00+00:00",
+      "normalized_guardrail_key": "G10-behavioral-test-contract",
+      "finding_url": null,
+      "comment_id": 5
+    },
+    {
+      "evidence_id": "5",
+      "repo": "eiei114/pi-a",
+      "observed_at": "2026-10-11T09:00:00+00:00",
+      "normalized_guardrail_key": "G10-behavioral-test-contract",
+      "finding_url": "",
+      "comment_id": "5"
+    },
+    {
+      "evidence_id": 42,
+      "repo": "eiei114/pi-a",
+      "observed_at": "2026-10-11T09:00:00+00:00",
+      "normalized_guardrail_key": "G10-behavioral-test-contract",
+      "finding_url": ""
+    },
+    {
+      "evidence_id": 42.0,
+      "repo": "eiei114/pi-a",
+      "observed_at": "2026-10-11T09:00:00+00:00",
+      "normalized_guardrail_key": "G10-behavioral-test-contract",
+      "finding_url": ""
+    },
+    {
+      "evidence_id": null,
+      "repo": "eiei114/pi-a",
+      "observed_at": "2026-10-11T09:00:00+00:00",
+      "normalized_guardrail_key": "G10-behavioral-test-contract",
+      "finding_url": ""
+    }
+  ],
+  "registry": {
+    "guardrails": [
+      {
+        "key": "G10-behavioral-test-contract",
+        "attributes": {
+          "artifact": [
+            "test"
+          ]
+        },
+        "scope_level": "global"
+      }
+    ]
+  },
+  "repo_aliases": {}
+}
