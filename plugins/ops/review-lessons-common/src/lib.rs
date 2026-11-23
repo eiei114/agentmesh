@@ -1,6 +1,9 @@
 //! Offline port of `review-lessons-common.py` index construction and timestamp parsing.
 
 mod stamp;
+mod wire;
+
+pub use wire::handle_json;
 
 use std::collections::{BTreeMap, BTreeSet, HashMap, HashSet};
 
@@ -25,6 +28,37 @@ const ADVICE_KEYS: &[&str] = &[
 
 type Object = Map<String, Value>;
 
+fn python_float(value: f64) -> String {
+    if !value.is_finite() {
+        return value.to_string();
+    }
+
+    // Find the shortest round-trip precision using Rust's scientific formatter.
+    // Python breaks decimal ties toward even; use explicit precision (which
+    // rounds ties to even) if it still round-trips at that precision.
+    let shortest = format!("{value:e}");
+    let (mantissa, exponent) = shortest.split_once('e').expect("scientific notation");
+    let exponent: i32 = exponent.parse().expect("decimal exponent");
+    let precision = mantissa.split_once('.').map_or(0, |(_, tail)| tail.len());
+    if (-4..16).contains(&exponent) {
+        let places = (precision as i32 - exponent).max(1) as usize;
+        let fixed = format!("{value:.places$}");
+        if fixed.parse::<f64>() == Ok(value) {
+            return fixed;
+        }
+        return format!("{value:?}");
+    }
+
+    let rounded = format!("{value:.precision$e}");
+    let (mantissa, exponent) = if rounded.parse::<f64>() == Ok(value) {
+        let (mantissa, exponent) = rounded.split_once('e').expect("scientific notation");
+        (mantissa, exponent.parse().expect("decimal exponent"))
+    } else {
+        (mantissa, exponent)
+    };
+    format!("{mantissa}e{exponent:+03}")
+}
+
 fn truthy(value: &Value) -> bool {
     match value {
         Value::Null => false,
@@ -42,7 +76,11 @@ fn python_scalar(value: &Value) -> Result<String, OpsError> {
         Value::Null => Ok("None".into()),
         Value::Bool(true) => Ok("True".into()),
         Value::Bool(false) => Ok("False".into()),
-        Value::Number(n) => Ok(n.to_string()),
+        Value::Number(n) => Ok(if n.is_f64() {
+            python_float(n.as_f64().expect("JSON float"))
+        } else {
+            n.to_string()
+        }),
         _ => Err(OpsError::invalid_request("expected a scalar identifier")),
     }
 }
@@ -57,15 +95,63 @@ enum Identity {
     Number(String),
 }
 
-fn identity(record: &Value) -> Result<Option<Identity>, OpsError> {
+// Only ID fields need lossless JSON numbers. Keep their raw tokens separate
+// from the regular Value fields so numbers and strings cannot collide.
+#[derive(Default)]
+struct NumericIds<'a> {
+    finding_url: Option<NumericId<'a>>,
+    comment_id: Option<NumericId<'a>>,
+    evidence_id: Option<NumericId<'a>>,
+}
+
+#[derive(Clone, Copy)]
+enum NumericId<'a> {
+    Integer(&'a str),
+    Float(f64),
+}
+
+impl NumericId<'_> {
+    fn is_truthy(self) -> bool {
+        match self {
+            Self::Integer(text) => !matches!(text, "0" | "-0"),
+            Self::Float(f) => f != 0.0,
+        }
+    }
+
+    fn as_comment(self) -> String {
+        match self {
+            Self::Integer(text) => text.to_owned(),
+            Self::Float(f) => python_float(f),
+        }
+    }
+
+    fn as_key(self) -> Identity {
+        // Python compares numeric keys across int, float, and bool types.
+        Identity::Number(match self {
+            Self::Integer(text) => text.to_owned(),
+            Self::Float(f) if f.fract() == 0.0 => format!("{f:.0}"),
+            Self::Float(f) => format!("{f:e}"),
+        })
+    }
+}
+
+fn identity(record: &Value, raw: &NumericIds<'_>) -> Result<Option<Identity>, OpsError> {
+    if let Some(id) = raw.finding_url.filter(|n| n.is_truthy()) {
+        return Ok(Some(id.as_key()));
+    }
     let id = if truthy(&record["finding_url"]) {
         &record["finding_url"]
-    } else if truthy(&record["comment_id"]) {
+    } else if raw.comment_id.is_some_and(NumericId::is_truthy) || truthy(&record["comment_id"]) {
+        let comment = match raw.comment_id {
+            Some(n) => n.as_comment(),
+            None => python_scalar(&record["comment_id"])?,
+        };
         return Ok(Some(Identity::Text(format!(
-            "{}:{}",
-            python_scalar(&record["repo"])?,
-            python_scalar(&record["comment_id"])?
+            "{}:{comment}",
+            python_scalar(&record["repo"])?
         ))));
+    } else if let Some(id) = raw.evidence_id {
+        return Ok(id.is_truthy().then(|| id.as_key()));
     } else {
         &record["evidence_id"]
     };
@@ -74,13 +160,13 @@ fn identity(record: &Value) -> Result<Option<Identity>, OpsError> {
         Value::String(s) => Ok(Some(Identity::Text(s.clone()))),
         Value::Bool(true) => Ok(Some(Identity::Number("1".into()))),
         Value::Number(n) => {
-            // Python considers 1, 1.0 and True the same hash key. Do not
-            // round integer JSON IDs through f64, where large IDs may collide.
-            let key = match n.as_f64().filter(|f| n.is_f64() && f.fract() == 0.0) {
-                Some(f) => format!("{f:.0}"),
-                None => n.to_string(),
-            };
-            Ok(Some(Identity::Number(key)))
+            if n.is_f64() {
+                Ok(Some(
+                    NumericId::Float(n.as_f64().expect("JSON float")).as_key(),
+                ))
+            } else {
+                Ok(Some(Identity::Number(n.to_string())))
+            }
         }
         _ => Err(OpsError::invalid_request("expected a scalar identity")),
     }
@@ -192,7 +278,7 @@ fn lesson(
     })))
 }
 
-fn build_index(req: &Value) -> Result<Value, OpsError> {
+fn build_index(req: &Value, ids: &[NumericIds<'_>]) -> Result<Value, OpsError> {
     let now = req["now"]
         .as_str()
         .and_then(stamp::parse)
@@ -229,7 +315,8 @@ fn build_index(req: &Value) -> Result<Value, OpsError> {
     let window = now_instant - 90 * DAY..=now_instant;
     let mut seen = HashSet::new();
     let mut grouped = BTreeMap::<&str, Vec<Finding<'_>>>::new();
-    for record in records {
+    let no_raw_ids = NumericIds::default();
+    for (index, record) in records.iter().enumerate() {
         if !record.is_object() {
             return Err(OpsError::invalid_request("records must contain objects"));
         }
@@ -251,7 +338,7 @@ fn build_index(req: &Value) -> Result<Value, OpsError> {
         let Some(at) = parse_stamp(timestamp).filter(|t| window.contains(&t.instant())) else {
             continue;
         };
-        if let Some(id) = identity(record)? {
+        if let Some(id) = identity(record, ids.get(index).unwrap_or(&no_raw_ids))? {
             if seen.insert(id) {
                 grouped.entry(key).or_default().push(Finding { record, at });
             }
@@ -270,9 +357,10 @@ fn build_index(req: &Value) -> Result<Value, OpsError> {
 }
 
 /// Dispatch one ops-kit request to `stamp` or `build_index`.
+/// Use [`handle_json`] for JSON text with numeric IDs that may exceed `Value`'s integer range.
 pub fn handle(request: Value) -> Result<Value, OpsError> {
     match request["op"].as_str() {
-        Some("build_index") => build_index(&request),
+        Some("build_index") => build_index(&request, &[]),
         Some("stamp") => request
             .get("value")
             .map(|v| json!(parse_stamp(v).map(Stamp::isoformat)))
@@ -280,5 +368,53 @@ pub fn handle(request: Value) -> Result<Value, OpsError> {
         _ => Err(OpsError::invalid_request(
             "expected op: build_index or stamp",
         )),
+    }
+}
+
+#[cfg(test)]
+mod numeric_tests {
+    use super::*;
+
+    fn scalar(input: &str) -> String {
+        wire::numeric_id(input).unwrap().unwrap().as_comment()
+    }
+
+    #[test]
+    fn numeric_comment_spelling() {
+        for (input, expected) in [
+            ("1e-7", "1e-07"),
+            ("1e-4", "0.0001"),
+            ("1e15", "1000000000000000.0"),
+            ("1e16", "1e+16"),
+            ("1000000000000000.25", "1000000000000000.2"),
+            ("18446744073709551617", "18446744073709551617"),
+            ("-0.0", "-0.0"),
+            ("1e999", "inf"),
+        ] {
+            assert_eq!(scalar(input), expected, "{input}");
+        }
+    }
+
+    #[test]
+    fn numeric_evidence_equality() {
+        let key = |input| {
+            let id = wire::numeric_id(input).unwrap();
+            let raw = NumericIds {
+                evidence_id: id,
+                ..NumericIds::default()
+            };
+            let record = if id.is_none() {
+                json!({"evidence_id": serde_json::from_str::<Value>(input).unwrap()})
+            } else {
+                json!({})
+            };
+            identity(&record, &raw).unwrap()
+        };
+        assert!(key("1") == key("1.0") && key("1.0") == key("true"));
+        assert!(key("1e-6") == key("0.0000010"));
+        assert!(key("18446744073709551616") == key("18446744073709551616.0"));
+        assert!(key("18446744073709551617") != key("18446744073709551617.0"));
+        assert!(key("1") != key("\"1\""));
+        assert!(key("-0").is_none() && key("-1e-999").is_none());
     }
 }

@@ -1,8 +1,9 @@
+use std::io::Write;
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
 
 use agentmesh_ops_kit::{check_parity, load_parity_cases};
-use agentmesh_ops_review_lessons_common::handle;
+use agentmesh_ops_review_lessons_common::{handle, handle_json};
 use serde_json::{json, Value};
 
 fn testdata() -> PathBuf {
@@ -11,23 +12,39 @@ fn testdata() -> PathBuf {
 
 #[test]
 fn library_matches_python_fixtures() {
-    assert_eq!(check_parity(&testdata(), handle).unwrap(), 19);
+    assert_eq!(check_parity(&testdata(), handle).unwrap(), 20);
 }
 
 #[test]
-fn stdio_matches_python_fixtures() {
-    for case in load_parity_cases(&testdata()).unwrap() {
-        let mut child = Command::new(env!("CARGO_BIN_EXE_agentmesh-ops-review-lessons-common"))
-            .stdin(Stdio::piped())
-            .stdout(Stdio::piped())
-            .spawn()
-            .unwrap();
-        serde_json::to_writer(child.stdin.take().unwrap(), &case.input).unwrap();
-        let output = child.wait_with_output().unwrap();
-        assert_eq!(output.status.code(), Some(0), "{}", case.name);
-        let actual: Value = serde_json::from_slice(&output.stdout).unwrap();
-        assert_eq!(actual, case.expected, "{}", case.name);
+fn original_json_matches_python_through_library_and_stdio() {
+    let dir = testdata();
+    let mut count = 0;
+    for dir in [&dir, &dir.join("raw")] {
+        for case in load_parity_cases(dir).unwrap() {
+            let input =
+                std::fs::read_to_string(dir.join(format!("{}.input.json", case.name))).unwrap();
+            assert_eq!(handle_json(&input).unwrap(), case.expected, "{}", case.name);
+            let mut child = Command::new(env!("CARGO_BIN_EXE_agentmesh-ops-review-lessons-common"))
+                .stdin(Stdio::piped())
+                .stdout(Stdio::piped())
+                .spawn()
+                .unwrap();
+            // Exercise the binary with the original numeric lexemes, not a
+            // reserialization that could hide rounding during request parsing.
+            child
+                .stdin
+                .take()
+                .unwrap()
+                .write_all(input.as_bytes())
+                .unwrap();
+            let output = child.wait_with_output().unwrap();
+            assert_eq!(output.status.code(), Some(0), "{}", case.name);
+            let actual: Value = serde_json::from_slice(&output.stdout).unwrap();
+            assert_eq!(actual, case.expected, "{}", case.name);
+            count += 1;
+        }
     }
+    assert_eq!(count, 21);
 }
 
 #[test]

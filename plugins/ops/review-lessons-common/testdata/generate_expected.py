@@ -11,7 +11,7 @@ from unittest.mock import patch
 def main():
     sys.path.insert(0, os.environ["VAULT_SCRIPTS_DIR"])
     lessons = importlib.import_module("review-lessons-common")
-    for path in sorted(Path(__file__).resolve().parent.glob("*.input.json")):
+    for path in sorted(Path(__file__).resolve().parent.rglob("*.input.json")):
         request = json.loads(path.read_text(encoding="utf-8"))
         if request["op"] == "stamp":
             result = lessons.stamp(request["value"])
