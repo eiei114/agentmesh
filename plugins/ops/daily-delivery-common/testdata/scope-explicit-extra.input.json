@@ -1,0 +1,16 @@
+{
+  "op": "managed_delivery_scope",
+  "project": {
+    "status": "active",
+    "workspace_path": "/synthetic/other/example",
+    "multica_project_id": "synthetic-extra"
+  },
+  "policy": {
+    "allowed_project_statuses": [
+      "active"
+    ],
+    "review_delivery_extra_project_ids": [
+      "synthetic-extra"
+    ]
+  }
+}

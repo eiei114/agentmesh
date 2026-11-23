@@ -1,0 +1,18 @@
+{
+  "op": "sdk_report_reason",
+  "report": {
+    "schema_version": 1,
+    "sdk_versions": {
+      "example-sdk": "1.2.3"
+    },
+    "unhandled_errors": 0,
+    "extension_load_errors": 1,
+    "verification_contract": "pi-sdk-behavior-v2"
+  },
+  "versions": {
+    "example-sdk": "1.2.3"
+  },
+  "cases": [
+    "extension_load"
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "op": "daily_target",
+  "now": "2026-11-21T00:00:00+09:00",
+  "remaining": 3,
+  "minimum": 15,
+  "deadline": "2026-11-25T15:00:00Z"
+}

@@ -1,0 +1,46 @@
+{
+  "op": "sdk_report_reason",
+  "report": {
+    "schema_version": 1,
+    "sdk_versions": {
+      "example-sdk": "1.2.3"
+    },
+    "unhandled_errors": 0,
+    "extension_load_errors": 0,
+    "verification_contract": "pi-sdk-behavior-v2",
+    "cases": [
+      {
+        "name": "reload_cleanup",
+        "exit_code": 0,
+        "passed": true,
+        "command": [
+          "synthetic-sdk-check",
+          "reload_cleanup"
+        ],
+        "evidence": [
+          "example/reload_cleanup.json"
+        ],
+        "assertions": [
+          {
+            "id": "reloaded_feature_response",
+            "passed": true,
+            "expected": "success with value 42 after reload",
+            "observed": "success with value 42 after reload"
+          },
+          {
+            "id": "clean_shutdown",
+            "passed": true,
+            "expected": "no live extension process after shutdown",
+            "observed": "no live extension process after shutdown"
+          }
+        ]
+      }
+    ]
+  },
+  "versions": {
+    "example-sdk": "1.2.3"
+  },
+  "cases": [
+    "reload_cleanup"
+  ]
+}
