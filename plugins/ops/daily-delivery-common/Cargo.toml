@@ -1,0 +1,17 @@
+[package]
+name = "agentmesh-ops-daily-delivery-common"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish = false
+rust-version.workspace = true
+description = "Daily delivery scope, target, and SDK evidence checks (unstable)"
+
+[lints]
+workspace = true
+
+[dependencies]
+agentmesh-ops-kit = { path = "../kit" }
+serde.workspace = true
+serde_json.workspace = true
+time.workspace = true

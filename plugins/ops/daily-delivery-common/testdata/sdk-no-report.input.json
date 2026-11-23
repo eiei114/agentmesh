@@ -1,0 +1,10 @@
+{
+  "op": "sdk_report_reason",
+  "report": null,
+  "versions": {
+    "example-sdk": "1.2.3"
+  },
+  "cases": [
+    "extension_load"
+  ]
+}

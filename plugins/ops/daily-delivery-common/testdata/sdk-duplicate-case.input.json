@@ -1,0 +1,46 @@
+{
+  "op": "sdk_report_reason",
+  "report": {
+    "schema_version": 1,
+    "sdk_versions": {
+      "example-sdk": "1.2.3"
+    },
+    "unhandled_errors": 0,
+    "extension_load_errors": 0,
+    "verification_contract": "pi-sdk-behavior-v2",
+    "cases": [
+      {
+        "name": "extension_load",
+        "exit_code": 0,
+        "passed": true,
+        "command": [
+          "synthetic-sdk-check",
+          "extension_load"
+        ],
+        "evidence": [
+          "example/extension_load.json"
+        ],
+        "assertions": [
+          {
+            "id": "extension_registered",
+            "passed": true,
+            "expected": "example extension is registered",
+            "observed": "example extension is registered"
+          }
+        ]
+      },
+      {
+        "name": "unrequested"
+      },
+      {
+        "name": "unrequested"
+      }
+    ]
+  },
+  "versions": {
+    "example-sdk": "1.2.3"
+  },
+  "cases": [
+    "extension_load"
+  ]
+}

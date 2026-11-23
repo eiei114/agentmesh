@@ -1,0 +1,15 @@
+{
+  "op": "managed_delivery_scope",
+  "project": {
+    "status": "active",
+    "workspace_path": "X:\\Synthetic\\OSS\\example"
+  },
+  "policy": {
+    "allowed_project_statuses": [
+      "active"
+    ],
+    "review_delivery_extra_project_ids": [
+      "synthetic-extra"
+    ]
+  }
+}

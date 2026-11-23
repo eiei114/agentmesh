@@ -1,0 +1,12 @@
+{
+  "op": "managed_delivery_scope",
+  "project": null,
+  "policy": {
+    "allowed_project_statuses": [
+      "active"
+    ],
+    "review_delivery_extra_project_ids": [
+      "synthetic-extra"
+    ]
+  }
+}
