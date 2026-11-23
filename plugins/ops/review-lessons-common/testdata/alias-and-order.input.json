@@ -1,0 +1,97 @@
+{
+  "op": "build_index",
+  "now": "2026-10-11T09:00:00+00:00",
+  "records": [
+    {
+      "evidence_id": "9",
+      "repo": "eiei114/qmd-adaptive-search",
+      "observed_at": "2026-10-11T09:00:00+00:00",
+      "normalized_guardrail_key": "G10-behavioral-test-contract",
+      "finding_url": "https://github.com/eiei114/qmd-adaptive-search/pull/1#discussion_r9",
+      "finding_created_at": "2026-10-11T09:00:00Z"
+    },
+    {
+      "evidence_id": "1",
+      "repo": "eiei114/pi-a",
+      "observed_at": "2026-10-11T09:00:00+00:00",
+      "normalized_guardrail_key": "G10-behavioral-test-contract",
+      "finding_url": "https://github.com/eiei114/pi-a/pull/1#discussion_r1",
+      "finding_created_at": "2026-10-11T04:00:00-05:00"
+    },
+    {
+      "evidence_id": "5",
+      "repo": "eiei114/qmd-adaptive-search",
+      "observed_at": "2026-10-11T09:00:00+00:00",
+      "normalized_guardrail_key": "G10-behavioral-test-contract",
+      "finding_url": "https://github.com/eiei114/qmd-adaptive-search/pull/1#discussion_r5"
+    },
+    {
+      "evidence_id": "3",
+      "repo": "eiei114/qmd-adaptive-search",
+      "observed_at": "2026-10-11T09:00:00+00:00",
+      "normalized_guardrail_key": "G10-behavioral-test-contract",
+      "finding_url": "https://github.com/eiei114/qmd-adaptive-search/pull/1#discussion_r3"
+    },
+    {
+      "evidence_id": "2",
+      "repo": "eiei114/qmd-adaptive-search",
+      "observed_at": "2026-10-11T09:00:00+00:00",
+      "normalized_guardrail_key": "G10-behavioral-test-contract",
+      "finding_url": "https://github.com/eiei114/qmd-adaptive-search/pull/1#discussion_r2"
+    },
+    {
+      "evidence_id": "1",
+      "repo": "eiei114/legacy-search",
+      "observed_at": "2026-10-11T09:00:00+00:00",
+      "normalized_guardrail_key": "G10-behavioral-test-contract",
+      "finding_url": "https://github.com/eiei114/legacy-search/pull/1#discussion_r1"
+    },
+    {
+      "evidence_id": "8",
+      "repo": "eiei114/qmd-adaptive-search",
+      "observed_at": "2026-10-11T09:00:00+00:00",
+      "normalized_guardrail_key": "G10-behavioral-test-contract",
+      "finding_url": "https://github.com/eiei114/other/pull/1"
+    },
+    {
+      "evidence_id": "10",
+      "repo": "eiei114/pi-a",
+      "observed_at": "2026-10-11T09:00:00+00:00",
+      "normalized_guardrail_key": "G2-package-docs-consistency",
+      "finding_url": "https://github.com/eiei114/pi-a/pull/1#discussion_r10"
+    }
+  ],
+  "registry": {
+    "guardrails": [
+      {
+        "key": "G10-behavioral-test-contract",
+        "attributes": {
+          "artifact": [
+            "test"
+          ]
+        },
+        "scope_level": "global"
+      },
+      {
+        "key": "G2-package-docs-consistency"
+      },
+      {
+        "key": "G2-package-docs-consistency",
+        "scope_level": "project",
+        "project_keys": [
+          "pi-a"
+        ],
+        "attributes": {
+          "artifact": [
+            "docs"
+          ]
+        },
+        "exception_adr": "synthetic-adr"
+      }
+    ]
+  },
+  "repo_aliases": {
+    "qmd-adaptive-search": "pi-qmd-adaptive-search",
+    "legacy-search": "pi-qmd-adaptive-search"
+  }
+}

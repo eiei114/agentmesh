@@ -1,0 +1,41 @@
+{
+  "op": "build_index",
+  "now": "2026-10-11T09:00:00+00:00",
+  "records": [
+    {
+      "evidence_id": "1",
+      "repo": "eiei114/pi-a",
+      "observed_at": "2026-10-11T09:00:00+00:00",
+      "normalized_guardrail_key": "G10-behavioral-test-contract",
+      "finding_url": "https://github.com/eiei114/pi-a/pull/1#discussion_r1"
+    },
+    {
+      "evidence_id": "2",
+      "repo": "eiei114/pi-a",
+      "observed_at": "2026-10-11T09:00:00+00:00",
+      "normalized_guardrail_key": "G10-behavioral-test-contract",
+      "finding_url": "https://github.com/eiei114/pi-a/pull/1#discussion_r2"
+    },
+    {
+      "evidence_id": "3",
+      "repo": "eiei114/pi-b",
+      "observed_at": "2026-10-11T09:00:00+00:00",
+      "normalized_guardrail_key": "G10-behavioral-test-contract",
+      "finding_url": "https://github.com/eiei114/pi-b/pull/1#discussion_r3"
+    }
+  ],
+  "registry": {
+    "guardrails": [
+      {
+        "key": "G10-behavioral-test-contract",
+        "attributes": {
+          "artifact": [
+            "test"
+          ]
+        },
+        "scope_level": "global"
+      }
+    ]
+  },
+  "repo_aliases": {}
+}

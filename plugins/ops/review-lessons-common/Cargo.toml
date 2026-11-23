@@ -1,0 +1,16 @@
+[package]
+name = "agentmesh-ops-review-lessons-common"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish = false
+rust-version.workspace = true
+description = "Offline review lesson index construction"
+
+[lints]
+workspace = true
+
+[dependencies]
+agentmesh-ops-kit = { path = "../kit" }
+serde_json.workspace = true
+time.workspace = true

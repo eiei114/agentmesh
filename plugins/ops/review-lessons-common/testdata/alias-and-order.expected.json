@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "built_at": "2026-10-11T09:00:00+00:00",
+  "window_days": 90,
+  "evidence_count": 8,
+  "lessons": [
+    {
+      "key": "G10-behavioral-test-contract",
+      "attributes": {
+        "artifact": [
+          "test"
+        ]
+      },
+      "project_counts": {
+        "pi-a": 1,
+        "pi-qmd-adaptive-search": 6
+      },
+      "finding_count": 7,
+      "stats": {
+        "findings_7d": 7,
+        "findings_30d": 7,
+        "findings_90d": 7,
+        "last_finding_at": "2026-10-11T09:00:00+00:00",
+        "recently_observed_open": 0
+      },
+      "project_stats": {
+        "pi-a": {
+          "findings_7d": 1,
+          "findings_30d": 1,
+          "findings_90d": 1,
+          "last_finding_at": "2026-10-11T04:00:00-05:00",
+          "recently_observed_open": 0
+        },
+        "pi-qmd-adaptive-search": {
+          "findings_7d": 6,
+          "findings_30d": 6,
+          "findings_90d": 6,
+          "last_finding_at": "2026-10-11T09:00:00+00:00",
+          "recently_observed_open": 0
+        }
+      },
+      "immediate_risk": false,
+      "repository_count": 2,
+      "common": true,
+      "scope_level": "global",
+      "project_keys": [],
+      "exception_adr": null,
+      "sources": {
+        "pi-a": [
+          "https://github.com/eiei114/pi-a/pull/1#discussion_r1"
+        ],
+        "pi-qmd-adaptive-search": [
+          "https://github.com/eiei114/legacy-search/pull/1#discussion_r1",
+          "https://github.com/eiei114/qmd-adaptive-search/pull/1#discussion_r2",
+          "https://github.com/eiei114/qmd-adaptive-search/pull/1#discussion_r3"
+        ]
+      }
+    },
+    {
+      "key": "G2-package-docs-consistency",
+      "attributes": {
+        "artifact": [
+          "docs"
+        ]
+      },
+      "project_counts": {
+        "pi-a": 1
+      },
+      "finding_count": 1,
+      "stats": {
+        "findings_7d": 1,
+        "findings_30d": 1,
+        "findings_90d": 1,
+        "last_finding_at": "2026-10-11T09:00:00+00:00",
+        "recently_observed_open": 0
+      },
+      "project_stats": {
+        "pi-a": {
+          "findings_7d": 1,
+          "findings_30d": 1,
+          "findings_90d": 1,
+          "last_finding_at": "2026-10-11T09:00:00+00:00",
+          "recently_observed_open": 0
+        }
+      },
+      "immediate_risk": false,
+      "repository_count": 1,
+      "common": false,
+      "scope_level": "project",
+      "project_keys": [
+        "pi-a"
+      ],
+      "exception_adr": "synthetic-adr",
+      "sources": {
+        "pi-a": [
+          "https://github.com/eiei114/pi-a/pull/1#discussion_r10"
+        ]
+      }
+    }
+  ]
+}
