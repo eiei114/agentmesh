@@ -1,0 +1,19 @@
+{
+  "op": "passing",
+  "row": {
+    "ranking_method": "external-benchmarks-v2",
+    "gates": {
+      "free": true,
+      "available": true,
+      "not_deprecated": true,
+      "tool_metadata": true,
+      "not_exhausted": true,
+      "smoke": true
+    },
+    "evals": [
+      {
+        "passed": false
+      }
+    ]
+  }
+}

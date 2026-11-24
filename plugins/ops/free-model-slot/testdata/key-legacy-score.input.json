@@ -1,0 +1,22 @@
+{
+  "op": "ranking_key",
+  "row": {
+    "model": "synthetic/c",
+    "score": 20,
+    "gates": {
+      "free": true,
+      "available": true,
+      "not_deprecated": true,
+      "smoke": true,
+      "tools": true
+    },
+    "evals": [
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "op": "zero_cost",
+  "meta": {
+    "cost": {
+      "input": false,
+      "output": 0
+    }
+  }
+}

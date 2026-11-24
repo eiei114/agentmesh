@@ -1,0 +1,88 @@
+[
+  {
+    "model": "synthetic/high",
+    "score": 21,
+    "gates": {
+      "free": true,
+      "available": true,
+      "not_deprecated": true,
+      "smoke": true,
+      "tools": true
+    },
+    "evals": [
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      }
+    ]
+  },
+  {
+    "model": "synthetic/b",
+    "ranking_method": "external-benchmarks-v1",
+    "score": 20,
+    "gates": {
+      "free": true,
+      "available": true,
+      "not_deprecated": true,
+      "tool_metadata": true,
+      "not_exhausted": true
+    },
+    "benchmark": {
+      "quality": 0.99
+    },
+    "real_runs": {
+      "completed": 999
+    }
+  },
+  {
+    "model": "synthetic/c",
+    "score": 20,
+    "gates": {
+      "free": true,
+      "available": true,
+      "not_deprecated": true,
+      "smoke": true,
+      "tools": true
+    },
+    "evals": [
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      }
+    ]
+  },
+  {
+    "model": "synthetic/a",
+    "score": 3,
+    "gates": {
+      "free": true,
+      "available": true,
+      "not_deprecated": true,
+      "smoke": true,
+      "tools": true
+    },
+    "evals": [
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      }
+    ]
+  },
+  {
+    "model": "synthetic/default",
+    "ranking_method": "external-benchmarks-v2",
+    "gates": {
+      "free": true,
+      "available": true,
+      "not_deprecated": true,
+      "tool_metadata": true,
+      "not_exhausted": true
+    }
+  }
+]

@@ -1,0 +1,20 @@
+{
+  "op": "passing",
+  "row": {
+    "gates": {
+      "free": true,
+      "available": true,
+      "not_deprecated": true,
+      "smoke": true,
+      "tools": false
+    },
+    "evals": [
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      }
+    ]
+  }
+}
