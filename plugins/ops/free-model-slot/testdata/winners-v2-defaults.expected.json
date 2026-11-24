@@ -1,0 +1,59 @@
+[
+  {
+    "model": "synthetic/with-evidence",
+    "ranking_method": "external-benchmarks-v2",
+    "gates": {
+      "free": true,
+      "available": true,
+      "not_deprecated": true,
+      "tool_metadata": true,
+      "not_exhausted": true
+    },
+    "benchmark": {
+      "quality": 0.25
+    },
+    "real_runs": {
+      "completed": 1
+    },
+    "metadata": {
+      "limit": {
+        "context": 0
+      }
+    },
+    "score": 0
+  },
+  {
+    "model": "synthetic/default",
+    "ranking_method": "external-benchmarks-v2",
+    "gates": {
+      "free": true,
+      "available": true,
+      "not_deprecated": true,
+      "tool_metadata": true,
+      "not_exhausted": true
+    }
+  },
+  {
+    "model": "synthetic/zero-quality",
+    "ranking_method": "external-benchmarks-v2",
+    "gates": {
+      "free": true,
+      "available": true,
+      "not_deprecated": true,
+      "tool_metadata": true,
+      "not_exhausted": true
+    },
+    "benchmark": {
+      "quality": 0
+    },
+    "real_runs": {
+      "completed": 100
+    },
+    "metadata": {
+      "limit": {
+        "context": 100
+      }
+    },
+    "score": 100
+  }
+]

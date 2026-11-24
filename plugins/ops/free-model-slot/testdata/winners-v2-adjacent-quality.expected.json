@@ -1,0 +1,48 @@
+[
+  {
+    "model": "synthetic/z",
+    "ranking_method": "external-benchmarks-v2",
+    "gates": {
+      "free": true,
+      "available": true,
+      "not_deprecated": true,
+      "tool_metadata": true,
+      "not_exhausted": true
+    },
+    "benchmark": {
+      "quality": 1.0
+    },
+    "real_runs": {
+      "completed": 0
+    },
+    "metadata": {
+      "limit": {
+        "context": 0
+      }
+    },
+    "score": 0
+  },
+  {
+    "model": "synthetic/a",
+    "ranking_method": "external-benchmarks-v2",
+    "gates": {
+      "free": true,
+      "available": true,
+      "not_deprecated": true,
+      "tool_metadata": true,
+      "not_exhausted": true
+    },
+    "benchmark": {
+      "quality": 0.9999999999999999
+    },
+    "real_runs": {
+      "completed": 0
+    },
+    "metadata": {
+      "limit": {
+        "context": 0
+      }
+    },
+    "score": 0
+  }
+]

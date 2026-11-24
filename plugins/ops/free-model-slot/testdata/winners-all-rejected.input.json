@@ -1,0 +1,15 @@
+{
+  "op": "winners",
+  "models": [
+    {},
+    {
+      "gates": {
+        "free": true,
+        "available": true,
+        "not_deprecated": true,
+        "tool_metadata": true,
+        "not_exhausted": true
+      }
+    }
+  ]
+}

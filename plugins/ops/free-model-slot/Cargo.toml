@@ -1,0 +1,16 @@
+[package]
+name = "agentmesh-ops-free-model-slot"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish = false
+rust-version.workspace = true
+description = "Read-only free-model snapshot ranking port (unstable)"
+
+[lints]
+workspace = true
+
+[dependencies]
+agentmesh-ops-kit = { path = "../kit" }
+# Keep adjacent f64 values distinct when the kit parses stdio requests.
+serde_json = { workspace = true, features = ["float_roundtrip"] }
