@@ -395,6 +395,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "agentmesh-ops-vault-steward"
+version = "0.1.0"
+dependencies = [
+ "agentmesh-ops-kit",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "agentmesh-ops-windows-subprocess"
 version = "0.1.0"
 dependencies = [

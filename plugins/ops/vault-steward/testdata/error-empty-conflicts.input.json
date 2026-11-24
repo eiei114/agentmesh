@@ -1,0 +1,15 @@
+{
+  "root": "VAULT_PLACEHOLDER",
+  "branch": "main",
+  "plans": [],
+  "excluded": [],
+  "commits": [],
+  "pushed": false,
+  "push_target": "",
+  "skipped_reason": "",
+  "trigger": "manual",
+  "dry_run": false,
+  "error": "could not commit",
+  "conflicted_paths": [],
+  "skipped_buckets": []
+}

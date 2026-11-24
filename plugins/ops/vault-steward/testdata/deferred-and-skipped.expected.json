@@ -1,0 +1,58 @@
+{
+  "branch": "main",
+  "required_branch": "main",
+  "dry_run": false,
+  "trigger": "scheduled",
+  "agents_md_sanitize": null,
+  "buckets": [
+    {
+      "id": "z",
+      "files": [
+        "notes/z.md"
+      ],
+      "file_count": 1,
+      "message": "docs: update notes"
+    },
+    {
+      "id": "a",
+      "files": [
+        "notes/a.md"
+      ],
+      "file_count": 1,
+      "message": "docs: update example"
+    },
+    {
+      "id": "m",
+      "files": [
+        "guide.md"
+      ],
+      "file_count": 1,
+      "message": "docs: update guide"
+    }
+  ],
+  "excluded": [],
+  "commits": [
+    {
+      "bucket_id": "m",
+      "message": "docs: update guide",
+      "sha": "abcdef3"
+    }
+  ],
+  "commit_count": 1,
+  "skipped_buckets": [
+    {
+      "bucket_id": "z",
+      "reason": "nothing_to_commit"
+    },
+    {
+      "bucket_id": "a",
+      "reason": "nothing_to_commit"
+    }
+  ],
+  "pushed": false,
+  "push_deferred": true,
+  "push_target": null,
+  "skipped_reason": "push deferred for this example",
+  "error": null,
+  "vault_root": "VAULT_PLACEHOLDER"
+}

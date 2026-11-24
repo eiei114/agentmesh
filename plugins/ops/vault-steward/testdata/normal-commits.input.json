@@ -1,0 +1,19 @@
+{
+  "root": "VAULT_PLACEHOLDER",
+  "branch": "agent/example",
+  "plans": [
+    {"bucket_id": "z", "files": ["notes/z.md", "notes/café.md"], "message": "docs: update notes"},
+    {"bucket_id": "a", "files": ["guide.md"], "message": "docs: update guide"}
+  ],
+  "excluded": [],
+  "commits": [
+    {"bucket_id": "z", "message": "docs: update notes", "sha": "abcdef1", "task_sha": "abcdef1"},
+    {"bucket_id": "a", "message": "docs: update guide", "sha": "abcdef2"}
+  ],
+  "pushed": true,
+  "push_target": "origin/agent/example",
+  "skipped_reason": "",
+  "trigger": "scheduled",
+  "dry_run": false,
+  "agents_md_sanitize": {"sanitized": true, "reason": null}
+}

@@ -1,0 +1,21 @@
+{
+  "root": "VAULT_PLACEHOLDER",
+  "branch": "main",
+  "plans": [
+    {"bucket_id": "z", "files": ["notes/z.md"], "message": "docs: update notes"},
+    {"bucket_id": "a", "files": ["notes/a.md"], "message": "docs: update example"},
+    {"bucket_id": "m", "files": ["guide.md"], "message": "docs: update guide"}
+  ],
+  "excluded": [],
+  "commits": [{"bucket_id": "m", "message": "docs: update guide", "sha": "abcdef3"}],
+  "pushed": false,
+  "push_target": "",
+  "skipped_reason": "push deferred for this example",
+  "trigger": "scheduled",
+  "dry_run": false,
+  "push_deferred": true,
+  "skipped_buckets": [
+    {"bucket_id": "z", "reason": "nothing_to_commit"},
+    {"bucket_id": "a", "reason": "nothing_to_commit"}
+  ]
+}
