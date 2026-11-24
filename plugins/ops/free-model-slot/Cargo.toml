@@ -12,4 +12,5 @@ workspace = true
 
 [dependencies]
 agentmesh-ops-kit = { path = "../kit" }
-serde_json.workspace = true
+# Keep adjacent f64 values distinct when the kit parses stdio requests.
+serde_json = { workspace = true, features = ["float_roundtrip"] }

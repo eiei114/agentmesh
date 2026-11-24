@@ -52,6 +52,7 @@ def requests():
             "legacy-shape": legacy,
             "missing": {k: v for k, v in external.items() if k != "not_exhausted"},
             "numeric-true": dict(external, free=1, available=1.0),
+            "float-below-one": dict(external, free=0.9999999999999999),
             "string-true": dict(external, tool_metadata="true"),
             **{f"false-{key}": dict(external, **{key: False}) for key in external},
         }.items():
@@ -91,6 +92,10 @@ def requests():
         dict(ranking_method=v2, gates=dict(external, not_exhausted=False)),
     ]
     yield "winners-v2", dict(op="winners", models=rows_v2)
+    yield "winners-v2-adjacent-quality", dict(op="winners", models=[
+        row_v2("a", 0.9999999999999999, 0, 0, 0),
+        row_v2("z", 1.0, 0, 0, 0),
+    ])
     yield "key-v2", dict(op="ranking_key", row=tied)
     defaults = dict(model="synthetic/default", ranking_method=v2, gates=external)
     yield "key-v2-defaults", dict(op="ranking_key", row=defaults)
@@ -121,11 +126,13 @@ def main():
     fixtures = Path(__file__).resolve().parent
     fields = dict(zero_cost="meta", passing="row", ranking_key="row")
     for name, request in requests():
+        input_json = json.dumps(request, indent=2, allow_nan=False) + "\n"
+        (fixtures / f"{name}.input.json").write_text(input_json, encoding="utf-8", newline="\n")
+        request = json.loads(input_json)
         op = request["op"]
         result = functions[op](request if op == "winners" else request[fields[op]])
-        for suffix, value in (("input", request), ("expected", result)):
-            (fixtures / f"{name}.{suffix}.json").write_text(
-                json.dumps(value, indent=2, allow_nan=False) + "\n", encoding="utf-8", newline="\n")
+        (fixtures / f"{name}.expected.json").write_text(
+            json.dumps(result, indent=2, allow_nan=False) + "\n", encoding="utf-8", newline="\n")
 
 
 if __name__ == "__main__":

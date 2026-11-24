@@ -26,6 +26,21 @@ fn invoke(input: &[u8]) -> (u8, Value) {
 }
 
 #[test]
+fn stdio_preserves_adjacent_float_gate_and_quality_values() {
+    let testdata = Path::new(env!("CARGO_MANIFEST_DIR")).join("testdata");
+    for name in [
+        "passing-v1-float-below-one",
+        "passing-v2-float-below-one",
+        "winners-v2-adjacent-quality",
+    ] {
+        let input = std::fs::read(testdata.join(format!("{name}.input.json"))).unwrap();
+        let expected = std::fs::read(testdata.join(format!("{name}.expected.json"))).unwrap();
+        let expected = serde_json::from_slice(&expected).unwrap();
+        assert_eq!(invoke(&input), (0, expected), "{name}");
+    }
+}
+
+#[test]
 fn stdio_returns_one_result_or_one_error() {
     let (code, result) = invoke(include_bytes!("../testdata/winners-v2.input.json"));
     let expected: Value =
