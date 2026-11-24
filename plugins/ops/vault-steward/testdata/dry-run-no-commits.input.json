@@ -1,0 +1,16 @@
+{
+  "root": "VAULT_PLACEHOLDER",
+  "branch": "main",
+  "plans": [
+    {"bucket_id": "z", "files": ["notes/z.md", "notes/a.md", "notes/z.md"], "message": "docs: update notes"},
+    {"bucket_id": "a", "files": ["guide.md"], "message": "docs: update guide"},
+    {"bucket_id": "empty", "files": [], "message": "empty plan"}
+  ],
+  "excluded": ["scratch/z.md", "scratch/a.md"],
+  "commits": [],
+  "pushed": false,
+  "push_target": "",
+  "skipped_reason": "",
+  "trigger": "",
+  "dry_run": true
+}

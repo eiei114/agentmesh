@@ -1,0 +1,13 @@
+{
+  "root": "VAULT_PLACEHOLDER",
+  "branch": "main",
+  "plans": [{"bucket_id": "notes", "files": ["notes/plan.md"], "message": "docs: update plan"}],
+  "excluded": [],
+  "commits": [{"bucket_id": "notes", "message": "docs: update plan", "sha": null}],
+  "pushed": false,
+  "push_target": "",
+  "skipped_reason": "",
+  "trigger": "manual",
+  "dry_run": true,
+  "agents_md_sanitize": {}
+}

@@ -1,0 +1,18 @@
+{
+  "branch": "main",
+  "required_branch": "main",
+  "dry_run": false,
+  "trigger": "manual",
+  "agents_md_sanitize": null,
+  "buckets": [],
+  "excluded": [],
+  "commits": [],
+  "commit_count": 0,
+  "skipped_buckets": [],
+  "pushed": false,
+  "push_deferred": false,
+  "push_target": null,
+  "skipped_reason": null,
+  "error": "could not commit",
+  "vault_root": "VAULT_PLACEHOLDER"
+}

@@ -1,0 +1,33 @@
+{
+  "branch": "main",
+  "required_branch": "main",
+  "dry_run": true,
+  "trigger": "manual",
+  "agents_md_sanitize": {},
+  "buckets": [
+    {
+      "id": "notes",
+      "files": [
+        "notes/plan.md"
+      ],
+      "file_count": 1,
+      "message": "docs: update plan"
+    }
+  ],
+  "excluded": [],
+  "commits": [
+    {
+      "bucket_id": "notes",
+      "message": "docs: update plan",
+      "sha": null
+    }
+  ],
+  "commit_count": 1,
+  "skipped_buckets": [],
+  "pushed": false,
+  "push_deferred": false,
+  "push_target": null,
+  "skipped_reason": null,
+  "error": null,
+  "vault_root": "VAULT_PLACEHOLDER"
+}
