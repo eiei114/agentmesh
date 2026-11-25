@@ -1,0 +1,84 @@
+{
+  "audit": {
+    "schema_version": 1,
+    "checked_at": "2023-11-14T22:13:20+00:00",
+    "vault_root": "synthetic-vault",
+    "threshold_hours": 24.0,
+    "eligible_path_count": 15,
+    "stale": true,
+    "stale_path_count": 11,
+    "oldest_age_hours": 55.56,
+    "stale_paths": [
+      {
+        "path": "oldest.md",
+        "age_hours": 55.56
+      },
+      {
+        "path": "equal.md",
+        "age_hours": 24.0
+      },
+      {
+        "path": "round-down.md",
+        "age_hours": 24.0
+      },
+      {
+        "path": "same-a.md",
+        "age_hours": 24.0
+      },
+      {
+        "path": "same-b.md",
+        "age_hours": 24.0
+      },
+      {
+        "path": "tail-1.md",
+        "age_hours": 24.0
+      },
+      {
+        "path": "tail-2.md",
+        "age_hours": 24.0
+      },
+      {
+        "path": "tail-3.md",
+        "age_hours": 24.0
+      },
+      {
+        "path": "tail-4.md",
+        "age_hours": 24.0
+      },
+      {
+        "path": "tail-5.md",
+        "age_hours": 24.0
+      },
+      {
+        "path": "tail-6.md",
+        "age_hours": 24.0
+      }
+    ],
+    "excluded_paths": [
+      "ignored.md",
+      "ignored/other.md"
+    ]
+  },
+  "finding": {
+    "code": "vault_uncommitted_stale_24h",
+    "severity": "warning",
+    "detail": {
+      "threshold_hours": 24.0,
+      "stale_path_count": 11,
+      "oldest_age_hours": 55.56,
+      "paths": [
+        "oldest.md",
+        "equal.md",
+        "round-down.md",
+        "same-a.md",
+        "same-b.md",
+        "tail-1.md",
+        "tail-2.md",
+        "tail-3.md",
+        "tail-4.md",
+        "tail-5.md"
+      ]
+    },
+    "next_action": "Run vault-split-commit.py --apply --push or record an explicit skip reason in handoff."
+  }
+}

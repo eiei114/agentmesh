@@ -1,0 +1,37 @@
+{
+  "audit": {
+    "schema_version": 1,
+    "checked_at": "1969-12-31T23:59:59.999999+00:00",
+    "vault_root": "synthetic-vault",
+    "threshold_hours": 0.0,
+    "eligible_path_count": 3,
+    "stale": true,
+    "stale_path_count": 2,
+    "oldest_age_hours": 0.0,
+    "stale_paths": [
+      {
+        "path": "future.md",
+        "age_hours": 0.0
+      },
+      {
+        "path": "now.md",
+        "age_hours": 0.0
+      }
+    ],
+    "excluded_paths": []
+  },
+  "finding": {
+    "code": "vault_uncommitted_stale_24h",
+    "severity": "warning",
+    "detail": {
+      "threshold_hours": 0.0,
+      "stale_path_count": 2,
+      "oldest_age_hours": 0.0,
+      "paths": [
+        "future.md",
+        "now.md"
+      ]
+    },
+    "next_action": "Run vault-split-commit.py --apply --push or record an explicit skip reason in handoff."
+  }
+}

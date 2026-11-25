@@ -1,0 +1,8 @@
+{
+  "vault_root": "synthetic-vault",
+  "now_unix_us": 1700000000123456,
+  "threshold_hours": 36.0,
+  "grouped": {"notes": ["recent.md", "missing.md"]},
+  "excluded_paths": ["ignored.md"],
+  "mtimes_unix_us": {"recent.md": 1699913600123456, "missing.md": null}
+}

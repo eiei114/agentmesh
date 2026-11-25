@@ -1,0 +1,26 @@
+{
+  "vault_root": "synthetic-vault",
+  "now_unix_us": 1700000000000000,
+  "grouped": {
+    "notes": ["equal.md", "same-b.md", "same-a.md", "just-under.md", "future.md", "missing.md", "unreadable.md", "round-down.md"],
+    "other": ["tail-6.md", "tail-5.md", "tail-4.md", "tail-3.md", "tail-2.md", "tail-1.md", "oldest.md", "equal.md", "equal.md"]
+  },
+  "excluded_paths": ["ignored.md", "ignored/other.md"],
+  "mtimes_unix_us": {
+    "oldest.md": 1699800000000000,
+    "equal.md": 1699913600000000,
+    "same-b.md": 1699913586000000,
+    "same-a.md": 1699913587000000,
+    "round-down.md": 1699913582000000,
+    "just-under.md": 1699913600000001,
+    "future.md": 1700000000000001,
+    "unreadable.md": null,
+    "tail-1.md": 1699913599999999,
+    "tail-2.md": 1699913599999999,
+    "tail-3.md": 1699913599999999,
+    "tail-4.md": 1699913599999999,
+    "tail-5.md": 1699913599999999,
+    "tail-6.md": 1699913599999999,
+    "ignored.md": 1699800000000000
+  }
+}

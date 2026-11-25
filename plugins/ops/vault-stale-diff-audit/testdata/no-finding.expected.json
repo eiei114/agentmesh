@@ -1,0 +1,17 @@
+{
+  "audit": {
+    "schema_version": 1,
+    "checked_at": "2023-11-14T22:13:20.123456+00:00",
+    "vault_root": "synthetic-vault",
+    "threshold_hours": 36.0,
+    "eligible_path_count": 2,
+    "stale": false,
+    "stale_path_count": 0,
+    "oldest_age_hours": 0.0,
+    "stale_paths": [],
+    "excluded_paths": [
+      "ignored.md"
+    ]
+  },
+  "finding": null
+}

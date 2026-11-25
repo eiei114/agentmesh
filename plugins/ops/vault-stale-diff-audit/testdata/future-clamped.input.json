@@ -1,0 +1,8 @@
+{
+  "vault_root": "synthetic-vault",
+  "now_unix_us": -1,
+  "threshold_hours": 0.0,
+  "grouped": {"notes": ["future.md", "missing.md", "now.md"]},
+  "excluded_paths": [],
+  "mtimes_unix_us": {"future.md": 1000000, "now.md": -1}
+}
