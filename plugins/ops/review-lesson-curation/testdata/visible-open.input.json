@@ -1,0 +1,5 @@
+{
+  "op":"is_visible","key":"hint",
+  "curation":{"schema_version":1,"curated_at":"2025-01-06T00:00:00+09:00","global_decisions":{"hint":"reference_only"}},
+  "stats":{"last_finding_at":"not-a-date","recently_observed_open":1}
+}
