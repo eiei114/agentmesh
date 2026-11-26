@@ -1,0 +1,6 @@
+{
+  "error": {
+    "kind": "invalid_request",
+    "message": "native_stall_timestamp_unknown"
+  }
+}

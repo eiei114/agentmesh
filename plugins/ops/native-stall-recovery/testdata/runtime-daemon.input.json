@@ -1,0 +1,16 @@
+{
+  "issue": {
+    "assignee_id": "owner"
+  },
+  "latest_run": {
+    "id": "i-run",
+    "status": "cancelled",
+    "error": "daemon shut down",
+    "result": {
+      "output": "daemon shut down"
+    }
+  },
+  "timestamp": "2026-11-18T12:00:00+00:00",
+  "provider_match": false,
+  "decoded_metadata": null
+}
