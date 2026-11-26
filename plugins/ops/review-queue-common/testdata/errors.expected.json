@@ -1,0 +1,13 @@
+{
+  "coverage": "partial_errors",
+  "deferred_sources": 0,
+  "sources": 0,
+  "children": 0,
+  "in_review_sources": 0,
+  "done_cleanup_sources": 0,
+  "source_reasons": {},
+  "child_reasons": {},
+  "groups": [],
+  "rows": [],
+  "basis": "issue_age and last_activity, not claimed exact review-entry age; no delivery counts"
+}

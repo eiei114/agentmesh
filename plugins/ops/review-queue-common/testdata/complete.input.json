@@ -1,0 +1,88 @@
+{
+  "rows": [
+    {
+      "key": "SYN-1",
+      "project": "synthetic-z",
+      "role": "source",
+      "status": "in_review",
+      "reason": null,
+      "issue_age_hours": null,
+      "next_action": "stale-label",
+      "inactivity_hours": 7.0
+    },
+    {
+      "key": "SYN-2",
+      "project": "synthetic-a",
+      "role": "source",
+      "status": "in_review",
+      "reason": "unresolved_review_threads",
+      "issue_age_hours": 2.5
+    },
+    {
+      "key": "SYN-3",
+      "project": "synthetic-z",
+      "role": "source",
+      "status": "done",
+      "reason": null,
+      "issue_age_hours": 0.0,
+      "independent_reviewed": true
+    },
+    {
+      "key": "SYN-4",
+      "project": "synthetic-z",
+      "role": "source",
+      "status": "done",
+      "reason": null,
+      "issue_age_hours": 3.5
+    },
+    {
+      "key": null,
+      "project": "synthetic-z",
+      "role": "child",
+      "status": "in_review",
+      "reason": "",
+      "issue_age_hours": null
+    },
+    {
+      "key": "SYN-6",
+      "project": "synthetic-z",
+      "role": "child",
+      "status": "done",
+      "reason": "merge_conflict",
+      "issue_age_hours": null
+    },
+    {
+      "key": "SYN-7",
+      "project": "synthetic-z",
+      "role": "source",
+      "status": "in_review",
+      "reason": null,
+      "issue_age_hours": 1
+    },
+    {
+      "key": "SYN-8",
+      "project": "synthetic-a",
+      "role": "source",
+      "status": "in_review",
+      "reason": "unresolved_review_threads",
+      "issue_age_hours": null
+    },
+    {
+      "key": "SYN-9",
+      "project": "synthetic-z",
+      "role": "child",
+      "status": "in_review",
+      "reason": "merge_conflict",
+      "issue_age_hours": 12.25
+    },
+    {
+      "key": "SYN-10",
+      "project": null,
+      "role": "source",
+      "status": null,
+      "reason": "",
+      "issue_age_hours": null,
+      "independent_reviewed": true
+    }
+  ]
+}

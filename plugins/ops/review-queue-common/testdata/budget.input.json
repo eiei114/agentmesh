@@ -1,0 +1,76 @@
+{
+  "complete": true,
+  "deferred": 6,
+  "rows": [
+    {
+      "key": "SYN-1",
+      "project": "synthetic-z",
+      "role": "child",
+      "status": "in_review",
+      "reason": "worker_still_active",
+      "issue_age_hours": null,
+      "deferral_budget": "requests"
+    },
+    {
+      "key": "SYN-2",
+      "project": "synthetic-z",
+      "role": "child",
+      "status": "in_review",
+      "reason": "worker_still_active",
+      "issue_age_hours": null,
+      "deferral_budget": {}
+    },
+    {
+      "key": "SYN-3",
+      "project": "synthetic-z",
+      "role": "child",
+      "status": "in_review",
+      "reason": "classification_deferred",
+      "issue_age_hours": null
+    },
+    {
+      "key": "SYN-4",
+      "project": "synthetic-z",
+      "role": "child",
+      "status": "in_review",
+      "reason": "classification_time_deferred",
+      "issue_age_hours": null
+    },
+    {
+      "key": "SYN-5",
+      "project": "synthetic-z",
+      "role": "child",
+      "status": "in_review",
+      "reason": "protected_publication_requires_separation",
+      "issue_age_hours": null
+    },
+    {
+      "key": "SYN-6",
+      "project": "synthetic-z",
+      "role": "child",
+      "status": "in_review",
+      "reason": "publication_hold_invalid",
+      "issue_age_hours": null,
+      "deferral_budget": {
+        "budget": "time"
+      }
+    },
+    {
+      "key": "SYN-7",
+      "project": "synthetic-z",
+      "role": "child",
+      "status": "in_review",
+      "reason": "publication_hold_invalid",
+      "issue_age_hours": null
+    },
+    {
+      "key": "SYN-8",
+      "project": "synthetic-z",
+      "role": "child",
+      "status": "in_review",
+      "reason": null,
+      "issue_age_hours": null,
+      "independent_reviewed": true
+    }
+  ]
+}
