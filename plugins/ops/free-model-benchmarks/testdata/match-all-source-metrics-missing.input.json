@@ -1,0 +1,48 @@
+{
+  "op": "match_model",
+  "model": "test/example",
+  "metadata": {
+    "family": "example",
+    "release_date": "2026-11-01"
+  },
+  "aliases": {
+    "models": {
+      "test/example": {
+        "identity": "vendor/example",
+        "metadata": {
+          "family": "example",
+          "release_date": "2026-11-01"
+        },
+        "entries": {
+          "epoch_mirrorcode": "exact"
+        }
+      }
+    }
+  },
+  "sources": {
+    "epoch": {
+      "stale": false,
+      "metrics": {}
+    },
+    "aider": {
+      "stale": false,
+      "metrics": {}
+    },
+    "arena_agent": {
+      "stale": false,
+      "metrics": {}
+    },
+    "arena_webdev": {
+      "stale": false,
+      "metrics": {}
+    },
+    "llm_stats": {
+      "stale": false,
+      "metrics": {}
+    },
+    "hf_lightning": {
+      "stale": false,
+      "metrics": {}
+    }
+  }
+}

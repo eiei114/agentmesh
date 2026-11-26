@@ -1,0 +1,25 @@
+{
+  "op": "percentiles",
+  "entries": [
+    {
+      "id": "a",
+      "score": 0
+    },
+    {
+      "id": "c",
+      "score": 50
+    },
+    {
+      "id": "d",
+      "score": 100
+    },
+    {
+      "id": "b",
+      "score": 10
+    },
+    {
+      "id": "b",
+      "score": 90
+    }
+  ]
+}

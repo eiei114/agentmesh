@@ -1,0 +1,100 @@
+{
+  "identity": "vendor/example",
+  "quality": 0.3,
+  "sources": {
+    "aider_polyglot": {
+      "entry_id": null,
+      "evidence_kind": "independent",
+      "normalized": null,
+      "percentile": null,
+      "raw": null,
+      "source": "aider",
+      "stale": false,
+      "status": "no_alias"
+    },
+    "arena_agent": {
+      "entry_id": null,
+      "evidence_kind": "independent",
+      "normalized": null,
+      "percentile": null,
+      "raw": null,
+      "source": "arena_agent",
+      "stale": false,
+      "status": "no_alias"
+    },
+    "arena_webdev": {
+      "entry_id": null,
+      "evidence_kind": "independent",
+      "normalized": null,
+      "percentile": null,
+      "raw": null,
+      "source": "arena_webdev",
+      "stale": false,
+      "status": "no_alias"
+    },
+    "epoch_gpqa": {
+      "entry_id": null,
+      "evidence_kind": "independent",
+      "normalized": null,
+      "percentile": null,
+      "raw": null,
+      "source": "epoch",
+      "stale": true,
+      "status": "no_alias"
+    },
+    "epoch_mirrorcode": {
+      "entry_id": "exact",
+      "evidence_kind": "independent",
+      "normalized": 0.5,
+      "observed_at": null,
+      "original_source": null,
+      "percentile": 0.5,
+      "raw": 90,
+      "release_date": "2026-10-01",
+      "source": "epoch",
+      "stale": true,
+      "status": "matched"
+    },
+    "epoch_swe_verified": {
+      "entry_id": null,
+      "evidence_kind": "independent",
+      "normalized": null,
+      "percentile": null,
+      "raw": null,
+      "source": "epoch",
+      "stale": true,
+      "status": "no_alias"
+    },
+    "hf_lightning_swe": {
+      "entry_id": null,
+      "evidence_kind": "vendor-reported",
+      "normalized": null,
+      "percentile": null,
+      "raw": null,
+      "source": "hf_lightning",
+      "stale": false,
+      "status": "no_alias"
+    },
+    "vendor_deepswe": {
+      "entry_id": null,
+      "evidence_kind": "vendor-reported",
+      "normalized": null,
+      "percentile": null,
+      "raw": null,
+      "source": "llm_stats",
+      "stale": false,
+      "status": "no_alias"
+    },
+    "vendor_swe_verified": {
+      "entry_id": null,
+      "evidence_kind": "vendor-reported",
+      "normalized": null,
+      "percentile": null,
+      "raw": null,
+      "source": "llm_stats",
+      "stale": false,
+      "status": "no_alias"
+    }
+  },
+  "status": "matched"
+}

@@ -1,0 +1,106 @@
+{
+  "identity": "vendor/example",
+  "quality": 0.274656,
+  "sources": {
+    "aider_polyglot": {
+      "entry_id": null,
+      "evidence_kind": "independent",
+      "normalized": null,
+      "percentile": null,
+      "raw": null,
+      "source": "aider",
+      "stale": false,
+      "status": "no_alias"
+    },
+    "arena_agent": {
+      "entry_id": null,
+      "evidence_kind": "independent",
+      "normalized": null,
+      "percentile": null,
+      "raw": null,
+      "source": "arena_agent",
+      "stale": false,
+      "status": "no_alias"
+    },
+    "arena_webdev": {
+      "entry_id": null,
+      "evidence_kind": "independent",
+      "normalized": null,
+      "percentile": null,
+      "raw": null,
+      "source": "arena_webdev",
+      "stale": false,
+      "status": "no_alias"
+    },
+    "epoch_gpqa": {
+      "entry_id": null,
+      "evidence_kind": "independent",
+      "normalized": null,
+      "percentile": null,
+      "raw": null,
+      "source": "epoch",
+      "stale": false,
+      "status": "no_alias"
+    },
+    "epoch_mirrorcode": {
+      "entry_id": null,
+      "evidence_kind": "independent",
+      "normalized": null,
+      "percentile": null,
+      "raw": null,
+      "source": "epoch",
+      "stale": false,
+      "status": "no_alias"
+    },
+    "epoch_swe_verified": {
+      "entry_id": null,
+      "evidence_kind": "independent",
+      "normalized": null,
+      "percentile": null,
+      "raw": null,
+      "source": "epoch",
+      "stale": false,
+      "status": "no_alias"
+    },
+    "hf_lightning_swe": {
+      "entry_id": "exact",
+      "evidence_kind": "vendor-reported",
+      "normalized": 0.5156000000000001,
+      "observed_at": null,
+      "original_source": null,
+      "percentile": null,
+      "raw": 51.56,
+      "release_date": null,
+      "source": "hf_lightning",
+      "stale": false,
+      "status": "matched"
+    },
+    "vendor_deepswe": {
+      "entry_id": "exact",
+      "evidence_kind": "vendor-reported",
+      "normalized": 0.9,
+      "observed_at": "2026-11-15",
+      "original_source": "https://bench.example/results",
+      "percentile": null,
+      "raw": 90,
+      "release_date": null,
+      "source": "llm_stats",
+      "stale": true,
+      "status": "matched"
+    },
+    "vendor_swe_verified": {
+      "entry_id": "exact",
+      "evidence_kind": "vendor-reported",
+      "normalized": 0.5,
+      "observed_at": null,
+      "original_source": null,
+      "percentile": null,
+      "raw": 50,
+      "release_date": null,
+      "source": "llm_stats",
+      "stale": true,
+      "status": "matched"
+    }
+  },
+  "status": "matched"
+}
