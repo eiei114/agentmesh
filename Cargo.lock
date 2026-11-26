@@ -404,6 +404,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "agentmesh-ops-review-lesson-curation"
+version = "0.1.0"
+dependencies = [
+ "agentmesh-ops-kit",
+ "serde_json",
+ "time",
+]
+
+[[package]]
 name = "agentmesh-ops-review-lessons-common"
 version = "0.1.0"
 dependencies = [

@@ -1,0 +1,5 @@
+{
+  "op":"is_visible","key":"hint",
+  "curation":{"global_decisions":{"hint":"reference_only"}},
+  "stats":{}
+}

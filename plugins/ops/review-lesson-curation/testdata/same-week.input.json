@@ -1,0 +1,11 @@
+{
+  "op": "curate",
+  "now": "2025-01-05T14:59:59Z",
+  "previous": {
+    "weekly_curation": {
+      "schema_version":1,"week":"2025-W01","curated_at":"2024-12-30T00:00:00+09:00",
+      "global_decisions":{"hint":"reference_only"},"extra":{"keep":[1,2]}
+    }
+  },
+  "index":{"lessons":[{"key":"hint","repository_count":1,"stats":{"findings_7d":1}}]}
+}

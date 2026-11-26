@@ -1,0 +1,23 @@
+{
+  "op": "curate",
+  "now": "2024-12-29T10:00:00.123456-05:00",
+  "previous": {"weekly_curation": {"schema_version": 1, "week": "2024-W52"}},
+  "index": {
+    "lessons": [
+      {"key":"G4-migration-no-clobber","repository_count":0,"project_stats":{"project-z":{}}},
+      {"key":"G8-ci-workflow-permissions","repository_count":1,"stats":{"findings_7d":1}},
+      {"key":"risk","immediate_risk":true,"repository_count":0},
+      {"key":"cold","repository_count":0},
+      {
+        "key":"recent",
+        "repository_count":2,
+        "stats":{"findings_7d":0,"findings_30d":3,"last_finding_at":"2024-12-20T00:00:00Z"},
+        "project_stats": {
+          "project-z":{"recently_observed_open":1,"findings_7d":2},
+          "project-a":{"findings_7d":1},
+          "project-empty":{}
+        }
+      }
+    ]
+  }
+}

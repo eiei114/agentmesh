@@ -1,0 +1,5 @@
+{
+  "op":"is_visible","key":"hint","project":"project-a",
+  "curation":{"schema_version":1,"curated_at":"2025-01-06T00:00:00+09:00","global_decisions":{"hint":"active"},"project_decisions":{"project-a":{"hint":"reference_only"}}},
+  "stats":{"last_finding_at":"2025-01-05T15:00:00Z"}
+}

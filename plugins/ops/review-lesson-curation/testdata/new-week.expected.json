@@ -1,0 +1,106 @@
+{
+  "curation": {
+    "schema_version": 1,
+    "week": "2025-W01",
+    "curated_at": "2024-12-29T10:00:00.123456-05:00",
+    "policy": {
+      "active_days": 7,
+      "cooling_days": 30,
+      "evidence_days": 90,
+      "max_task_hints": 5,
+      "pinned_hint_keys": [
+        "G4-migration-no-clobber",
+        "G8-ci-workflow-permissions"
+      ]
+    },
+    "global_decisions": {
+      "G4-migration-no-clobber": "protected_hint",
+      "G8-ci-workflow-permissions": "protected_hint",
+      "risk": "protected_hint",
+      "cold": "reference_only",
+      "recent": "cooling"
+    },
+    "project_decisions": {
+      "project-z": {
+        "G4-migration-no-clobber": "protected_hint",
+        "recent": "active_observed"
+      },
+      "project-a": {
+        "recent": "active"
+      },
+      "project-empty": {
+        "recent": "reference_only"
+      }
+    },
+    "measurement": "sampled_finding_counts_only_no_exposure_denominator",
+    "rows": [
+      {
+        "scope": "common",
+        "project_key": null,
+        "key": "G4-migration-no-clobber",
+        "status": "protected_hint",
+        "repository_count": 0
+      },
+      {
+        "scope": "project",
+        "project_key": "project-z",
+        "key": "G4-migration-no-clobber",
+        "status": "protected_hint"
+      },
+      {
+        "scope": "common",
+        "project_key": null,
+        "key": "G8-ci-workflow-permissions",
+        "status": "protected_hint",
+        "repository_count": 1,
+        "findings_7d": 1
+      },
+      {
+        "scope": "common",
+        "project_key": null,
+        "key": "risk",
+        "status": "protected_hint",
+        "repository_count": 0
+      },
+      {
+        "scope": "common",
+        "project_key": null,
+        "key": "cold",
+        "status": "reference_only",
+        "repository_count": 0
+      },
+      {
+        "scope": "common",
+        "project_key": null,
+        "key": "recent",
+        "status": "cooling",
+        "repository_count": 2,
+        "findings_7d": 0,
+        "findings_30d": 3,
+        "last_finding_at": "2024-12-20T00:00:00Z"
+      },
+      {
+        "scope": "project",
+        "project_key": "project-a",
+        "key": "recent",
+        "status": "active",
+        "findings_7d": 1
+      },
+      {
+        "scope": "project",
+        "project_key": "project-empty",
+        "key": "recent",
+        "status": "reference_only"
+      },
+      {
+        "scope": "project",
+        "project_key": "project-z",
+        "key": "recent",
+        "status": "active_observed",
+        "recently_observed_open": 1,
+        "findings_7d": 2
+      }
+    ]
+  },
+  "changed": true
+}
