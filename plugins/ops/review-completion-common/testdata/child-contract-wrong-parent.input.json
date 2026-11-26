@@ -1,0 +1,72 @@
+{
+  "receipt": {
+    "schema_version": 1,
+    "source_issue_id": "source",
+    "producer_issue_id": "child",
+    "producer_run_id": "run",
+    "project_id": "project",
+    "pr_url": "https://github.com/fixture-owner/synthetic-demo/pull/1",
+    "head_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "context": {
+    "source": {
+      "id": "source",
+      "project_id": "project",
+      "status": "in_review"
+    },
+    "producer": {
+      "id": "child",
+      "project_id": "project",
+      "status": "in_review"
+    },
+    "project_id": "project",
+    "project_status": "planned",
+    "producer_runs": [
+      {
+        "id": "run",
+        "status": "completed",
+        "created_at": "2026-10-12T00:00:00Z"
+      }
+    ],
+    "source_runs": [],
+    "default_branch": "main",
+    "owner_allowlist": [
+      "fixture-owner"
+    ],
+    "pr": {
+      "headRefOid": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "state": "OPEN",
+      "baseRefName": "main",
+      "isDraft": false,
+      "author": {
+        "login": "fixture-owner"
+      }
+    },
+    "helpers": {
+      "source_safety_reason": null,
+      "producer_safety_reason": null,
+      "producer_metadata": {
+        "task_kind": "review_fix",
+        "source_issue_id": "other",
+        "dedupe_key": "managed-review-fix:source:old",
+        "todo_runner_ignore_terminal_run_id": null,
+        "canonical_source_pr_url": "https://github.com/fixture-owner/synthetic-demo/pull/1"
+      },
+      "receipt_url": {
+        "scheme": "https",
+        "netloc": "github.com",
+        "path": "/fixture-owner/synthetic-demo/pull/1",
+        "query": "",
+        "fragment": "",
+        "pull_number_is_digits": true,
+        "canonical_path_repo": "fixture-owner/synthetic-demo",
+        "canonical_context_repo": "fixture-owner/synthetic-demo",
+        "canonical_url": "https://github.com/fixture-owner/synthetic-demo/pull/1"
+      },
+      "canonical_pr_url": "https://github.com/fixture-owner/synthetic-demo/pull/1",
+      "canonical_link_urls": [
+        "https://github.com/fixture-owner/synthetic-demo/pull/1"
+      ]
+    }
+  }
+}
