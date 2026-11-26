@@ -51,3 +51,24 @@ fn binary_rejects_invalid_wire_requests() {
         assert_eq!(document["error"]["kind"], json!("invalid_request"));
     }
 }
+
+#[test]
+fn binary_does_not_echo_rejected_request_values() {
+    let marker = "synthetic-request-value";
+    let input = json!({"receipt": {}, "context": {"producer_runs": marker}});
+    let output = stdio(&serde_json::to_vec(&input).unwrap());
+
+    assert_eq!(output.status.code(), Some(i32::from(EXIT_INVALID_REQUEST)));
+    let stdout = String::from_utf8(output.stdout).unwrap();
+    let stderr = String::from_utf8(output.stderr).unwrap();
+    assert_eq!(
+        (stdout.contains(marker), stderr.contains(marker)),
+        (false, false),
+        "neither stdout nor stderr should echo the rejected value"
+    );
+    assert_eq!(
+        serde_json::from_str::<Value>(&stdout).unwrap(),
+        json!({"error": {"kind": "invalid_request", "message": "invalid subject request"}})
+    );
+    assert_eq!(stderr.trim_end(), "invalid subject request");
+}

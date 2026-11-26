@@ -255,7 +255,8 @@ pub fn completion_subject_plan(request: &Request) -> Value {
 }
 
 pub fn handle(input: Value) -> Result<Value, OpsError> {
+    // Serde's diagnostic may include values from the rejected request.
     let request = serde_json::from_value(input)
-        .map_err(|err| OpsError::invalid_request(format!("invalid subject request: {err}")))?;
+        .map_err(|_| OpsError::invalid_request("invalid subject request"))?;
     Ok(completion_subject_plan(&request))
 }
