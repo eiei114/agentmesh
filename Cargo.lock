@@ -336,6 +336,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "agentmesh-ops-native-stall-recovery"
+version = "0.1.0"
+dependencies = [
+ "agentmesh-ops-kit",
+ "regex",
+ "serde_json",
+ "time",
+]
+
+[[package]]
 name = "agentmesh-ops-orphan-session-summary"
 version = "0.1.0"
 dependencies = [

@@ -1,0 +1,17 @@
+[package]
+name = "agentmesh-ops-native-stall-recovery"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish = false
+rust-version.workspace = true
+description = "Offline classification of native stall evidence"
+
+[lints]
+workspace = true
+
+[dependencies]
+agentmesh-ops-kit = { path = "../kit" }
+regex = "1"
+serde_json.workspace = true
+time.workspace = true

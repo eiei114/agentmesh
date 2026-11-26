@@ -1,0 +1,5 @@
+{
+  "classification": "terminal_failure",
+  "timestamp": "2026-11-18T12:00:00+00:00",
+  "blocked_reason": "native_stall_retry_budget_exhausted"
+}

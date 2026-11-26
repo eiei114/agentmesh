@@ -1,0 +1,14 @@
+{
+  "issue": {
+    "assignee_id": "owner"
+  },
+  "latest_run": {
+    "id": "i-run",
+    "status": "failed",
+    "error": null,
+    "result": null
+  },
+  "timestamp": "2026-02-30T12:00:00Z",
+  "provider_match": false,
+  "decoded_metadata": null
+}
