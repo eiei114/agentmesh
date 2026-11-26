@@ -1,0 +1,9 @@
+{
+  "op": "assessment_context",
+  "issue": {
+    "metadata": {
+      "routed_agent": "Pi Blocked Recovery Luna Assessor",
+      "blocked_recovery_context": "{\"writer\":\"windows-tick\",\"mode\":\"assess\",\"original_required_capabilities\":{\"value\":18446744073709551617}}"
+    }
+  }
+}

@@ -277,6 +277,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "agentmesh-ops-blocked-recovery-common"
+version = "0.1.0"
+dependencies = [
+ "agentmesh-ops-kit",
+ "serde_json",
+]
+
+[[package]]
 name = "agentmesh-ops-daily-delivery-common"
 version = "0.1.0"
 dependencies = [
