@@ -1,0 +1,17 @@
+{
+  "operation": "orphan_repair",
+  "issue": {
+    "id": "child",
+    "identifier": "SYN-4",
+    "assignee_id": null
+  },
+  "metadata": {},
+  "status": "in_review",
+  "pr_view": {
+    "state": "OPEN",
+    "headRefOid": "edb55b2d00000000000000000000000000000000"
+  },
+  "runs": {
+    "runs": []
+  }
+}
