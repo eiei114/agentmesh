@@ -150,8 +150,15 @@ fn orphan_repair(request: &Value, issue: &Value, md: &Value) -> Result<Value, Op
     } else {
         runs
     };
-    if !runs.is_null() && runs.as_array().is_none_or(|rows| !rows.is_empty()) {
-        return Ok(Value::Null);
+    match runs {
+        Value::Null => {}
+        Value::Array(rows) if rows.is_empty() => {}
+        Value::Array(_) => return Ok(Value::Null),
+        _ => {
+            return Err(OpsError::invalid_request(
+                "run evidence must be an array or null",
+            ))
+        }
     }
     let Some(head) = open_head(request)? else {
         return Ok(Value::Null);

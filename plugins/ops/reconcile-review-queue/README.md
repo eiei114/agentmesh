@@ -15,7 +15,9 @@ present if the decision reaches the corresponding guard.
   `"superseded_by:<identifier>@<head prefix>"`.
 - `operation: "orphan_repair"`: supply `status` and `runs` for this issue.
   `runs` accepts a bare array or a `runs`/`items` response object (as in
-  Python, `runs` takes precedence). Any run, including a completed one,
+  Python, `runs` takes precedence even when null). A bare `null`, a wrapper
+  with neither key, or a selected `null` field means no runs. Other non-array
+  evidence yields `invalid_request` (exit 2). Any run, including a completed one,
   suppresses the orphan decision. Returns `null` or `[status, reason]` for
   either `done` (artifact at the exact open head) or `backlog` (otherwise).
 
