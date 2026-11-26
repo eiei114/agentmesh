@@ -21,7 +21,11 @@ static RUNTIME_FAILURE: LazyLock<Regex> = LazyLock::new(|| {
 static SIBLING_HOLD: LazyLock<Regex> = LazyLock::new(|| {
     Regex::new(concat!(
         r"(?i)sibling|兄弟|並行.{0,24}(?:待|実行)|親.{0,24}待|",
-        r"(?:別|他).{0,24}\brun\b.{0,24}(?:待|queued|running)"
+        // Both surrounding tokens end/start with word characters, so Python
+        // \b requires a non-word separator on each side of `run`. Count each
+        // separator toward the original 24-code-point gap and exclude LF as `.` does.
+        r"(?:別|他).{0,23}(?-i:[^\p{L}\p{N}_\n])run",
+        r"(?-i:[^\p{L}\p{N}_\n]).{0,23}(?:待|queued|running)"
     ))
     .unwrap()
 });
@@ -38,9 +42,21 @@ fn text(value: &Value) -> Cow<'_, str> {
     }
 }
 
+fn python_regex_text(value: &Value) -> Cow<'_, str> {
+    let text = text(value);
+    // Python re.I matches both dotted and dotless I against ASCII i, unlike
+    // Unicode simple folding in regex. Replace one code point with one so
+    // the bounded gaps and word classification stay intact.
+    if text.contains(['İ', 'ı']) {
+        Cow::Owned(text.replace(['İ', 'ı'], "i"))
+    } else {
+        text
+    }
+}
+
 fn classification(run: &Value, status: &str, provider_match: bool) -> &'static str {
     if status == "completed" {
-        let output = text(&run["result"]["output"]);
+        let output = python_regex_text(&run["result"]["output"]);
         if SIBLING_HOLD.is_match(&output) {
             "sibling_hold"
         } else if IDENTITY_HOLD.is_match(&output) {
@@ -48,7 +64,7 @@ fn classification(run: &Value, status: &str, provider_match: bool) -> &'static s
         } else {
             "completed_hold"
         }
-    } else if RUNTIME_FAILURE.is_match(&text(&run["error"])) {
+    } else if RUNTIME_FAILURE.is_match(&python_regex_text(&run["error"])) {
         "infrastructure"
     } else if provider_match {
         "provider"

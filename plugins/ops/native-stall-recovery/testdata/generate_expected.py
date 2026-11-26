@@ -54,6 +54,23 @@ for name, status, text in [
 ]:
     emit(name, status, text, {"output": text})
 
+# Python re.I folds dotted/dotless I; Python \b treats marks as non-word
+# and all Unicode numbers as word. Separators still count toward the gap.
+for name, output in [
+    ("identity-dotted-i", "\u0130dentity mismatch"),
+    ("sibling-dotless-i", "S\u0131BLING"),
+    ("sibling-mark-after-run", "他 run\u0301待"),
+    ("sibling-mark-before-run", "他\u0301run 待"),
+    ("sibling-number-after-run", "他 run²待"),
+    ("sibling-underscore-before-run", "他_run 待"),
+    ("sibling-newline-after-run", "他 run\n待"),
+    ("sibling-gap-24", "他" + "." * 23 + " run " + "." * 23 + "待"),
+    ("sibling-gap-25-before", "他" + "." * 24 + " run 待"),
+    ("sibling-gap-25-after", "他 run " + "." * 24 + "待"),
+]:
+    emit(name, "completed", result={"output": output})
+emit("runtime-dotless-i", error="daemon ex\u0131ted")
+
 # Marker binding from the fake recovery tests, plus each mismatch separately.
 emit("marker-match", marker=MARKER)
 emit("marker-wrong-run", marker={**MARKER, "source_run": "other-run"})
