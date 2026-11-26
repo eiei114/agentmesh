@@ -4,6 +4,7 @@ use std::collections::BTreeMap;
 
 use agentmesh_ops_kit::OpsError;
 use serde::Deserialize;
+use serde_json::value::RawValue;
 use serde_json::{json, Map, Value};
 
 pub const PRIOR: f64 = 0.25;
@@ -34,6 +35,7 @@ const SOURCES: [(&str, &[&str]); 6] = [
 
 type Object = Map<String, Value>;
 type Rows = Vec<Object>;
+type Metadata<'a> = BTreeMap<String, &'a RawValue>;
 type Result<T> = std::result::Result<T, OpsError>;
 
 fn invalid(message: &'static str) -> OpsError {
@@ -177,57 +179,99 @@ pub struct Source {
 }
 
 #[derive(Deserialize)]
-pub struct Aliases {
-    #[serde(default)]
-    models: BTreeMap<String, Option<Alias>>,
+pub struct Aliases<'a> {
+    #[serde(borrow, default)]
+    models: BTreeMap<String, Option<Alias<'a>>>,
 }
 
 #[derive(Deserialize)]
-struct Alias {
+struct Alias<'a> {
     #[serde(default)]
     identity: Value,
-    #[serde(default)]
-    metadata: Object,
+    #[serde(borrow, default)]
+    metadata: Metadata<'a>,
     #[serde(default)]
     entries: BTreeMap<String, Option<String>>,
 }
 
-fn integer(value: &Value) -> Option<i128> {
-    value
-        .as_i64()
-        .map(i128::from)
-        .or_else(|| value.as_u64().map(i128::from))
-        .or_else(|| value.as_bool().map(i128::from))
+enum MetadataNumber<'a> {
+    Integer(&'a str),
+    Float(f64),
+}
+
+fn metadata_number(text: &str) -> Option<MetadataNumber<'_>> {
+    match text {
+        "true" => Some(MetadataNumber::Integer("1")),
+        "false" | "-0" => Some(MetadataNumber::Integer("0")),
+        _ if text.starts_with(['-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']) => {
+            if text.contains(['.', 'e', 'E']) {
+                text.parse().ok().map(MetadataNumber::Float)
+            } else {
+                Some(MetadataNumber::Integer(text))
+            }
+        }
+        _ => None,
+    }
 }
 
 // Python compares JSON metadata structurally, and int/bool/float by numeric value.
-fn metadata_eq(a: &Value, b: &Value) -> bool {
-    match (a, b) {
-        (Value::Array(a), Value::Array(b)) => {
-            a.len() == b.len() && a.iter().zip(b).all(|(a, b)| metadata_eq(a, b))
-        }
-        (Value::Object(a), Value::Object(b)) => {
+fn metadata_eq(a: &RawValue, b: &RawValue, depth: usize) -> bool {
+    // RawValue defers decoding; bound recursion before walking nested metadata.
+    if depth >= 128 {
+        return false;
+    }
+    let (a, b) = (a.get(), b.get());
+    match (a.as_bytes().first(), b.as_bytes().first()) {
+        (Some(b'['), Some(b'[')) => {
+            let (Ok(a), Ok(b)) = (
+                serde_json::from_str::<Vec<&RawValue>>(a),
+                serde_json::from_str::<Vec<&RawValue>>(b),
+            ) else {
+                return false;
+            };
             a.len() == b.len()
-                && a.iter()
-                    .all(|(key, a)| b.get(key).is_some_and(|b| metadata_eq(a, b)))
+                && a.into_iter()
+                    .zip(b)
+                    .all(|(a, b)| metadata_eq(a, b, depth + 1))
         }
-        _ => match (integer(a), integer(b)) {
-            (Some(a), Some(b)) => a == b,
-            (Some(integer), None) => b
-                .as_f64()
-                .is_some_and(|f| f.fract() == 0.0 && f as i128 == integer),
-            (None, Some(integer)) => a
-                .as_f64()
-                .is_some_and(|f| f.fract() == 0.0 && f as i128 == integer),
-            (None, None) => a == b || a.as_f64().zip(b.as_f64()).is_some_and(|(a, b)| a == b),
+        (Some(b'{'), Some(b'{')) => {
+            let (Ok(a), Ok(b)) = (
+                serde_json::from_str::<Metadata>(a),
+                serde_json::from_str::<Metadata>(b),
+            ) else {
+                return false;
+            };
+            a.len() == b.len()
+                && a.into_iter()
+                    .all(|(key, a)| b.get(&key).is_some_and(|b| metadata_eq(a, b, depth + 1)))
+        }
+        (Some(b'"'), Some(b'"')) => serde_json::from_str::<String>(a)
+            .ok()
+            .zip(serde_json::from_str::<String>(b).ok())
+            .is_some_and(|(a, b)| a == b),
+        _ => match (metadata_number(a), metadata_number(b)) {
+            (Some(MetadataNumber::Integer(a)), Some(MetadataNumber::Integer(b))) => a == b,
+            (Some(MetadataNumber::Float(a)), Some(MetadataNumber::Float(b))) => a == b,
+            (Some(MetadataNumber::Float(f)), Some(MetadataNumber::Integer(n)))
+            | (Some(MetadataNumber::Integer(n)), Some(MetadataNumber::Float(f))) => {
+                // Expand the exact integral float, not its shortest roundtrip spelling.
+                // Converting n to f64 would round distinct integers to the same value.
+                f.fract() == 0.0
+                    && if f == 0.0 {
+                        n == "0"
+                    } else {
+                        format!("{f:.0}") == n
+                    }
+            }
+            _ => a == "null" && b == "null",
         },
     }
 }
 
 pub fn match_model(
     model: &str,
-    metadata: &Object,
-    aliases: &Aliases,
+    metadata: &Metadata<'_>,
+    aliases: &Aliases<'_>,
     sources: &BTreeMap<String, Source>,
 ) -> Result<Value> {
     let alias = aliases.models.get(model).and_then(Option::as_ref);
@@ -236,9 +280,10 @@ pub fn match_model(
         None => Some("alias_missing"),
         Some(_) if identity.is_null() => Some("identity_unverified"),
         Some(a)
-            if a.metadata
-                .iter()
-                .any(|(k, v)| !metadata_eq(metadata.get(k).unwrap_or(&Value::Null), v)) =>
+            if a.metadata.iter().any(|(k, v)| match metadata.get(k) {
+                Some(actual) => !metadata_eq(actual, v, 0),
+                None => v.get() != "null",
+            }) =>
         {
             Some("metadata_mismatch")
         }
@@ -349,26 +394,74 @@ enum Request {
     Percentiles {
         entries: Rows,
     },
-    MatchModel {
-        model: String,
-        metadata: Object,
-        aliases: Aliases,
-        sources: BTreeMap<String, Source>,
-    },
 }
 
-pub fn handle(request: Value) -> Result<Value> {
-    let request = serde_json::from_value(request)
-        .map_err(|_| invalid("invalid benchmark request shape or op"))?;
-    match request {
-        Request::Number { value, low, high } => Ok(json!(number(&value, low, high)?)),
-        Request::Collapse { rows } => Ok(json!(collapse(&rows)?)),
-        Request::Percentiles { entries } => Ok(json!(percentiles(&entries)?)),
-        Request::MatchModel {
+#[derive(Deserialize)]
+struct MatchRequest<'a> {
+    model: String,
+    #[serde(borrow)]
+    metadata: Metadata<'a>,
+    #[serde(borrow)]
+    aliases: Aliases<'a>,
+    sources: BTreeMap<String, Source>,
+}
+
+pub fn handle_text(input: &str) -> Result<Value> {
+    let document: &RawValue = serde_json::from_str(input)
+        .map_err(|err| OpsError::invalid_request(format!("request is not JSON: {err}")))?;
+    #[derive(Deserialize)]
+    struct Operation {
+        op: String,
+    }
+    let bad_shape = |_| invalid("invalid benchmark request shape or op");
+    let op: Operation = serde_json::from_str(document.get()).map_err(bad_shape)?;
+    if op.op == "match_model" {
+        let MatchRequest {
             model,
             metadata,
             aliases,
             sources,
-        } => match_model(&model, &metadata, &aliases, &sources),
+        } = serde_json::from_str(document.get()).map_err(bad_shape)?;
+        match_model(&model, &metadata, &aliases, &sources)
+    } else {
+        match serde_json::from_str(document.get()).map_err(bad_shape)? {
+            Request::Number { value, low, high } => Ok(json!(number(&value, low, high)?)),
+            Request::Collapse { rows } => Ok(json!(collapse(&rows)?)),
+            Request::Percentiles { entries } => Ok(json!(percentiles(&entries)?)),
+        }
+    }
+}
+
+pub fn handle(request: Value) -> Result<Value> {
+    handle_text(&request.to_string())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn metadata_numeric_equality_matches_python() {
+        for (a, b, equal) in [
+            ("18446744073709551617", "18446744073709551617", true),
+            ("18446744073709551616", "18446744073709551616.0", true),
+            ("18446744073709551617", "18446744073709551616.0", false),
+            ("-18446744073709551617", "-18446744073709551616", false),
+            (
+                "1267650600228229401496703205376",
+                "1.2676506002282294e30",
+                true,
+            ),
+            ("-0.0", "false", true),
+            ("1e0", "true", true),
+            ("1.5", "1", false),
+            ("1.5", "15e-1", true),
+            (r#""1""#, "1", false),
+        ] {
+            let left = serde_json::from_str(a).unwrap();
+            let right = serde_json::from_str(b).unwrap();
+            assert_eq!(metadata_eq(left, right, 0), equal, "{a} vs {b}");
+            assert_eq!(metadata_eq(right, left, 0), equal, "{b} vs {a}");
+        }
     }
 }

@@ -12,7 +12,7 @@ fn fixtures() -> PathBuf {
 
 #[test]
 fn python_parity() {
-    assert!(check_parity(&fixtures(), handle).expect("Python scoring parity") >= 16);
+    assert!(check_parity(&fixtures(), handle).expect("Python scoring parity") >= 25);
 }
 
 fn stdio(input: &[u8]) -> Output {
@@ -26,16 +26,30 @@ fn stdio(input: &[u8]) -> Output {
     child.wait_with_output().unwrap()
 }
 
-#[test]
-fn stdio_returns_python_result() {
-    let output = stdio(include_bytes!("../testdata/match-vendor-stale.input.json"));
+fn assert_stdio_result(input: &[u8], expected: &str) {
+    let output = stdio(input);
     assert!(output.status.success(), "{output:?}");
     assert!(output.stderr.is_empty());
     assert!(output.stdout.ends_with(b"\n"));
     let actual: Value = serde_json::from_slice(&output.stdout).unwrap();
-    let expected: Value =
-        serde_json::from_str(include_str!("../testdata/match-vendor-stale.expected.json")).unwrap();
+    let expected: Value = serde_json::from_str(expected).unwrap();
     assert_eq!(actual, expected);
+}
+
+#[test]
+fn stdio_returns_python_result() {
+    assert_stdio_result(
+        include_bytes!("../testdata/match-vendor-stale.input.json"),
+        include_str!("../testdata/match-vendor-stale.expected.json"),
+    );
+}
+
+#[test]
+fn stdio_distinguishes_large_integer_metadata() {
+    assert_stdio_result(
+        include_bytes!("../testdata/stdio/match-large-integer-mismatch.input.json"),
+        include_str!("../testdata/stdio/match-large-integer-mismatch.expected.json"),
+    );
 }
 
 #[test]

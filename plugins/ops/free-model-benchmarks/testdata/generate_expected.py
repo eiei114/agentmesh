@@ -19,7 +19,7 @@ def main():
         "percentiles": benchmarks.percentiles,
         "match_model": benchmarks.match_model,
     }
-    for path in sorted(Path(__file__).parent.glob("*.input.json")):
+    for path in sorted(Path(__file__).parent.rglob("*.input.json")):
         arguments = json.loads(path.read_text(encoding="utf-8"))
         operation = operations[arguments.pop("op")]
         try:
