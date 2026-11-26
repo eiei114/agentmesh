@@ -24,6 +24,8 @@ document per request.
 
 `now` is an ISO calendar timestamp with seconds and an explicit minute-aligned
 offset (`Z` or `±HH:MM`); no host clock or local timezone is consulted. For visibility,
-legacy naïve timestamps and date-only strings are interpreted as UTC. Unparseable
-evidence times do not restore a hint by timestamp alone. These are hint decisions,
-not a filter on actual findings or safety gates.
+legacy naïve timestamps (including `YYYY-MM-DDTHH:MM` and `YYYY-MM-DD HH:MM`
+with omitted seconds) and date-only strings are interpreted as UTC. Evidence
+must be strictly newer than `curated_at` to restore a hint by timestamp alone;
+unparseable times do not restore it. These are hint decisions, not a filter on
+actual findings or safety gates.

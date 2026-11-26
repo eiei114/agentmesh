@@ -71,6 +71,14 @@ fn stamp(value: &Value) -> Option<OffsetDateTime> {
         // Python's evidence parser interprets naïve timestamps as UTC.
         .or_else(|| parse_aware(&format!("{text}Z")))
         .or_else(|| {
+            // Legacy YYYY-MM-DD[T ]HH:MM values also omit seconds.
+            if text.len() == 16 {
+                parse_aware(&format!("{text}:00Z"))
+            } else {
+                None
+            }
+        })
+        .or_else(|| {
             Date::parse(text, date_format)
                 .ok()
                 .map(|d| d.midnight().assume_utc())
