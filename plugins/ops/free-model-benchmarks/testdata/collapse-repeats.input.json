@@ -1,0 +1,46 @@
+{
+  "op": "collapse",
+  "rows": [
+    {
+      "id": "b",
+      "score": 1300,
+      "observed_at": "2026-11-15",
+      "other": {
+        "label": "first"
+      }
+    },
+    {
+      "id": "a",
+      "score": 0
+    },
+    {
+      "id": "c",
+      "score": -0.2
+    },
+    {
+      "id": "b",
+      "score": 1400,
+      "observed_at": "2026-11-16"
+    },
+    {
+      "id": "c",
+      "score": 0.1
+    },
+    {
+      "id": "b",
+      "score": 1200
+    },
+    {
+      "id": "a",
+      "score": "180"
+    },
+    {
+      "id": "b",
+      "score": 1550
+    },
+    {
+      "id": "c",
+      "score": -1
+    }
+  ]
+}

@@ -304,6 +304,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "agentmesh-ops-free-model-benchmarks"
+version = "0.1.0"
+dependencies = [
+ "agentmesh-ops-kit",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "agentmesh-ops-free-model-slot"
 version = "0.1.0"
 dependencies = [

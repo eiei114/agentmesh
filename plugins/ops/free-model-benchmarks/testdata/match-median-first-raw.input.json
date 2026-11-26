@@ -1,0 +1,166 @@
+{
+  "op": "match_model",
+  "model": "test/example",
+  "metadata": {
+    "family": "example",
+    "release_date": "2026-11-01",
+    "other": {
+      "list": [
+        1.0,
+        true
+      ]
+    }
+  },
+  "aliases": {
+    "models": {
+      "test/example": {
+        "identity": "vendor/example",
+        "metadata": {
+          "family": "example",
+          "release_date": "2026-11-01",
+          "other": {
+            "list": [
+              1,
+              1
+            ]
+          },
+          "missing": null
+        },
+        "entries": {
+          "epoch_mirrorcode": "exact"
+        }
+      }
+    }
+  },
+  "sources": {
+    "epoch": {
+      "metrics": {
+        "epoch_mirrorcode": [
+          {
+            "id": "low",
+            "score": 10
+          },
+          {
+            "id": "exact",
+            "score": 90,
+            "release_date": "2026-10-01"
+          },
+          {
+            "id": "exact",
+            "score": 10
+          },
+          {
+            "id": "higher",
+            "score": 80
+          }
+        ],
+        "epoch_swe_verified": [
+          {
+            "id": "low",
+            "score": 10
+          },
+          {
+            "id": "exact",
+            "score": 90
+          }
+        ],
+        "epoch_gpqa": [
+          {
+            "id": "low",
+            "score": 10
+          },
+          {
+            "id": "exact",
+            "score": 90
+          }
+        ]
+      },
+      "stale": true
+    },
+    "aider": {
+      "metrics": {
+        "aider_polyglot": [
+          {
+            "id": "low",
+            "score": 10
+          },
+          {
+            "id": "exact",
+            "score": 90
+          }
+        ]
+      },
+      "stale": false
+    },
+    "arena_agent": {
+      "metrics": {
+        "arena_agent": [
+          {
+            "id": "low",
+            "score": 10
+          },
+          {
+            "id": "exact",
+            "score": 90
+          }
+        ]
+      },
+      "stale": false
+    },
+    "arena_webdev": {
+      "metrics": {
+        "arena_webdev": [
+          {
+            "id": "low",
+            "score": 10
+          },
+          {
+            "id": "exact",
+            "score": 90
+          }
+        ]
+      },
+      "stale": false
+    },
+    "llm_stats": {
+      "metrics": {
+        "vendor_deepswe": [
+          {
+            "id": "low",
+            "score": 10
+          },
+          {
+            "id": "exact",
+            "score": 90
+          }
+        ],
+        "vendor_swe_verified": [
+          {
+            "id": "low",
+            "score": 10
+          },
+          {
+            "id": "exact",
+            "score": 90
+          }
+        ]
+      },
+      "stale": false
+    },
+    "hf_lightning": {
+      "metrics": {
+        "hf_lightning_swe": [
+          {
+            "id": "low",
+            "score": 10
+          },
+          {
+            "id": "exact",
+            "score": 90
+          }
+        ]
+      },
+      "stale": false
+    }
+  }
+}

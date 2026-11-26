@@ -1,0 +1,6 @@
+{
+  "error": {
+    "kind": "invalid_request",
+    "message": "missing/non-numeric score"
+  }
+}

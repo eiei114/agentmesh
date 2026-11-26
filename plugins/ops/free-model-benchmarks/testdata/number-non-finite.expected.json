@@ -1,0 +1,6 @@
+{
+  "error": {
+    "kind": "invalid_request",
+    "message": "out-of-range score"
+  }
+}
