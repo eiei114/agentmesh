@@ -3,16 +3,43 @@ use std::sync::LazyLock;
 use regex::Regex;
 use time::{Date, Month, Time, Weekday};
 
-// Python's fromisoformat accepts calendar and ISO week dates, basic and
-// extended clocks, and any single character between the date and the clock.
-static STAMP: LazyLock<Regex> = LazyLock::new(|| {
-    Regex::new(concat!(
-        r"\A(?P<year>[0-9]{4})(?P<date>-[0-9]{2}-[0-9]{2}|[0-9]{4}|",
-        r"-W[0-9]{2}(?:-[1-7])?|W[0-9]{2}[1-7]?)",
-        r"(?s:.)(?P<clock>[^+-]+)(?P<sign>[+-])(?P<offset>[^+-]+)\z"
-    ))
-    .unwrap()
+static DATE: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(r"\A([0-9]{4})(-[0-9]{2}-[0-9]{2}|[0-9]{4}|-W[0-9]{2}(?:-[1-7])?|W[0-9]{2}[1-7]?)\z")
+        .unwrap()
 });
+
+// Resolve the split before parsing either side, like Python's fromisoformat.
+// A greedy optional weekday could consume the first digit of the clock.
+fn separator_index(text: &str) -> Option<usize> {
+    let bytes = text.as_bytes();
+    Some(match bytes.get(4..)? {
+        [b'-', b'W', ..] => {
+            // YYYY-Www-##: prefer '-' as separator when two digits follow it.
+            // Otherwise '-' introduces an explicit weekday.
+            if bytes.get(8) == Some(&b'-') && !bytes.get(10).is_some_and(u8::is_ascii_digit) {
+                10
+            } else {
+                8
+            }
+        }
+        [b'W', ..] => {
+            // If the separator is itself a digit, clock components contribute
+            // pairs of digits before the first colon, fraction or offset.
+            let digit_count = bytes
+                .get(7..)?
+                .iter()
+                .take_while(|b| b.is_ascii_digit())
+                .count();
+            7 + if digit_count < 2 {
+                digit_count
+            } else {
+                usize::from(digit_count.is_multiple_of(2))
+            }
+        }
+        [b'-', ..] => 10,
+        _ => 8,
+    })
+}
 
 fn date(year: i32, rest: &str) -> Option<Date> {
     let rest = rest.strip_prefix('-').unwrap_or(rest);
@@ -62,13 +89,18 @@ fn clock(text: &str) -> Option<(u8, u8, u8, u32)> {
 
 pub(crate) fn parse(value: &str) -> Option<String> {
     let normalized = value.replace('Z', "+00:00");
-    let c = STAMP.captures(&normalized)?;
-    let year = c["year"].parse().ok()?;
+    let (date_text, tail) = normalized.split_at_checked(separator_index(&normalized)?)?;
+    let mut tail = tail.chars();
+    tail.next()?; // Skip exactly one Unicode separator.
+    let tail = tail.as_str();
+    let (clock_text, offset_text) = tail.split_at(tail.find(['+', '-'])?);
+    let c = DATE.captures(date_text)?;
+    let year = c[1].parse().ok()?;
     if year == 0 {
         return None;
     }
-    let mut date = date(year, &c["date"])?;
-    let (h, m, s, us) = clock(&c["clock"])?;
+    let mut date = date(year, &c[2])?;
+    let (h, m, s, us) = clock(clock_text)?;
     let time = if (h, m, s, us) == (24, 0, 0, 0) {
         date = date.next_day()?;
         Time::MIDNIGHT
@@ -78,16 +110,13 @@ pub(crate) fn parse(value: &str) -> Option<String> {
     if !(1..=9999).contains(&date.year()) {
         return None;
     }
-    let (oh, om, os, ous) = clock(&c["offset"])?;
+    let (sign, offset_text) = offset_text.split_at(1);
+    let (oh, om, os, ous) = clock(offset_text)?;
     let offset = u32::from(oh) * 3600 + u32::from(om) * 60 + u32::from(os);
     if offset >= 86_400 {
         return None;
     }
-    let sign = if offset == 0 && ous == 0 {
-        "+"
-    } else {
-        &c["sign"]
-    };
+    let sign = if offset == 0 && ous == 0 { "+" } else { sign };
     let mut out = format!(
         "{date}T{:02}:{:02}:{:02}",
         time.hour(),
