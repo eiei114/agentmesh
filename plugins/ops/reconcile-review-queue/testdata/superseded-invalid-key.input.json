@@ -1,0 +1,34 @@
+{
+  "operation": "superseded_by",
+  "issue": {
+    "id": "old"
+  },
+  "metadata": {
+    "dedupe_key": "not-a-repair-key",
+    "source_pr_url": "https://github.com/example-org/example-repo/pull/30"
+  },
+  "pr_view": {
+    "state": "OPEN",
+    "headRefOid": "cccccccccccccccccccccccccccccccccccccccc"
+  },
+  "siblings": [
+    {
+      "id": "old",
+      "identifier": "old",
+      "status": "in_progress",
+      "created_at": "2026-11-11",
+      "metadata": {
+        "dedupe_key": "managed-review-fix:source:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    },
+    {
+      "id": "SYN-2",
+      "identifier": "SYN-2",
+      "status": "in_progress",
+      "created_at": "2026-11-12",
+      "metadata": {
+        "dedupe_key": "managed-review-fix:source:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      }
+    }
+  ]
+}

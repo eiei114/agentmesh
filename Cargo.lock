@@ -369,6 +369,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "agentmesh-ops-reconcile-review-queue"
+version = "0.1.0"
+dependencies = [
+ "agentmesh-ops-kit",
+ "serde_json",
+]
+
+[[package]]
 name = "agentmesh-ops-review-guardrail-analysis"
 version = "0.1.0"
 dependencies = [

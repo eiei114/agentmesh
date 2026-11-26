@@ -1,0 +1,15 @@
+{
+  "operation": "superseded_by",
+  "issue": {
+    "id": "old"
+  },
+  "metadata": {
+    "dedupe_key": "managed-review-fix:source:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "source_pr_url": "https://github.com/example-org/example-repo/pull/30"
+  },
+  "pr_view": {
+    "state": "CLOSED",
+    "headRefOid": "cccccccccccccccccccccccccccccccccccccccc"
+  },
+  "siblings": []
+}
