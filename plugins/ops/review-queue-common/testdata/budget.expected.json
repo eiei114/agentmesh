@@ -1,0 +1,196 @@
+{
+  "coverage": "partial_budget_deferred",
+  "deferred_sources": 6,
+  "sources": 0,
+  "children": 8,
+  "in_review_sources": 0,
+  "done_cleanup_sources": 0,
+  "source_reasons": {},
+  "child_reasons": {
+    "worker_still_active": 2,
+    "classification_deferred": 1,
+    "classification_time_deferred": 1,
+    "protected_publication_requires_separation": 1,
+    "publication_hold_invalid": 2,
+    "ready": 1
+  },
+  "groups": [
+    {
+      "project": "synthetic-z",
+      "role": "child",
+      "reason": "worker_still_active",
+      "next_action": "rescan_within_scan_budget",
+      "count": 1,
+      "oldest_issue_hours": null,
+      "unknown_age": 1,
+      "keys": [
+        "SYN-1"
+      ]
+    },
+    {
+      "project": "synthetic-z",
+      "role": "child",
+      "reason": "worker_still_active",
+      "next_action": "wait_for_native_worker",
+      "count": 1,
+      "oldest_issue_hours": null,
+      "unknown_age": 1,
+      "keys": [
+        "SYN-2"
+      ]
+    },
+    {
+      "project": "synthetic-z",
+      "role": "child",
+      "reason": "classification_deferred",
+      "next_action": "rescan_within_scan_budget",
+      "count": 1,
+      "oldest_issue_hours": null,
+      "unknown_age": 1,
+      "keys": [
+        "SYN-3"
+      ]
+    },
+    {
+      "project": "synthetic-z",
+      "role": "child",
+      "reason": "classification_time_deferred",
+      "next_action": "rescan_within_scan_budget",
+      "count": 1,
+      "oldest_issue_hours": null,
+      "unknown_age": 1,
+      "keys": [
+        "SYN-4"
+      ]
+    },
+    {
+      "project": "synthetic-z",
+      "role": "child",
+      "reason": "protected_publication_requires_separation",
+      "next_action": "static_publication_separation_then_independent_review",
+      "count": 1,
+      "oldest_issue_hours": null,
+      "unknown_age": 1,
+      "keys": [
+        "SYN-5"
+      ]
+    },
+    {
+      "project": "synthetic-z",
+      "role": "child",
+      "reason": "publication_hold_invalid",
+      "next_action": "rescan_within_scan_budget",
+      "count": 1,
+      "oldest_issue_hours": null,
+      "unknown_age": 1,
+      "keys": [
+        "SYN-6"
+      ]
+    },
+    {
+      "project": "synthetic-z",
+      "role": "child",
+      "reason": "publication_hold_invalid",
+      "next_action": "static_publication_separation_then_independent_review",
+      "count": 1,
+      "oldest_issue_hours": null,
+      "unknown_age": 1,
+      "keys": [
+        "SYN-7"
+      ]
+    },
+    {
+      "project": "synthetic-z",
+      "role": "child",
+      "reason": "ready",
+      "next_action": "fresh_parent_child_cleanup",
+      "count": 1,
+      "oldest_issue_hours": null,
+      "unknown_age": 1,
+      "keys": [
+        "SYN-8"
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "key": "SYN-1",
+      "project": "synthetic-z",
+      "role": "child",
+      "status": "in_review",
+      "reason": "worker_still_active",
+      "issue_age_hours": null,
+      "deferral_budget": "requests",
+      "next_action": "rescan_within_scan_budget"
+    },
+    {
+      "key": "SYN-2",
+      "project": "synthetic-z",
+      "role": "child",
+      "status": "in_review",
+      "reason": "worker_still_active",
+      "issue_age_hours": null,
+      "deferral_budget": {},
+      "next_action": "wait_for_native_worker"
+    },
+    {
+      "key": "SYN-3",
+      "project": "synthetic-z",
+      "role": "child",
+      "status": "in_review",
+      "reason": "classification_deferred",
+      "issue_age_hours": null,
+      "next_action": "rescan_within_scan_budget"
+    },
+    {
+      "key": "SYN-4",
+      "project": "synthetic-z",
+      "role": "child",
+      "status": "in_review",
+      "reason": "classification_time_deferred",
+      "issue_age_hours": null,
+      "next_action": "rescan_within_scan_budget"
+    },
+    {
+      "key": "SYN-5",
+      "project": "synthetic-z",
+      "role": "child",
+      "status": "in_review",
+      "reason": "protected_publication_requires_separation",
+      "issue_age_hours": null,
+      "next_action": "static_publication_separation_then_independent_review"
+    },
+    {
+      "key": "SYN-6",
+      "project": "synthetic-z",
+      "role": "child",
+      "status": "in_review",
+      "reason": "publication_hold_invalid",
+      "issue_age_hours": null,
+      "deferral_budget": {
+        "budget": "time"
+      },
+      "next_action": "rescan_within_scan_budget"
+    },
+    {
+      "key": "SYN-7",
+      "project": "synthetic-z",
+      "role": "child",
+      "status": "in_review",
+      "reason": "publication_hold_invalid",
+      "issue_age_hours": null,
+      "next_action": "static_publication_separation_then_independent_review"
+    },
+    {
+      "key": "SYN-8",
+      "project": "synthetic-z",
+      "role": "child",
+      "status": "in_review",
+      "reason": null,
+      "issue_age_hours": null,
+      "independent_reviewed": true,
+      "next_action": "fresh_parent_child_cleanup"
+    }
+  ],
+  "basis": "issue_age and last_activity, not claimed exact review-entry age; no delivery counts"
+}

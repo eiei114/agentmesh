@@ -1,0 +1,132 @@
+{
+  "complete": false,
+  "deferred": 2,
+  "rows": [
+    {
+      "key": "SYN-1",
+      "project": "synthetic-z",
+      "role": "source",
+      "status": "in_review",
+      "reason": "review_repair_pending",
+      "issue_age_hours": null,
+      "independent_reviewed": true
+    },
+    {
+      "key": "SYN-2",
+      "project": "synthetic-z",
+      "role": "source",
+      "status": "in_review",
+      "reason": "repair_worker_not_completed",
+      "issue_age_hours": null,
+      "independent_reviewed": true
+    },
+    {
+      "key": "SYN-3",
+      "project": "synthetic-z",
+      "role": "source",
+      "status": "in_review",
+      "reason": "review_waiting_for_new_evidence",
+      "issue_age_hours": null,
+      "independent_reviewed": true
+    },
+    {
+      "key": "SYN-4",
+      "project": "synthetic-z",
+      "role": "source",
+      "status": "in_review",
+      "reason": "independent_changes_requested",
+      "issue_age_hours": null,
+      "independent_reviewed": true
+    },
+    {
+      "key": "SYN-5",
+      "project": "synthetic-z",
+      "role": "source",
+      "status": "in_review",
+      "reason": "no_action_requires_review",
+      "issue_age_hours": null,
+      "independent_reviewed": true
+    },
+    {
+      "key": "SYN-6",
+      "project": "synthetic-z",
+      "role": "source",
+      "status": "in_review",
+      "reason": "no_linked_pr",
+      "issue_age_hours": null,
+      "independent_reviewed": true
+    },
+    {
+      "key": "SYN-7",
+      "project": "synthetic-z",
+      "role": "source",
+      "status": "in_review",
+      "reason": "merge_conflict",
+      "issue_age_hours": null,
+      "independent_reviewed": true
+    },
+    {
+      "key": "SYN-8",
+      "project": "synthetic-z",
+      "role": "source",
+      "status": "in_review",
+      "reason": "duplicate_repair_issue",
+      "issue_age_hours": null,
+      "independent_reviewed": true
+    },
+    {
+      "key": "SYN-9",
+      "project": "synthetic-z",
+      "role": "source",
+      "status": "in_review",
+      "reason": "repair_inventory_incomplete",
+      "issue_age_hours": null,
+      "independent_reviewed": true
+    },
+    {
+      "key": "SYN-10",
+      "project": "synthetic-z",
+      "role": "source",
+      "status": "in_review",
+      "reason": "two_repairs_exhausted",
+      "issue_age_hours": null,
+      "independent_reviewed": true
+    },
+    {
+      "key": "SYN-11",
+      "project": "synthetic-z",
+      "role": "source",
+      "status": "in_review",
+      "reason": "sdk_example",
+      "issue_age_hours": null,
+      "independent_reviewed": true
+    },
+    {
+      "key": "SYN-12",
+      "project": "synthetic-z",
+      "role": "source",
+      "status": "in_review",
+      "reason": "completion_example",
+      "issue_age_hours": null,
+      "independent_reviewed": true
+    },
+    {
+      "key": "SYN-13",
+      "project": "synthetic-z",
+      "role": "source",
+      "status": "in_review",
+      "reason": "checkout_example",
+      "issue_age_hours": null,
+      "independent_reviewed": true
+    },
+    {
+      "key": "SYN-14",
+      "project": "synthetic-z",
+      "role": "source",
+      "status": "in_review",
+      "reason": "unrecognized_synthetic_reason",
+      "issue_age_hours": null,
+      "independent_reviewed": true
+    }
+  ]
+}

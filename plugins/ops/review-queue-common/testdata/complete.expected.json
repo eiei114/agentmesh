@@ -1,0 +1,190 @@
+{
+  "coverage": "complete_classification",
+  "deferred_sources": 0,
+  "sources": 7,
+  "children": 3,
+  "in_review_sources": 4,
+  "done_cleanup_sources": 2,
+  "source_reasons": {
+    "ready": 5,
+    "unresolved_review_threads": 2
+  },
+  "child_reasons": {
+    "ready": 1,
+    "merge_conflict": 2
+  },
+  "groups": [
+    {
+      "project": "synthetic-z",
+      "role": "source",
+      "reason": "ready",
+      "next_action": "independent_review",
+      "count": 3,
+      "oldest_issue_hours": 3.5,
+      "unknown_age": 1,
+      "keys": [
+        "SYN-1",
+        "SYN-4",
+        "SYN-7"
+      ]
+    },
+    {
+      "project": "synthetic-a",
+      "role": "source",
+      "reason": "unresolved_review_threads",
+      "next_action": "independent_finding_verification",
+      "count": 2,
+      "oldest_issue_hours": 2.5,
+      "unknown_age": 1,
+      "keys": [
+        "SYN-2",
+        "SYN-8"
+      ]
+    },
+    {
+      "project": "synthetic-z",
+      "role": "source",
+      "reason": "ready",
+      "next_action": "verified_merge_done",
+      "count": 1,
+      "oldest_issue_hours": 0,
+      "unknown_age": 0,
+      "keys": [
+        "SYN-3"
+      ]
+    },
+    {
+      "project": "synthetic-z",
+      "role": "child",
+      "reason": "ready",
+      "next_action": "fresh_parent_child_cleanup",
+      "count": 1,
+      "oldest_issue_hours": null,
+      "unknown_age": 1,
+      "keys": [
+        null
+      ]
+    },
+    {
+      "project": "synthetic-z",
+      "role": "child",
+      "reason": "merge_conflict",
+      "next_action": "wait_for_parent_delivery",
+      "count": 2,
+      "oldest_issue_hours": 12.25,
+      "unknown_age": 1,
+      "keys": [
+        "SYN-6",
+        "SYN-9"
+      ]
+    },
+    {
+      "project": null,
+      "role": "source",
+      "reason": "ready",
+      "next_action": "fresh_specific_blocker_investigation",
+      "count": 1,
+      "oldest_issue_hours": null,
+      "unknown_age": 1,
+      "keys": [
+        "SYN-10"
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "key": "SYN-1",
+      "project": "synthetic-z",
+      "role": "source",
+      "status": "in_review",
+      "reason": null,
+      "issue_age_hours": null,
+      "next_action": "independent_review",
+      "inactivity_hours": 7.0
+    },
+    {
+      "key": "SYN-2",
+      "project": "synthetic-a",
+      "role": "source",
+      "status": "in_review",
+      "reason": "unresolved_review_threads",
+      "issue_age_hours": 2.5,
+      "next_action": "independent_finding_verification"
+    },
+    {
+      "key": "SYN-3",
+      "project": "synthetic-z",
+      "role": "source",
+      "status": "done",
+      "reason": null,
+      "issue_age_hours": 0.0,
+      "independent_reviewed": true,
+      "next_action": "verified_merge_done"
+    },
+    {
+      "key": "SYN-4",
+      "project": "synthetic-z",
+      "role": "source",
+      "status": "done",
+      "reason": null,
+      "issue_age_hours": 3.5,
+      "next_action": "independent_review"
+    },
+    {
+      "key": null,
+      "project": "synthetic-z",
+      "role": "child",
+      "status": "in_review",
+      "reason": "",
+      "issue_age_hours": null,
+      "next_action": "fresh_parent_child_cleanup"
+    },
+    {
+      "key": "SYN-6",
+      "project": "synthetic-z",
+      "role": "child",
+      "status": "done",
+      "reason": "merge_conflict",
+      "issue_age_hours": null,
+      "next_action": "wait_for_parent_delivery"
+    },
+    {
+      "key": "SYN-7",
+      "project": "synthetic-z",
+      "role": "source",
+      "status": "in_review",
+      "reason": null,
+      "issue_age_hours": 1,
+      "next_action": "independent_review"
+    },
+    {
+      "key": "SYN-8",
+      "project": "synthetic-a",
+      "role": "source",
+      "status": "in_review",
+      "reason": "unresolved_review_threads",
+      "issue_age_hours": null,
+      "next_action": "independent_finding_verification"
+    },
+    {
+      "key": "SYN-9",
+      "project": "synthetic-z",
+      "role": "child",
+      "status": "in_review",
+      "reason": "merge_conflict",
+      "issue_age_hours": 12.25,
+      "next_action": "wait_for_parent_delivery"
+    },
+    {
+      "key": "SYN-10",
+      "project": null,
+      "role": "source",
+      "status": null,
+      "reason": "",
+      "issue_age_hours": null,
+      "independent_reviewed": true,
+      "next_action": "fresh_specific_blocker_investigation"
+    }
+  ],
+  "basis": "issue_age and last_activity, not claimed exact review-entry age; no delivery counts"
+}
